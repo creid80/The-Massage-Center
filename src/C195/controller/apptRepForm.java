@@ -8,6 +8,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -17,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 
@@ -42,6 +48,7 @@ public class apptRepForm implements Initializable {
     private static ObservableList<Integer> allYears = FXCollections.observableArrayList();
     private static ObservableList<String> allMonths = FXCollections.observableArrayList();
     private static ObservableList<Types> allTypes = Types.getAllTypes();
+    public BarChart<String, Integer> typeBarChart;
 
 
     /**This method initializes the apptRep scene and populates the type table with appointments from the
@@ -65,6 +72,45 @@ public class apptRepForm implements Initializable {
         year.setValue(currD.getYear());
         month.setItems(allMonths);
         month.setValue(currD.getMonth());
+
+        CategoryAxis xAxis = new CategoryAxis();
+
+        xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList(
+                "Speed", "User rating", "Milage", "Safety")));
+        xAxis.setLabel("category");
+
+//Defining the y axis
+        NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("score");
+
+        typeBarChart.setTitle(String.valueOf(currD.getMonth()));
+
+        //Prepare XYChart.Series objects by setting data
+        XYChart.Series<String, Integer> series1 = new XYChart.Series<>();
+        series1.setName("Fiat");
+        series1.getData().add(new XYChart.Data("Speed", 1.0));
+        series1.getData().add(new XYChart.Data("User rating", 3.0));
+        series1.getData().add(new XYChart.Data("Milage", 5.0));
+        series1.getData().add(new XYChart.Data("Safety", 5.0));
+
+        XYChart.Series<String, Integer> series2 = new XYChart.Series<>();
+        series2.setName("Audi");
+        series2.getData().add(new XYChart.Data("Speed", 5.0));
+        series2.getData().add(new XYChart.Data("User rating", 6.0));
+
+        series2.getData().add(new XYChart.Data("Milage", 10.0));
+        series2.getData().add(new XYChart.Data("Safety", 4.0));
+
+        XYChart.Series<String, Integer> series3 = new XYChart.Series<>();
+        series3.setName("Ford");
+        series3.getData().add(new XYChart.Data("Speed", 4.0));
+        series3.getData().add(new XYChart.Data("User rating", 2.0));
+        series3.getData().add(new XYChart.Data("Milage", 3.0));
+        series3.getData().add(new XYChart.Data("Safety", 6.0));
+
+        typeBarChart.getData().addAll(series1,series2,series3);
+
+        //Group root = new Group(typeBarChart);
     }
 
     /**This method takes the selected menu item, and passes it to the Menu.menuSelection method. */
@@ -172,6 +218,7 @@ public class apptRepForm implements Initializable {
         getApptT(selectedD);
 
         apptTypeTable.setItems(allTypes);
+
     }
 
     /**This method exits the Graphical User Interface.*/
