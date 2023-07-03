@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.17224080267558528" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #0588FA;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.controller.apptRepForm">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+        <Label layoutX="202.0" layoutY="15.0" text="Monthly Appointments Report">
+            <font>
+                <Font name="System Bold" size="48.0" />
+            </font>
+        </Label>
+        <ComboBox fx:id="menu" layoutX="934.0" layoutY="61.0" onAction="#onMenu" prefWidth="150.0" promptText="Menu" />
+    </AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="457.0" prefWidth="527.0" style="-fx-background-color: #0588FA;">
+      <Label layoutX="228.0" layoutY="63.0" text="Year">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="year" layoutX="171.0" layoutY="99.0" onAction="#onYear" prefWidth="150.0" />
+      <Label layoutX="219.0" layoutY="185.0" text="Month">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="month" layoutX="171.0" layoutY="221.0" onAction="#onMonth" prefWidth="150.0" />
+      <TableView fx:id="apptTypeTable" layoutX="484.0" layoutY="63.0" prefHeight="319.0" prefWidth="437.0">
+        <columns>
+          <TableColumn fx:id="apptType" prefWidth="318.0" text="Appointment Type" />
+          <TableColumn fx:id="apptTotal" prefWidth="118.0" text="Total" />
+        </columns>
+      </TableView>
+        <Button fx:id="signOut" layoutX="886.0" layoutY="436.0" mnemonicParsing="false" onAction="#onSignOut" text="Sign out" />
+    </AnchorPane>
+</SplitPane>

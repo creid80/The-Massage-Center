@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane style="-fx-background-color: #0588FA;" xmlns="http://javafx.com/javafx/17.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.controller.loginForm">
+   <AnchorPane style="-fx-border-color: #000000; -fx-padding: 30;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="50.0">
+      <padding>
+         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+      </padding>
+      <Label fx:id="usernameText" alignment="CENTER" layoutX="80.0" layoutY="137.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="passwordText" alignment="CENTER" layoutX="80.0" layoutY="181.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="username" layoutX="212.0" layoutY="138.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <PasswordField fx:id="password" layoutX="212.0" layoutY="181.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </PasswordField>
+      <Button fx:id="login" layoutX="311.0" layoutY="251.0" mnemonicParsing="false" onAction="#onLogIn">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="cancel" layoutX="373.0" layoutY="251.0" mnemonicParsing="false" onAction="#onCancel">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+      <Label fx:id="locationText" layoutX="31.0" layoutY="267.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="location" layoutX="93.0" layoutY="267.0" textFill="#fff9f9">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="welcome" layoutX="164.0" layoutY="31.0" textAlignment="CENTER">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+   </AnchorPane>
+</AnchorPane>
