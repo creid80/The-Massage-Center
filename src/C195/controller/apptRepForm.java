@@ -76,39 +76,41 @@ public class apptRepForm implements Initializable {
         CategoryAxis xAxis = new CategoryAxis();
 
         xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList(
-                "Speed", "User rating", "Milage", "Safety")));
-        xAxis.setLabel("category");
+                "Treatments")));
+        xAxis.setLabel("Treatments");
 
 //Defining the y axis
         NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel("score");
+        yAxis.setLabel("Total");
 
         typeBarChart.setTitle(String.valueOf(currD.getMonth()));
 
         //Prepare XYChart.Series objects by setting data
         XYChart.Series<String, Integer> series1 = new XYChart.Series<>();
-        series1.setName("Fiat");
-        series1.getData().add(new XYChart.Data("Speed", 1.0));
-        series1.getData().add(new XYChart.Data("User rating", 3.0));
-        series1.getData().add(new XYChart.Data("Milage", 5.0));
-        series1.getData().add(new XYChart.Data("Safety", 5.0));
+        series1.setName("Acupuncture");
+        series1.getData().add(new XYChart.Data("Treatments", 1.0));
 
         XYChart.Series<String, Integer> series2 = new XYChart.Series<>();
-        series2.setName("Audi");
-        series2.getData().add(new XYChart.Data("Speed", 5.0));
-        series2.getData().add(new XYChart.Data("User rating", 6.0));
-
-        series2.getData().add(new XYChart.Data("Milage", 10.0));
-        series2.getData().add(new XYChart.Data("Safety", 4.0));
+        series2.setName("Deep Tissue ");
+        series2.getData().add(new XYChart.Data("Treatments", 5.0));
 
         XYChart.Series<String, Integer> series3 = new XYChart.Series<>();
-        series3.setName("Ford");
-        series3.getData().add(new XYChart.Data("Speed", 4.0));
-        series3.getData().add(new XYChart.Data("User rating", 2.0));
-        series3.getData().add(new XYChart.Data("Milage", 3.0));
-        series3.getData().add(new XYChart.Data("Safety", 6.0));
+        series3.setName("Hot Stone ");
+        series3.getData().add(new XYChart.Data("Treatments", 4.0));
 
-        typeBarChart.getData().addAll(series1,series2,series3);
+        XYChart.Series<String, Integer> series4 = new XYChart.Series<>();
+        series4.setName("Reflexology");
+        series4.getData().add(new XYChart.Data("Treatments", 6.0));
+
+        XYChart.Series<String, Integer> series5 = new XYChart.Series<>();
+        series5.setName("Sports");
+        series5.getData().add(new XYChart.Data("Treatments", 1.0));
+
+        XYChart.Series<String, Integer> series6 = new XYChart.Series<>();
+        series6.setName("Swedish");
+        series6.getData().add(new XYChart.Data("Treatments", 0.0));
+
+        typeBarChart.getData().addAll(series1,series2,series3,series4,series5,series6);
 
         //Group root = new Group(typeBarChart);
     }
