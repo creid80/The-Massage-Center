@@ -8,9 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
@@ -27,6 +25,7 @@ public class custApptRepForm implements Initializable {
 
     public ComboBox<String> menu;
     public String selected;
+    public TextField clientSearch;
 
     public TableView custTable;
     public TableColumn cTCustID;
@@ -44,6 +43,8 @@ public class custApptRepForm implements Initializable {
     public TableColumn aTStart;
     public TableColumn aTEnd;
     public TableColumn aTContName;
+
+    private ObservableList<Customers> searchClientText = null;
 
     private ObservableList<Customers> allCust = Customers.getAllCust();
 
@@ -89,6 +90,47 @@ public class custApptRepForm implements Initializable {
         Menu.menuSelection(selected, actionEvent);
     }
 
+    public void onClientSearch(ActionEvent actionEvent) {
+        String q = clientSearch.getText();
+        Customers custID = null;
+
+        if (searchClientText != null) {
+            searchClientText.clear();
+        }
+
+        searchClientText = Customers.lookupCustomer(q);
+
+        if(q == "") {
+            custTable.setItems(allCust);
+            return;
+        }
+        else if (searchClientText.size() == 0) {
+            try {
+                int ID = Integer.parseInt(q);
+                custID = Customers.lookupCustomer(ID);
+                if (custID != null) {
+                    searchClientText.add(custID);
+                }
+            }
+            catch (NumberFormatException e) {
+                //ignore
+            }
+        }
+
+        if ((searchClientText.size() == 0) && (custID == null)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error alert");
+            alert.setHeaderText("Can not find client.");
+            alert.setContentText("The client does not exists!");
+            alert.showAndWait();
+            clientSearch.clear();
+        }
+        else {
+            custTable.setItems(searchClientText);
+            clientSearch.setText("");
+        }
+    }
+
     /**This method gets the selected customer and filters all appointments by the customer. Then it populates
      * the appointment table with all of the filtered appointments.
      */
@@ -118,4 +160,5 @@ public class custApptRepForm implements Initializable {
 
     /**This method exits the Graphical User Interface.*/
     public void onSignOut(ActionEvent actionEvent) { Platform.exit(); }
+
 }

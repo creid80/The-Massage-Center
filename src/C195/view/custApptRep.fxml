@@ -6,6 +6,7 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -24,6 +25,7 @@
                 <Font size="20.0" />
             </font>
         </Label>
+        <TextField fx:id="clientSearch" layoutX="781.0" layoutY="17.0" onAction="#onClientSearch" prefHeight="25.0" prefWidth="166.0" promptText="Search by Client Name or ID" />
         <TableView fx:id="custTable" layoutX="130.0" layoutY="53.0" onMouseClicked="#onCustSelected" prefHeight="170.0" prefWidth="838.0">
             <columns>
                 <TableColumn fx:id="cTCustID" text="Customer ID" />

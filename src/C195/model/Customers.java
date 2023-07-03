@@ -24,6 +24,7 @@ public class Customers {
     private String countryName;
 
     private static ObservableList<Customers> allCust = FXCollections.observableArrayList();
+    private static ObservableList<Customers> searchedCustName = FXCollections.observableArrayList();
 
     /**This method is the default constructor. This method creates a customer object with default values.*/
     public Customers() {
@@ -174,5 +175,25 @@ public class Customers {
      */
     public static ObservableList<Customers> getAllCust() {
         return allCust;
+    }
+
+    public static ObservableList<Customers> lookupCustomer(String productName) {
+
+        for (Customers cust : allCust) {
+            if (cust.getName().contains(productName)) {
+                searchedCustName.add(cust);
+            }
+        }
+        return searchedCustName;
+    }
+
+    public static Customers lookupCustomer(int custId) {
+
+        for (Customers searchId : allCust) {
+            if (searchId.getCustID() == custId) {
+                return searchId;
+            }
+        }
+        return null;
     }
 }
