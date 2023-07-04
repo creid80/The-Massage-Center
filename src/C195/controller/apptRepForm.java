@@ -85,33 +85,50 @@ public class apptRepForm implements Initializable {
 
         typeBarChart.setTitle(String.valueOf(currD.getMonth()));
 
-        //Prepare XYChart.Series objects by setting data
-        XYChart.Series<String, Integer> series1 = new XYChart.Series<>();
-        series1.setName("Acupuncture");
-        series1.getData().add(new XYChart.Data("Treatments", 1.0));
+        int count = 1;
 
-        XYChart.Series<String, Integer> series2 = new XYChart.Series<>();
-        series2.setName("Deep Tissue ");
-        series2.getData().add(new XYChart.Data("Treatments", 5.0));
+        for (Types t: allTypes) {
 
-        XYChart.Series<String, Integer> series3 = new XYChart.Series<>();
-        series3.setName("Hot Stone ");
-        series3.getData().add(new XYChart.Data("Treatments", 4.0));
-
-        XYChart.Series<String, Integer> series4 = new XYChart.Series<>();
-        series4.setName("Reflexology");
-        series4.getData().add(new XYChart.Data("Treatments", 6.0));
-
-        XYChart.Series<String, Integer> series5 = new XYChart.Series<>();
-        series5.setName("Sports");
-        series5.getData().add(new XYChart.Data("Treatments", 1.0));
-
-        XYChart.Series<String, Integer> series6 = new XYChart.Series<>();
-        series6.setName("Swedish");
-        series6.getData().add(new XYChart.Data("Treatments", 0.0));
-
-        typeBarChart.getData().addAll(series1,series2,series3,series4,series5,series6);
-
+            //Prepare XYChart.Series objects by setting data
+            if (count == 1) {
+                XYChart.Series<String, Integer> series1 = new XYChart.Series<>();
+                series1.setName("Acupuncture");
+                series1.getData().add(new XYChart.Data("Treatments", t.getTotalAppt()));
+                typeBarChart.getData().add(series1);
+            }
+            else if (count == 2) {
+                XYChart.Series<String, Integer> series2 = new XYChart.Series<>();
+                series2.setName("Deep Tissue");
+                series2.getData().add(new XYChart.Data("Treatments", t.getTotalAppt()));
+                typeBarChart.getData().add(series2);
+            }
+            else if (count == 3) {
+                XYChart.Series<String, Integer> series3 = new XYChart.Series<>();
+                series3.setName("Hot Stone");
+                series3.getData().add(new XYChart.Data("Treatments", t.getTotalAppt()));
+                typeBarChart.getData().add(series3);
+            }
+            else if (count == 4) {
+                XYChart.Series<String, Integer> series4 = new XYChart.Series<>();
+                series4.setName("Reflexology");
+                series4.getData().add(new XYChart.Data("Treatments", t.getTotalAppt()));
+                typeBarChart.getData().add(series4);
+            }
+            else if (count == 5) {
+                XYChart.Series<String, Integer> series5 = new XYChart.Series<>();
+                series5.setName("Sports");
+                series5.getData().add(new XYChart.Data("Treatments", 1.0));
+                typeBarChart.getData().add(series5);
+            }
+            else if (count == 6) {
+                XYChart.Series<String, Integer> series6 = new XYChart.Series<>();
+                series6.setName("Swedish");
+                series6.getData().add(new XYChart.Data("Treatments", 0.0));
+                typeBarChart.getData().add(series6);
+            }
+            count += 1;
+            //typeBarChart.getData().addAll(series1, series2, series3, series4, series5, series6);
+        }
         //Group root = new Group(typeBarChart);
     }
 
@@ -159,6 +176,7 @@ public class apptRepForm implements Initializable {
             allTypes.clear();
         }
 
+        /*
         HashSet<String> apptHash = new HashSet<>();
 
         for(Appointments a : Appointments.getAllAppts()) {
@@ -173,6 +191,8 @@ public class apptRepForm implements Initializable {
             allTypes.add(newType);
         }
 
+         */
+
         for(Types t : allTypes) {
             tCount = 0;
             for (Appointments a : Appointments.getAllAppts()) {
@@ -184,6 +204,39 @@ public class apptRepForm implements Initializable {
                 }
                t.setTotalAppt(tCount);
             }
+            /*
+            if(t.getTypeAppt().equalsIgnoreCase("Acupuncture")) {
+                XYChart.Series<String, Integer> series1 = new XYChart.Series<>();
+                series1.setName("Acupuncture");
+                series1.getData().add(new XYChart.Data("Treatments", t.getTotalAppt()));
+            }
+            else if(t.getTypeAppt().equalsIgnoreCase("Deep Tissue")) {
+                XYChart.Series<String, Integer> series2 = new XYChart.Series<>();
+                series2.setName("Deep Tissue");
+                series2.getData().add(new XYChart.Data("Treatments", t.getTotalAppt()));
+            }
+            else if(t.getTypeAppt().equalsIgnoreCase("Hot Stone")) {
+                XYChart.Series<String, Integer> series3 = new XYChart.Series<>();
+                series3.setName("Hot Stone");
+                series3.getData().add(new XYChart.Data("Treatments", 4.0));
+            }
+            else if(t.getTypeAppt().equalsIgnoreCase("Reflexology")) {
+                XYChart.Series<String, Integer> series4 = new XYChart.Series<>();
+                series4.setName("Reflexology");
+                series4.getData().add(new XYChart.Data("Treatments", 6.0));
+            }
+            else if(t.getTypeAppt().equalsIgnoreCase("Sports")) {
+                XYChart.Series<String, Integer> series5 = new XYChart.Series<>();
+                series5.setName("Sports");
+                series5.getData().add(new XYChart.Data("Treatments", 1.0));
+            }
+            else if(t.getTypeAppt().equalsIgnoreCase("Swedish")) {
+                XYChart.Series<String, Integer> series6 = new XYChart.Series<>();
+                series6.setName("Swedish");
+                series6.getData().add(new XYChart.Data("Treatments", 0.0));
+
+             */
+            //}
         }
     }
 

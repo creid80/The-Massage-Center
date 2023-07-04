@@ -2,11 +2,13 @@ package C195.controller;
 
 import C195.model.Contacts;
 import C195.model.Customers;
+import C195.model.Types;
 import C195.model.Users;
 import C195.utilities.JDBC;
 import C195.utilities.Validate;
 import C195.utilities.apptTime;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -51,8 +53,8 @@ public class addApptForm implements Initializable {
     public ComboBox endTime;
     public TextField addApptTitle;
     public TextField addApptDesc;
-    public TextField addApptType;
     public TextField addApptLoc;
+    public ComboBox typeDropBox;
 
     private String newCreatedBy = " ";
     private int newUserID = 0;
@@ -65,7 +67,7 @@ public class addApptForm implements Initializable {
     private ObservableList<Contacts> allCont = Contacts.getAllConts();
     private ObservableList<LocalTime> availETime = apptTime.getAvailEHours();
     private ObservableList<LocalTime> custAppts = apptTime.getCustApptHours();
-
+    private static ObservableList<String> Types = FXCollections.observableArrayList();
 
     /**This method initializes the addAppt scene and populates the table and combo boxes.*/
     @Override
@@ -75,6 +77,7 @@ public class addApptForm implements Initializable {
         userDropBox.setItems(allUsers);
         contDropBox.setItems(allCont);
         copyOfficeHours();
+        popTypeCB();
 
         menu.setItems(C195.helper.Menu.menuItems);
     }
@@ -117,6 +120,11 @@ public class addApptForm implements Initializable {
 
         selected = menu.getValue();
         menuSelection(selected, actionEvent);
+    }
+
+    public void popTypeCB() {
+        Types.addAll("Acupuncture", "Deep Tissue", "Hot Stone", "Reflexology", "Sports","Swedish");
+        typeDropBox.setItems(Types);
     }
 
     /**This method checks whether this is the first time a customer has been selected. If this is not the
@@ -264,7 +272,7 @@ public class addApptForm implements Initializable {
 
         String newTitle = addApptTitle.getText();
         String newDesc = addApptDesc.getText();
-        String newType = addApptType.getText();
+        String newType = typeDropBox.getValue().toString();
         String newLoc = addApptLoc.getText();
 
         LocalDateTime newCreateDate = LocalDateTime.now();

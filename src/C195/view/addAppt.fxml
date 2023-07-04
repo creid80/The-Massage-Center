@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -84,7 +85,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="addApptType" layoutX="570.0" layoutY="367.0" prefHeight="25.0" prefWidth="174.0" />
+        <ComboBox fx:id="typeDropBox" layoutX="570.0" layoutY="367.0" prefHeight="25.0" prefWidth="174.0" />
       <Label layoutX="811.0" layoutY="340.0" text="Location:">
          <font>
             <Font size="16.0" />
