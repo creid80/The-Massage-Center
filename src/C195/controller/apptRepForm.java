@@ -20,6 +20,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -48,6 +49,8 @@ public class apptRepForm implements Initializable {
     private static ObservableList<Integer> allYears = FXCollections.observableArrayList();
     private static ObservableList<String> allMonths = FXCollections.observableArrayList();
     private static ObservableList<Types> allTypes = Types.getAllTypes();
+    int[] totalType = new int[6];
+    String[] typeName = new String[6];
     public BarChart<String, Number> typeBarChart;
 
 
@@ -61,13 +64,7 @@ public class apptRepForm implements Initializable {
 
         LocalDate currD = LocalDate.now();
         getApptT(currD);
-/*
-        apptTypeTable.setItems(allTypes);
-        apptType.setCellValueFactory(new PropertyValueFactory<>("typeAppt"));
-        apptTotal.setCellValueFactory(new PropertyValueFactory<>("totalAppt"));
 
-
- */
         getYears();
         getMonths();
         year.setItems(allYears);
@@ -85,6 +82,11 @@ public class apptRepForm implements Initializable {
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Total");
 
+        for(int i = 0; i < allTypes.size(); i++) {
+            typeName[i] = allTypes.get(i).getTypeAppt();
+            totalType[i] = allTypes.get(i).getTotalAppt();
+        }
+
         typeBarChart.setTitle(String.valueOf(currD.getMonth()));
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
@@ -93,18 +95,18 @@ public class apptRepForm implements Initializable {
         XYChart.Series<String, Number> series5 = new XYChart.Series<>();
         XYChart.Series<String, Number> series6 = new XYChart.Series<>();
 
-        int count = 1;
+        int i = 0;
 
-        while(count < 2{
+        while(i < 5) {
 
-            String type = t.getTypeAppt();
-            int typeTotal = t.getTotalAppt();
+           //String type = allTypes.get(i).getTypeAppt();
+            //int typeTotal = allTypes.get(i).getTotalAppt();
 
             //Prepare XYChart.Series objects by setting data
-
+            if (i == 0) {
                 series1.setName("Acupuncture");
-                series1.getData().add(new XYChart.Data<>("Treatments", 8.0));
-
+                series1.getData().add(new XYChart.Data<>("Treatments", totalType[i]));
+            }
 
                 series2.setName("Deep Tissue");
                 series2.getData().add(new XYChart.Data<>("Treatments", 8.0));
@@ -125,6 +127,7 @@ public class apptRepForm implements Initializable {
                 series6.setName("Swedish");
                 series6.getData().add(new XYChart.Data("Treatments", 0.0));
 
+                i += 1;
         }
 
         typeBarChart.getData().addAll(series1, series2, series3, series4, series5, series6);
@@ -175,6 +178,14 @@ public class apptRepForm implements Initializable {
             allTypes.clear();
         }
 
+        Types acu = new Types("Acupuncture");
+        Types dT = new Types("Deep Tissue");
+        Types hS = new Types("Hot Stone");
+        Types ref = new Types("Reflexology");
+        Types sM = new Types("Sports");
+        Types swed = new Types("Swedish");
+
+        allTypes.addAll(acu, dT, hS, ref, sM, swed);
         /*
         HashSet<String> apptHash = new HashSet<>();
 
