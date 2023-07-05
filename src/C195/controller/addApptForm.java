@@ -123,6 +123,7 @@ public class addApptForm implements Initializable {
     }
 
     public void popTypeCB() {
+        Types.clear();
         Types.addAll("Acupuncture", "Deep Tissue", "Hot Stone", "Reflexology", "Sports","Swedish");
         typeDropBox.setItems(Types);
     }

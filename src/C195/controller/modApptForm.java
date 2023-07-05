@@ -206,9 +206,10 @@ public class modApptForm implements Initializable {
     }
 
     public void popTypeCB() {
-        Types.addAll("Acupuncture", "Deep Tissue", "Hot Stone", "Reflexology", "Sports","Swedish");
-        modApptType.setItems(Types);
-        modApptType.setValue(setType);
+       Types.clear();
+           Types.addAll("Acupuncture", "Deep Tissue", "Hot Stone", "Reflexology", "Sports", "Swedish");
+           modApptType.setItems(Types);
+           modApptType.setValue(setType);
     }
 
     /**This method checks whether the selected customer ID matches the modAppt object's assigned customer ID.
@@ -356,6 +357,7 @@ public class modApptForm implements Initializable {
         if(apptDatePicker.getValue() == null) { Validate.blankAlert("Date"); return; }
         if(startTime.getValue() == null) { Validate.blankAlert("Start Time"); return; }
         if(endTime.getValue() == null) { Validate.blankAlert("End Time"); return; }
+        if(modApptType.getValue() == null) { Validate.blankAlert("Type"); return; }
 
         LocalDateTime newStart = estToLocal(LocalDateTime.of(apptDatePicker.getValue(), (LocalTime) startTime.getValue()));
         LocalDateTime newEnd = estToLocal(LocalDateTime.of(apptDatePicker.getValue(), (LocalTime) endTime.getValue()));
@@ -371,7 +373,6 @@ public class modApptForm implements Initializable {
 
         if((Validate.isValidLength("Title", newTitle, 50)) &&
                 (Validate.isValidLength("Description", newDesc, 50)) &&
-                (Validate.isValidLength("Type", newType, 50)) &&
                 (Validate.isValidLength("Location", newLoc, 50))) {
 
             String sql = "UPDATE APPOINTMENTS SET Title = ?, Description = ?, Location = ?, Type = ?, " +

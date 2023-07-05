@@ -285,7 +285,65 @@ public class apptRepForm implements Initializable {
 
         getApptT(selectedD);
 
-        apptTypeTable.setItems(allTypes);
+        CategoryAxis xAxis = new CategoryAxis();
+
+        xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList(
+                "Treatments")));
+        xAxis.setLabel("Treatments");
+
+//Defining the y axis
+        NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("Total");
+
+        for(int i = 0; i < allTypes.size(); i++) {
+            typeName[i] = allTypes.get(i).getTypeAppt();
+            totalType[i] = allTypes.get(i).getTotalAppt();
+        }
+
+        typeBarChart.setTitle(String.valueOf(selectedD.getMonth()));
+        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+        XYChart.Series<String, Number> series2 = new XYChart.Series<>();
+        XYChart.Series<String, Number> series3 = new XYChart.Series<>();
+        XYChart.Series<String, Number> series4 = new XYChart.Series<>();
+        XYChart.Series<String, Number> series5 = new XYChart.Series<>();
+        XYChart.Series<String, Number> series6 = new XYChart.Series<>();
+
+        int i = 0;
+
+        while(i < 6) {
+
+            //String type = allTypes.get(i).getTypeAppt();
+            //int typeTotal = allTypes.get(i).getTotalAppt();
+
+            //Prepare XYChart.Series objects by setting data
+            if (i == 0) {
+                series1.setName(typeName[i]);
+                series1.getData().add(new XYChart.Data<>("Treatments", totalType[i]));
+            }
+            else if(i == 1) {
+                series2.setName(typeName[i]);
+                series2.getData().add(new XYChart.Data<>("Treatments", totalType[i]));
+            }
+            else if(i == 2) {
+                series3.setName(typeName[i]);
+                series3.getData().add(new XYChart.Data<>("Treatments", totalType[i]));
+            }
+            else if(i == 3) {
+                series4.setName(typeName[i]);
+                series4.getData().add(new XYChart.Data<>("Treatments", totalType[i]));
+            }
+            else if(i == 4) {
+                series5.setName(typeName[i]);
+                series5.getData().add(new XYChart.Data<>("Treatments", totalType[i]));
+            }
+            else if(i == 5) {
+                series6.setName(typeName[i]);
+                series6.getData().add(new XYChart.Data("Treatments", totalType[i]));
+            }
+            i += 1;
+        }
+
+        typeBarChart.getData().addAll(series1, series2, series3, series4, series5, series6);
 
     }
 
