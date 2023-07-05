@@ -52,6 +52,13 @@ public class apptRepForm implements Initializable {
     int[] totalType = new int[6];
     String[] typeName = new String[6];
     public BarChart<String, Number> typeBarChart;
+    XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+    XYChart.Series<String, Number> series2 = new XYChart.Series<>();
+    XYChart.Series<String, Number> series3 = new XYChart.Series<>();
+    XYChart.Series<String, Number> series4 = new XYChart.Series<>();
+    XYChart.Series<String, Number> series5 = new XYChart.Series<>();
+    XYChart.Series<String, Number> series6 = new XYChart.Series<>();
+
 
 
     /**This method initializes the apptRep scene and populates the type table with appointments from the
@@ -88,6 +95,7 @@ public class apptRepForm implements Initializable {
         }
 
         typeBarChart.setTitle(String.valueOf(currD.getMonth()));
+        /*
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();
@@ -95,14 +103,12 @@ public class apptRepForm implements Initializable {
         XYChart.Series<String, Number> series5 = new XYChart.Series<>();
         XYChart.Series<String, Number> series6 = new XYChart.Series<>();
 
+         */
+
         int i = 0;
 
         while(i < 6) {
 
-           //String type = allTypes.get(i).getTypeAppt();
-            //int typeTotal = allTypes.get(i).getTotalAppt();
-
-            //Prepare XYChart.Series objects by setting data
             if (i == 0) {
                 series1.setName(typeName[i]);
                 series1.getData().add(new XYChart.Data<>("Treatments", totalType[i]));
@@ -131,7 +137,6 @@ public class apptRepForm implements Initializable {
         }
 
         typeBarChart.getData().addAll(series1, series2, series3, series4, series5, series6);
-        //Group root = new Group(typeBarChart);
     }
 
     /**This method takes the selected menu item, and passes it to the Menu.menuSelection method. */
@@ -186,22 +191,6 @@ public class apptRepForm implements Initializable {
         Types swed = new Types("Swedish");
 
         allTypes.addAll(acu, dT, hS, ref, sM, swed);
-        /*
-        HashSet<String> apptHash = new HashSet<>();
-
-        for(Appointments a : Appointments.getAllAppts()) {
-
-            if((a.getStartLDT().getYear() == sYear) && (a.getStartLDT().getMonthValue() == sMonth)) {
-                apptHash.add(a.getType());
-            }
-        }
-
-        for(String uS : apptHash) {
-            Types newType = new Types(uS);
-            allTypes.add(newType);
-        }
-
-         */
 
         for(Types t : allTypes) {
             tCount = 0;
@@ -214,39 +203,6 @@ public class apptRepForm implements Initializable {
                 }
                t.setTotalAppt(tCount);
             }
-            /*
-            if(t.getTypeAppt().equalsIgnoreCase("Acupuncture")) {
-                XYChart.Series<String, Integer> series1 = new XYChart.Series<>();
-                series1.setName("Acupuncture");
-                series1.getData().add(new XYChart.Data("Treatments", t.getTotalAppt()));
-            }
-            else if(t.getTypeAppt().equalsIgnoreCase("Deep Tissue")) {
-                XYChart.Series<String, Integer> series2 = new XYChart.Series<>();
-                series2.setName("Deep Tissue");
-                series2.getData().add(new XYChart.Data("Treatments", t.getTotalAppt()));
-            }
-            else if(t.getTypeAppt().equalsIgnoreCase("Hot Stone")) {
-                XYChart.Series<String, Integer> series3 = new XYChart.Series<>();
-                series3.setName("Hot Stone");
-                series3.getData().add(new XYChart.Data("Treatments", 4.0));
-            }
-            else if(t.getTypeAppt().equalsIgnoreCase("Reflexology")) {
-                XYChart.Series<String, Integer> series4 = new XYChart.Series<>();
-                series4.setName("Reflexology");
-                series4.getData().add(new XYChart.Data("Treatments", 6.0));
-            }
-            else if(t.getTypeAppt().equalsIgnoreCase("Sports")) {
-                XYChart.Series<String, Integer> series5 = new XYChart.Series<>();
-                series5.setName("Sports");
-                series5.getData().add(new XYChart.Data("Treatments", 1.0));
-            }
-            else if(t.getTypeAppt().equalsIgnoreCase("Swedish")) {
-                XYChart.Series<String, Integer> series6 = new XYChart.Series<>();
-                series6.setName("Swedish");
-                series6.getData().add(new XYChart.Data("Treatments", 0.0));
-
-             */
-            //}
         }
     }
 
@@ -284,7 +240,7 @@ public class apptRepForm implements Initializable {
         selectedD = LocalDate.of(selectedY, selM, 1);
 
         getApptT(selectedD);
-
+/*
         CategoryAxis xAxis = new CategoryAxis();
 
         xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList(
@@ -295,12 +251,16 @@ public class apptRepForm implements Initializable {
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Total");
 
+
+ */
         for(int i = 0; i < allTypes.size(); i++) {
             typeName[i] = allTypes.get(i).getTypeAppt();
             totalType[i] = allTypes.get(i).getTotalAppt();
         }
 
         typeBarChart.setTitle(String.valueOf(selectedD.getMonth()));
+
+        /*
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();
@@ -308,14 +268,12 @@ public class apptRepForm implements Initializable {
         XYChart.Series<String, Number> series5 = new XYChart.Series<>();
         XYChart.Series<String, Number> series6 = new XYChart.Series<>();
 
+         */
+
         int i = 0;
 
         while(i < 6) {
 
-            //String type = allTypes.get(i).getTypeAppt();
-            //int typeTotal = allTypes.get(i).getTotalAppt();
-
-            //Prepare XYChart.Series objects by setting data
             if (i == 0) {
                 series1.setName(typeName[i]);
                 series1.getData().add(new XYChart.Data<>("Treatments", totalType[i]));
@@ -343,7 +301,7 @@ public class apptRepForm implements Initializable {
             i += 1;
         }
 
-        typeBarChart.getData().addAll(series1, series2, series3, series4, series5, series6);
+        typeBarChart.getData().setAll(series1, series2, series3, series4, series5, series6);
 
     }
 
