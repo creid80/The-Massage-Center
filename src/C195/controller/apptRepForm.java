@@ -272,7 +272,7 @@ public class apptRepForm implements Initializable {
 
         int i = 0;
 
-        while(i < 6) {
+        while(i <= 5) {
 
             if (i == 0) {
                 series1.setName(typeName[i]);
