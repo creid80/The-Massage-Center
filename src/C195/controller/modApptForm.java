@@ -8,6 +8,7 @@ import C195.utilities.JDBC;
 import C195.utilities.Validate;
 import C195.utilities.apptTime;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -50,7 +51,7 @@ public class modApptForm implements Initializable {
     public ComboBox endTime;
     public TextField modApptTitle;
     public TextField modApptDesc;
-    public TextField modApptType;
+    public ComboBox modApptType;
     public TextField modApptLoc;
 
 
@@ -61,6 +62,7 @@ public class modApptForm implements Initializable {
     private LocalDate setDate;
     private LocalTime setStart;
     private LocalTime setEnd;
+    private String setType;
 
     private Appointments modAppt = allApptForm.getMAppointment();
     private ObservableList<Customers> allCust = Customers.getAllCust();
@@ -68,6 +70,7 @@ public class modApptForm implements Initializable {
     private ObservableList<Contacts> allCont = Contacts.getAllConts();
     private ObservableList<LocalTime> availETime = apptTime.getAvailEHours();
     private ObservableList<LocalTime> custAppts = getCustApptHours();
+    private static ObservableList<String> Types = FXCollections.observableArrayList();
 
     /**This method initializes the modAppt scene with the data passed through the modAppt object. It calls
      * methods to populate the customer table, contact drop box and start time combo box. It adds all
@@ -103,10 +106,11 @@ public class modApptForm implements Initializable {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        setType = modAppt.getType();
+        popTypeCB();
 
         modApptTitle.setText(String.valueOf(modAppt.getTitle()));
         modApptDesc.setText(String.valueOf(modAppt.getDesc()));
-        modApptType.setText(String.valueOf(modAppt.getType()));
         modApptLoc.setText(String.valueOf(modAppt.getLoc()));
 
         newApptID = modAppt.getApptID();
@@ -199,6 +203,12 @@ public class modApptForm implements Initializable {
 
         selected = menu.getValue();
         menuSelection(selected, actionEvent);
+    }
+
+    public void popTypeCB() {
+        Types.addAll("Acupuncture", "Deep Tissue", "Hot Stone", "Reflexology", "Sports","Swedish");
+        modApptType.setItems(Types);
+        modApptType.setValue(setType);
     }
 
     /**This method checks whether the selected customer ID matches the modAppt object's assigned customer ID.
@@ -354,7 +364,7 @@ public class modApptForm implements Initializable {
 
         String newTitle = modApptTitle.getText();
         String newDesc = modApptDesc.getText();
-        String newType = modApptType.getText();
+        String newType = modApptType.getValue().toString();
         String newLoc = modApptLoc.getText();
 
         LocalDateTime newLastUpdate = LocalDateTime.now();
@@ -401,4 +411,7 @@ public class modApptForm implements Initializable {
 
     /**This method exits the Graphical User Interface.*/
     public void onSignOut(ActionEvent actionEvent) { Platform.exit(); }
+
+    public void onModApptType(ActionEvent actionEvent) {
+    }
 }

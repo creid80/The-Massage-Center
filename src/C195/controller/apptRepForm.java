@@ -97,37 +97,37 @@ public class apptRepForm implements Initializable {
 
         int i = 0;
 
-        while(i < 5) {
+        while(i < 6) {
 
            //String type = allTypes.get(i).getTypeAppt();
             //int typeTotal = allTypes.get(i).getTotalAppt();
 
             //Prepare XYChart.Series objects by setting data
             if (i == 0) {
-                series1.setName("Acupuncture");
+                series1.setName(typeName[i]);
                 series1.getData().add(new XYChart.Data<>("Treatments", totalType[i]));
             }
-
-                series2.setName("Deep Tissue");
-                series2.getData().add(new XYChart.Data<>("Treatments", 8.0));
-
-
-                series3.setName("Hot Stone");
-                series3.getData().add(new XYChart.Data<>("Treatments", 3.0));
-
-
-                series4.setName("Reflexology");
-                series4.getData().add(new XYChart.Data<>("Treatments", 2.0));
-
-
-                series5.setName("Sports");
-                series5.getData().add(new XYChart.Data<>("Treatments", 1.0));
-
-
-                series6.setName("Swedish");
-                series6.getData().add(new XYChart.Data("Treatments", 0.0));
-
-                i += 1;
+            else if(i == 1) {
+                series2.setName(typeName[i]);
+                series2.getData().add(new XYChart.Data<>("Treatments", totalType[i]));
+            }
+            else if(i == 2) {
+                series3.setName(typeName[i]);
+                series3.getData().add(new XYChart.Data<>("Treatments", totalType[i]));
+            }
+            else if(i == 3) {
+                series4.setName(typeName[i]);
+                series4.getData().add(new XYChart.Data<>("Treatments", totalType[i]));
+            }
+            else if(i == 4) {
+                series5.setName(typeName[i]);
+                series5.getData().add(new XYChart.Data<>("Treatments", totalType[i]));
+            }
+            else if(i == 5) {
+                series6.setName(typeName[i]);
+                series6.getData().add(new XYChart.Data("Treatments", totalType[i]));
+            }
+            i += 1;
         }
 
         typeBarChart.getData().addAll(series1, series2, series3, series4, series5, series6);
@@ -253,6 +253,9 @@ public class apptRepForm implements Initializable {
     /**This method gets the selected year, clears allMonths before repopulating it.*/
     public void onYear(ActionEvent actionEvent) {
 
+        if(year.getValue() == null) {
+            return;
+        }
         selectedY = (int) year.getValue();
 
         allMonths.clear();
