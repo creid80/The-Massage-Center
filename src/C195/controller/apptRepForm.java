@@ -48,7 +48,7 @@ public class apptRepForm implements Initializable {
     private static ObservableList<Integer> allYears = FXCollections.observableArrayList();
     private static ObservableList<String> allMonths = FXCollections.observableArrayList();
     private static ObservableList<Types> allTypes = Types.getAllTypes();
-    public BarChart<String, Integer> typeBarChart;
+    public BarChart<String, Number> typeBarChart;
 
 
     /**This method initializes the apptRep scene and populates the type table with appointments from the
@@ -61,11 +61,13 @@ public class apptRepForm implements Initializable {
 
         LocalDate currD = LocalDate.now();
         getApptT(currD);
-
+/*
         apptTypeTable.setItems(allTypes);
         apptType.setCellValueFactory(new PropertyValueFactory<>("typeAppt"));
         apptTotal.setCellValueFactory(new PropertyValueFactory<>("totalAppt"));
 
+
+ */
         getYears();
         getMonths();
         year.setItems(allYears);
@@ -84,51 +86,48 @@ public class apptRepForm implements Initializable {
         yAxis.setLabel("Total");
 
         typeBarChart.setTitle(String.valueOf(currD.getMonth()));
+        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+        XYChart.Series<String, Number> series2 = new XYChart.Series<>();
+        XYChart.Series<String, Number> series3 = new XYChart.Series<>();
+        XYChart.Series<String, Number> series4 = new XYChart.Series<>();
+        XYChart.Series<String, Number> series5 = new XYChart.Series<>();
+        XYChart.Series<String, Number> series6 = new XYChart.Series<>();
 
         int count = 1;
 
-        for (Types t: allTypes) {
+        while(count < 2{
+
+            String type = t.getTypeAppt();
+            int typeTotal = t.getTotalAppt();
 
             //Prepare XYChart.Series objects by setting data
-            if (count == 1) {
-                XYChart.Series<String, Integer> series1 = new XYChart.Series<>();
+
                 series1.setName("Acupuncture");
-                series1.getData().add(new XYChart.Data("Treatments", t.getTotalAppt()));
-                typeBarChart.getData().add(series1);
-            }
-            else if (count == 2) {
-                XYChart.Series<String, Integer> series2 = new XYChart.Series<>();
+                series1.getData().add(new XYChart.Data<>("Treatments", 8.0));
+
+
                 series2.setName("Deep Tissue");
-                series2.getData().add(new XYChart.Data("Treatments", t.getTotalAppt()));
-                typeBarChart.getData().add(series2);
-            }
-            else if (count == 3) {
-                XYChart.Series<String, Integer> series3 = new XYChart.Series<>();
+                series2.getData().add(new XYChart.Data<>("Treatments", 8.0));
+
+
                 series3.setName("Hot Stone");
-                series3.getData().add(new XYChart.Data("Treatments", t.getTotalAppt()));
-                typeBarChart.getData().add(series3);
-            }
-            else if (count == 4) {
-                XYChart.Series<String, Integer> series4 = new XYChart.Series<>();
+                series3.getData().add(new XYChart.Data<>("Treatments", 3.0));
+
+
                 series4.setName("Reflexology");
-                series4.getData().add(new XYChart.Data("Treatments", t.getTotalAppt()));
-                typeBarChart.getData().add(series4);
-            }
-            else if (count == 5) {
-                XYChart.Series<String, Integer> series5 = new XYChart.Series<>();
+                series4.getData().add(new XYChart.Data<>("Treatments", 2.0));
+
+
                 series5.setName("Sports");
-                series5.getData().add(new XYChart.Data("Treatments", 1.0));
-                typeBarChart.getData().add(series5);
-            }
-            else if (count == 6) {
-                XYChart.Series<String, Integer> series6 = new XYChart.Series<>();
+                series5.getData().add(new XYChart.Data<>("Treatments", 1.0));
+
+
                 series6.setName("Swedish");
                 series6.getData().add(new XYChart.Data("Treatments", 0.0));
-                typeBarChart.getData().add(series6);
-            }
-            count += 1;
-            //typeBarChart.getData().addAll(series1, series2, series3, series4, series5, series6);
+
         }
+
+        typeBarChart.getData().addAll(series1, series2, series3, series4, series5, series6);
         //Group root = new Group(typeBarChart);
     }
 
