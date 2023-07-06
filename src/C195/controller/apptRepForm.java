@@ -240,7 +240,8 @@ public class apptRepForm implements Initializable {
         selectedD = LocalDate.of(selectedY, selM, 1);
 
         getApptT(selectedD);
-/*
+
+        /*
         CategoryAxis xAxis = new CategoryAxis();
 
         xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList(
@@ -251,8 +252,8 @@ public class apptRepForm implements Initializable {
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Total");
 
-
  */
+
         for(int i = 0; i < allTypes.size(); i++) {
             typeName[i] = allTypes.get(i).getTypeAppt();
             totalType[i] = allTypes.get(i).getTotalAppt();
