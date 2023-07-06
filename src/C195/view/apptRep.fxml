@@ -7,8 +7,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -22,26 +20,20 @@
         <ComboBox fx:id="menu" layoutX="934.0" layoutY="61.0" onAction="#onMenu" prefWidth="150.0" promptText="Menu" />
     </AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="457.0" prefWidth="527.0" style="-fx-background-color: #0588FA;">
-      <Label layoutX="228.0" layoutY="63.0" text="Year">
+      <Label layoutX="286.0" layoutY="35.0" text="Year">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="year" layoutX="171.0" layoutY="99.0" onAction="#onYear" prefWidth="150.0" />
-      <Label layoutX="219.0" layoutY="185.0" text="Month">
+      <ComboBox fx:id="year" layoutX="342.0" layoutY="36.0" onAction="#onYear" prefWidth="150.0" />
+      <Label layoutX="574.0" layoutY="35.0" text="Month">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="month" layoutX="171.0" layoutY="221.0" onAction="#onMonth" prefWidth="150.0" />
-      <TableView fx:id="apptTypeTable" layoutX="480.0" layoutY="28.0" prefHeight="70.0" prefWidth="437.0">
-        <columns>
-          <TableColumn fx:id="apptType" prefWidth="318.0" text="Appointment Type" />
-          <TableColumn fx:id="apptTotal" prefWidth="118.0" text="Total" />
-        </columns>
-      </TableView>
+      <ComboBox fx:id="month" layoutX="648.0" layoutY="36.0" onAction="#onMonth" prefWidth="150.0" />
         <Button fx:id="signOut" layoutX="886.0" layoutY="436.0" mnemonicParsing="false" onAction="#onSignOut" text="Sign out" />
-      <BarChart fx:id="typeBarChart" layoutX="417.0" layoutY="147.0" prefHeight="274.0" prefWidth="500.0">
+      <BarChart fx:id="typeBarChart" layoutX="226.0" layoutY="78.0" prefHeight="361.0" prefWidth="647.0">
         <xAxis>
           <CategoryAxis prefHeight="0.0" prefWidth="443.0" side="BOTTOM" />
         </xAxis>
