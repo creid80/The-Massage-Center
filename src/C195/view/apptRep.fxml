@@ -33,7 +33,7 @@
       </Label>
       <ComboBox fx:id="month" layoutX="648.0" layoutY="36.0" onAction="#onMonth" prefWidth="150.0" />
         <Button fx:id="signOut" layoutX="886.0" layoutY="436.0" mnemonicParsing="false" onAction="#onSignOut" text="Sign out" />
-      <BarChart fx:id="typeBarChart" layoutX="226.0" layoutY="78.0" prefHeight="361.0" prefWidth="647.0" animated="false">
+      <BarChart fx:id="typeBarChart" animated="false" layoutX="226.0" layoutY="78.0" prefHeight="361.0" prefWidth="647.0">
         <xAxis>
           <CategoryAxis prefHeight="0.0" prefWidth="443.0" side="BOTTOM" />
         </xAxis>
