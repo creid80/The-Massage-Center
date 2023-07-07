@@ -49,15 +49,14 @@ public class apptRepForm implements Initializable {
     private static ObservableList<Integer> allYears = FXCollections.observableArrayList();
     private static ObservableList<String> allMonths = FXCollections.observableArrayList();
     private static ObservableList<Types> allTypes = Types.getAllTypes();
-    int[] totalType = new int[6];
-    String[] typeName = new String[6];
+
     public BarChart<String, Number> typeBarChart;
-    XYChart.Series<String, Number> series1 = new XYChart.Series<>();
-    XYChart.Series<String, Number> series2 = new XYChart.Series<>();
-    XYChart.Series<String, Number> series3 = new XYChart.Series<>();
-    XYChart.Series<String, Number> series4 = new XYChart.Series<>();
-    XYChart.Series<String, Number> series5 = new XYChart.Series<>();
-    XYChart.Series<String, Number> series6 = new XYChart.Series<>();
+    public XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+    public XYChart.Series<String, Number> series2 = new XYChart.Series<>();
+    public XYChart.Series<String, Number> series3 = new XYChart.Series<>();
+    public XYChart.Series<String, Number> series4 = new XYChart.Series<>();
+    public XYChart.Series<String, Number> series5 = new XYChart.Series<>();
+    public XYChart.Series<String, Number> series6 = new XYChart.Series<>();
 
 
 
@@ -88,6 +87,9 @@ public class apptRepForm implements Initializable {
 //Defining the y axis
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Total");
+
+        int[] totalType = new int[6];
+        String[] typeName = new String[6];
 
         for(int i = 0; i < allTypes.size(); i++) {
             typeName[i] = allTypes.get(i).getTypeAppt();
@@ -194,6 +196,7 @@ public class apptRepForm implements Initializable {
 
         for(Types t : allTypes) {
             tCount = 0;
+            System.out.println(t.getTypeAppt());
             for (Appointments a : Appointments.getAllAppts()) {
 
                 if ((a.getStartLDT().getYear() == sYear) && (a.getStartLDT().getMonthValue() == sMonth) &&
@@ -228,6 +231,9 @@ public class apptRepForm implements Initializable {
         if(month.getValue() == null) {
             return;
         }
+        if(selectedY == 0) {
+            selectedY = (int) year.getValue();
+        }
         String selectedM = (String) month.getSelectionModel().getSelectedItem();
         int selM = 0;
 
@@ -238,7 +244,7 @@ public class apptRepForm implements Initializable {
             }
         }
         selectedD = LocalDate.of(selectedY, selM, 1);
-
+        System.out.println(selectedM);
         getApptT(selectedD);
 
         /*
@@ -253,15 +259,26 @@ public class apptRepForm implements Initializable {
         yAxis.setLabel("Total");
 
  */
+        int[] totalType = new int[6];
+        String[] typeName = new String[6];
 
-        for(int i = 0; i < allTypes.size(); i++) {
+        for(int i = 0; i < allTypes.size(); ++i) {
             typeName[i] = allTypes.get(i).getTypeAppt();
+
             totalType[i] = allTypes.get(i).getTotalAppt();
+            System.out.println(typeName[i] + ": " + totalType[i]);
         }
 
+        typeBarChart.getData().clear();
+        series1.getData().remove(0);
+        series2.getData().remove(0);
+        series3.getData().remove(0);
+        series4.getData().remove(0);
+        series5.getData().remove(0);
+        series6.getData().remove(0);
         typeBarChart.setTitle(String.valueOf(selectedD.getMonth()));
 
-        /*
+/*
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();
@@ -269,7 +286,10 @@ public class apptRepForm implements Initializable {
         XYChart.Series<String, Number> series5 = new XYChart.Series<>();
         XYChart.Series<String, Number> series6 = new XYChart.Series<>();
 
-         */
+
+ */
+
+
 
         int i = 0;
 
@@ -277,7 +297,10 @@ public class apptRepForm implements Initializable {
 
             if (i == 0) {
                 series1.setName(typeName[i]);
+
                 series1.getData().add(new XYChart.Data<>("Treatments", totalType[i]));
+
+                //.set(0, new XYChart.Data<String, Number> ("Treatments", totalType[i]));
             }
             else if(i == 1) {
                 series2.setName(typeName[i]);
@@ -302,7 +325,9 @@ public class apptRepForm implements Initializable {
             i += 1;
         }
 
-        typeBarChart.getData().setAll(series1, series2, series3, series4, series5, series6);
+
+        typeBarChart.getData().addAll(series1, series2, series3, series4, series5, series6);
+        System.out.println(selectedY);
 
     }
 
