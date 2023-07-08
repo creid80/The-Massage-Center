@@ -1,8 +1,8 @@
 package C195.controller;
 
 import C195.model.Appointments;
-import C195.model.Contacts;
-import C195.model.Customers;
+import C195.model.Therapists;
+import C195.model.Clients;
 import C195.model.Users;
 import C195.utilities.JDBC;
 import C195.utilities.Validate;
@@ -65,11 +65,11 @@ public class modApptForm implements Initializable {
     private String setType;
 
     private Appointments modAppt = allApptForm.getMAppointment();
-    private ObservableList<Customers> allCust = Customers.getAllCust();
+    private ObservableList<Clients> allCust = Clients.getAllClients();
     private ObservableList<Users> allUsers = Users.getAllUsers();
-    private ObservableList<Contacts> allCont = Contacts.getAllConts();
+    private ObservableList<Therapists> allCont = Therapists.getAllTheras();
     private ObservableList<LocalTime> availETime = apptTime.getAvailEHours();
-    private ObservableList<LocalTime> custAppts = getCustApptHours();
+    private ObservableList<LocalTime> custAppts = getClientApptHours();
     private static ObservableList<String> Types = FXCollections.observableArrayList();
 
     /**This method initializes the modAppt scene with the data passed through the modAppt object. It calls
@@ -99,7 +99,7 @@ public class modApptForm implements Initializable {
 
         setDate = modAppt.getStartLDT().toLocalDate();
         apptDatePicker.setValue(setDate);
-        fillCustApptHours(modAppt.getCustID(), setDate);
+        fillClientApptHours(modAppt.getClientID(), setDate);
 
         try {
             popStartTime();
@@ -110,7 +110,7 @@ public class modApptForm implements Initializable {
         popTypeCB();
 
         modApptTitle.setText(String.valueOf(modAppt.getTitle()));
-        modApptDesc.setText(String.valueOf(modAppt.getDesc()));
+        modApptDesc.setText(String.valueOf(modAppt.getNote()));
         modApptLoc.setText(String.valueOf(modAppt.getLoc()));
 
         newApptID = modAppt.getApptID();
@@ -123,7 +123,7 @@ public class modApptForm implements Initializable {
 
         if (allCust.isEmpty()) {
             try {
-                Customers.tableQueryC();
+                Clients.tableQueryC();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -131,15 +131,15 @@ public class modApptForm implements Initializable {
         else {
             allCust.clear();
             try {
-                Customers.tableQueryC();
+                Clients.tableQueryC();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         }
 
-        int selectedCust = modAppt.getCustID();
-        for (Customers cust : Customers.getAllCust() ) {
-            if(cust.getCustID() == selectedCust) {
+        int selectedCust = modAppt.getClientID();
+        for (Clients cust : Clients.getAllClients() ) {
+            if(cust.getClientID() == selectedCust) {
                 custTable.getSelectionModel().select(cust);
             }
         }
@@ -159,7 +159,7 @@ public class modApptForm implements Initializable {
     /**This method populates the contact combo box and selects the contact assigned to the modAppt object.*/
     public void popcontDropBox() {
 
-        String setCont = modAppt.getContName();
+        String setCont = modAppt.getTherapistName();
         contDropBox.setItems(allCont);
         contDropBox.setValue(setCont);
     }
@@ -179,7 +179,7 @@ public class modApptForm implements Initializable {
         setEnd = officeEnd.toLocalTime();
         endTime.setValue(setEnd);
 
-        newContID = modAppt.getContID();
+        newContID = modAppt.getTherapistID();
 
         boolean apptAvail = (apptTime.getApptSTimes(newContID, setDate));
 
@@ -217,9 +217,9 @@ public class modApptForm implements Initializable {
      */
     public void onCustSelected(MouseEvent mouseEvent) {
 
-        Customers newCust = (Customers) custTable.getSelectionModel().getSelectedItem();
+        Clients newCust = (Clients) custTable.getSelectionModel().getSelectedItem();
 
-        if(newCust.getCustID() != modAppt.getCustID()) {
+        if(newCust.getClientID() != modAppt.getClientID()) {
 
             if (apptDatePicker.getValue() != null) {
 
@@ -247,8 +247,8 @@ public class modApptForm implements Initializable {
      */
     public void onContDropBox(ActionEvent actionEvent) {
 
-        Contacts selContact = (Contacts) contDropBox.getValue();
-        newContID = selContact.getContID();
+        Therapists selContact = (Therapists) contDropBox.getValue();
+        newContID = selContact.getTheraID();
 
         if (apptDatePicker.getValue() != null) {
 
@@ -287,9 +287,9 @@ public class modApptForm implements Initializable {
 
         apptAvail = (apptTime.getApptSTimes(newContID, pickedDate));
 
-        Customers modCust = (Customers) custTable.getSelectionModel().getSelectedItem();
+        Clients modCust = (Clients) custTable.getSelectionModel().getSelectedItem();
 
-        fillCustApptHours(modCust.getCustID(), pickedDate);
+        fillClientApptHours(modCust.getClientID(), pickedDate);
         if(!(custAppts.isEmpty())) {
             removeCAppt();
         }
@@ -298,8 +298,8 @@ public class modApptForm implements Initializable {
             copyOfficeHours();
         }
 
-        if((pickedDate.isEqual(setDate)) && ((modCust.getCustID() == modAppt.getCustID()) ||
-                (newContID == modAppt.getContID()))) {
+        if((pickedDate.isEqual(setDate)) && ((modCust.getClientID() == modAppt.getClientID()) ||
+                (newContID == modAppt.getTherapistID()))) {
 
             addCurrAppt(setStart, setEnd);
         }
@@ -349,7 +349,7 @@ public class modApptForm implements Initializable {
      */
     public void onModAppt(ActionEvent actionEvent) throws SQLException, IOException {
 
-        Customers newCust = (Customers) custTable.getSelectionModel().getSelectedItem();
+        Clients newCust = (Clients) custTable.getSelectionModel().getSelectedItem();
 
         if(newCust == null) { Validate.blankAlert("Customer"); return; }
         if(userDropBox.getValue() == null) { Validate.blankAlert("User"); return; }
@@ -362,7 +362,7 @@ public class modApptForm implements Initializable {
         LocalDateTime newStart = estToLocal(LocalDateTime.of(apptDatePicker.getValue(), (LocalTime) startTime.getValue()));
         LocalDateTime newEnd = estToLocal(LocalDateTime.of(apptDatePicker.getValue(), (LocalTime) endTime.getValue()));
 
-        int newCustID = newCust.getCustID();
+        int newCustID = newCust.getClientID();
 
         String newTitle = modApptTitle.getText();
         String newDesc = modApptDesc.getText();

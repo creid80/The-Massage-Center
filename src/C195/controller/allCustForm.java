@@ -1,6 +1,6 @@
 package C195.controller;
 
-import C195.model.Customers;
+import C195.model.Clients;
 import C195.utilities.Validate;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -41,11 +41,11 @@ public class allCustForm implements Initializable {
     public TableColumn phoneCol;
     public TableColumn divCol;
 
-    private ObservableList<Customers> allCust = Customers.getAllCust();
+    private ObservableList<Clients> allCust = Clients.getAllClients();
 
-    private static Customers mCustomer = null;
+    private static Clients mCustomer = null;
 
-    public static Customers getmCustomer(){return mCustomer;}
+    public static Clients getmCustomer(){return mCustomer;}
 
     /**This method initializes the allCust scene and populates the customer table.*/
     @Override
@@ -55,7 +55,7 @@ public class allCustForm implements Initializable {
 
         if (allCust.isEmpty()) {
             try {
-                Customers.tableQueryC();
+                Clients.tableQueryC();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -63,7 +63,7 @@ public class allCustForm implements Initializable {
         else {
             allCust.clear();
             try {
-                Customers.tableQueryC();
+                Clients.tableQueryC();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -99,7 +99,7 @@ public class allCustForm implements Initializable {
      */
     public void onModCust(ActionEvent actionEvent) throws IOException {
 
-        mCustomer = (Customers) custTable.getSelectionModel().getSelectedItem();
+        mCustomer = (Clients) custTable.getSelectionModel().getSelectedItem();
 
         if (mCustomer == null) {
             Validate.noSelectionAlert(" customer");
@@ -121,17 +121,17 @@ public class allCustForm implements Initializable {
      */
     public void onDelCust(ActionEvent actionEvent) throws SQLException {
 
-        mCustomer = (Customers) custTable.getSelectionModel().getSelectedItem();
+        mCustomer = (Clients) custTable.getSelectionModel().getSelectedItem();
 
         if (mCustomer == null) {
             Validate.noSelectionAlert(" customer");
         }
         else {
-            isValidCDelete(mCustomer.getCustID());
+            isValidCDelete(mCustomer.getClientID());
         }
 
         allCust.clear();
-        Customers.tableQueryC();
+        Clients.tableQueryC();
         custTable.setItems(allCust);
 
     }

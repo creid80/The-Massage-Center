@@ -1,7 +1,7 @@
 package C195.controller;
 
+import C195.model.Clients;
 import C195.model.Countries;
-import C195.model.Customers;
 import C195.model.FLDivision;
 import C195.utilities.JDBC;
 import C195.utilities.Validate;
@@ -44,7 +44,7 @@ public class modCustForm implements Initializable {
 
     private int newDivID = 0;
 
-    private Customers modCust = allCustForm.getmCustomer();
+    private Clients modCust = allCustForm.getmCustomer();
     private ObservableList<Countries> allCountries = Countries.getAllcountries();
     private ObservableList<FLDivision> allDiv = FLDivision.getAllFLDiv();
 
@@ -75,7 +75,7 @@ public class modCustForm implements Initializable {
         FilteredList<FLDivision> fDiv = new FilteredList<>(FLDivision.getAllFLDiv());
         fDiv.setPredicate(FLDivision -> FLDivision.getCountryID() == modCust.getCountryID());
 
-        modCustID.setText(String.valueOf(modCust.getCustID()));
+        modCustID.setText(String.valueOf(modCust.getClientID()));
         modCustName.setText(String.valueOf(modCust.getName()));
         modCustPhone.setText(String.valueOf(modCust.getPhone()));
 
@@ -176,7 +176,7 @@ public class modCustForm implements Initializable {
         ps.setInt(5, newDivID);
         ps.setTimestamp(6, Timestamp.valueOf(newCustLastUpdate));
         ps.setString(7, newCustUpdatedBy);
-        ps.setInt(8, modCust.getCustID());
+        ps.setInt(8, modCust.getClientID());
         int rowsEffected = ps.executeUpdate();
 
         if (rowsEffected == 1) {
@@ -186,12 +186,12 @@ public class modCustForm implements Initializable {
             Validate.genAlert();
         }
 
-        menuSelection("View All Customers", actionEvent);
+        menuSelection("View All Clients", actionEvent);
     }
 
     /**This method loads the allCust scene in the Graphical User Interface.*/
     public void onModCustCancel(ActionEvent actionEvent) throws IOException {
-        menuSelection("View All Customers", actionEvent);
+        menuSelection("View All Clients", actionEvent);
     }
 
     /**This method exits the Graphical User Interface.*/

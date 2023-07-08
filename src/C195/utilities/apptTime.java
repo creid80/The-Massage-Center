@@ -17,7 +17,7 @@ public class apptTime {
     public static ObservableList<LocalTime> officeHours = FXCollections.observableArrayList();
     public static ObservableList<LocalTime> availSHours = FXCollections.observableArrayList();
     private static ObservableList<LocalTime> availEHours = FXCollections.observableArrayList();
-    private static ObservableList<LocalTime> custApptHours = FXCollections.observableArrayList();
+    private static ObservableList<LocalTime> clientApptHours = FXCollections.observableArrayList();
 
 
     /**This method adds all possible starting times within the open business hours to the observable list
@@ -35,25 +35,25 @@ public class apptTime {
         }
     }
 
-    /**This method clears custApptHours if it's not empty. Then it filters appointments by the selected
-     * customer ID, and that list is filtered by the selected date. The appointment times are then converted
+    /**This method clears clientApptHours if it's not empty. Then it filters appointments by the selected
+     * client ID, and that list is filtered by the selected date. The appointment times are then converted
      * to Eastern Standard Time, before they are compared to officeHours times and added to the
-     * custApptHours observable list.
-     * @param custID The selected customer ID.
+     * clientApptHours observable list.
+     * @param clientID The selected client ID.
      * @param startTime The selected date.
      * There is a lambda expressions within this method:
-     * Appointments -> Appointments.getCustID() == custID
+     * Appointments -> Appointments.getClientID() == clientID
      * Sets the filter predicate for fList.
-     * For every appointment it checks whether the customerID is the same as the variable custID.
+     * For every appointment it checks whether the clientID is the same as the variable clientID.
      */
-    public static void fillCustApptHours(int custID, LocalDate startTime) {
+    public static void fillClientApptHours(int clientID, LocalDate startTime) {
 
-        if(!(custApptHours.isEmpty())) {
-            custApptHours.clear();
+        if(!(clientApptHours.isEmpty())) {
+            clientApptHours.clear();
         }
 
         FilteredList<Appointments> fList = new FilteredList<>(Appointments.getAllAppts());
-        fList.setPredicate(Appointments -> Appointments.getCustID() == custID);
+        fList.setPredicate(Appointments -> Appointments.getClientID() == clientID);
 
         FilteredList<Appointments> fList2 = new FilteredList<>(fList);
         fList2.setPredicate(Appointments -> Appointments.getStartLDT().toLocalDate().isEqual(startTime));
@@ -65,16 +65,16 @@ public class apptTime {
                 LocalTime eTime = localToEST(a.getEndLDT()).toLocalTime();
 
                 if((lt.equals(sTime)) || ((lt.isAfter(sTime)) && (lt.isBefore(eTime)))) {
-                    custApptHours.add(lt);
+                    clientApptHours.add(lt);
                 }
             }
         }
     }
 
-    /**This method returns the observable list custApptHours.
-     * @return The observable list custApptHours.
+    /**This method returns the observable list clientApptHours.
+     * @return The observable list clientApptHours.
      */
-    public static ObservableList<LocalTime> getCustApptHours() { return custApptHours; }
+    public static ObservableList<LocalTime> getClientApptHours() { return clientApptHours; }
 
     /**This method returns the observable list availEHours.
      * @return The observable list availEHours.
@@ -82,21 +82,21 @@ public class apptTime {
     public static ObservableList<LocalTime> getAvailEHours() { return availEHours; }
 
     /**This method queries the database for all start and end times of appointments with the selected
-     * contact ID. Each time is converted from UTC to EST before being compared to the selected date.
+     * therapist ID. Each time is converted from UTC to EST before being compared to the selected date.
      * Then if filterSOfficeHours is true and it is the last appointment provided by the query, it returns
      * true indicating that there are available appointments. If filterSOfficeHours is false
      * and it is the last appointment provided by the query, it returns false, indicating that there are no
      * available appointments. Otherwise, if no appointments are returned by the query, it returns true,
      * indicating that there are available appointment times.
-     * @param newContID The selected contact ID.
+     * @param newTherapistID The selected therapist ID.
      * @param newLocalDate The selected date.
      * @return True if appointment times are available, False if there are no times available.
      */
-    public static boolean getApptSTimes(int newContID, LocalDate newLocalDate) throws SQLException {
+    public static boolean getApptSTimes(int newTherapistID, LocalDate newLocalDate) throws SQLException {
 
-        String sql = "SELECT Start, End FROM appointments WHERE Contact_ID = ?;";
+        String sql = "SELECT Start, End FROM appointments WHERE Therapist_ID = ?;";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setInt(1, newContID);
+        ps.setInt(1, newTherapistID);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
@@ -174,7 +174,7 @@ public class apptTime {
                         }
                     }
                     else {
-                        if((availSHours.isEmpty()) && (custApptHours.isEmpty())) {
+                        if((availSHours.isEmpty()) && (clientApptHours.isEmpty())) {
                             return false;
                         }
                     }
@@ -184,16 +184,16 @@ public class apptTime {
         return true;
     }
 
-    /**This method gets all office hours if the availSHours list is empty but the custApptHours list is not.
-     * Then it removes the times that matches the custApptHours from availSHours.
+    /**This method gets all office hours if the availSHours list is empty but the clientApptHours list is not.
+     * Then it removes the times that matches the clientApptHours from availSHours.
      */
     public static void removeCAppt() {
 
-        if((availSHours.isEmpty()) && (!(custApptHours.isEmpty()))) {
+        if((availSHours.isEmpty()) && (!(clientApptHours.isEmpty()))) {
             copyOfficeHours();
         }
 
-        for(LocalTime lT : custApptHours) {
+        for(LocalTime lT : clientApptHours) {
             for(int i = 0; i < officeHours.size(); i++) {
                 if(i < availSHours.size()) {
                     if(lT.equals(availSHours.get(i))) {

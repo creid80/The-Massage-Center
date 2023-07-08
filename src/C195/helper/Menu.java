@@ -20,7 +20,7 @@ import static C195.utilities.Validate.pickToMod;
 /**This class helps centralize the navigation through the application.*/
 public class Menu {
 
-    public static ObservableList<String> menuItems = FXCollections.observableArrayList("View All Appointments", "Add An Appointment", "Modify An Appointment", "\n", "View All Customers", "Add A Customer", "Modify A Customer", "\n", "Monthly Type Report", "Contact Schedules", "Customer Appointments Report");
+    public static ObservableList<String> menuItems = FXCollections.observableArrayList("View All Appointments", "Add An Appointment", "Modify An Appointment", "\n", "View All Clients", "Add A Customer", "Modify A Customer", "\n", "Monthly Type Report", "Contact Schedules", "Customer Appointments Report");
 
     /**This method checks what selection what made and loads the correct scene.*/
     public static void menuSelection(String selected, ActionEvent actionEvent) throws IOException {
@@ -59,12 +59,12 @@ public class Menu {
 
                     pickToMod("n appointment");
                 }
-                case "View All Customers" -> {
+                case "View All Clients" -> {
 
                     Parent root = FXMLLoader.load(Objects.requireNonNull(allApptForm.class.getResource("/C195/view/allCust.fxml")));
                     Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                     Scene scene = new Scene(root, 1100, 600);
-                    stage.setTitle("All Customers");
+                    stage.setTitle("All Clients");
                     stage.setScene(scene);
                     stage.centerOnScreen();
                     stage.show();
@@ -84,7 +84,7 @@ public class Menu {
                     Parent root = FXMLLoader.load(Objects.requireNonNull(allApptForm.class.getResource("/C195/view/allCust.fxml")));
                     Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                     Scene scene = new Scene(root, 1100, 600);
-                    stage.setTitle("All Customers");
+                    stage.setTitle("All Clients");
                     stage.setScene(scene);
                     stage.centerOnScreen();
                     stage.show();

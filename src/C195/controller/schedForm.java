@@ -2,7 +2,7 @@ package C195.controller;
 
 import C195.helper.Menu;
 import C195.model.Appointments;
-import C195.model.Contacts;
+import C195.model.Therapists;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -24,7 +24,7 @@ public class schedForm implements Initializable {
     public ComboBox<String> menu;
     public String selected;
 
-    public Contacts sContact;
+    public Therapists sContact;
     public LocalDate sDate;
 
     public TableView schedulesTable;
@@ -38,7 +38,7 @@ public class schedForm implements Initializable {
     public ComboBox contact;
     public DatePicker date;
 
-    private ObservableList<Contacts> allContacts = Contacts.getAllConts();
+    private ObservableList<Therapists> allContacts = Therapists.getAllTheras();
     private ObservableList<Appointments> allAppt = Appointments.getAllAppts();
 
 
@@ -61,7 +61,7 @@ public class schedForm implements Initializable {
     /**This method gets the selected contact, then clears the date and schedule table.*/
     public void onContact(ActionEvent actionEvent) {
 
-        sContact = (Contacts) contact.getValue();
+        sContact = (Therapists) contact.getValue();
 
         if(date.getValue() != null) {
             date.setValue(null);
@@ -80,7 +80,7 @@ public class schedForm implements Initializable {
         sDate = date.getValue();
 
         FilteredList<Appointments> fList = new FilteredList<>(allAppt);
-        fList.setPredicate(Appointments -> Appointments.getContName().equals(sContact.getContName()));
+        fList.setPredicate(Appointments -> Appointments.getTherapistName().equals(sContact.getTheraName()));
 
         FilteredList<Appointments> fList2 = new FilteredList<>(fList);
         fList2.setPredicate(Appointments -> Appointments.getStartLDT().toLocalDate().isEqual(sDate));

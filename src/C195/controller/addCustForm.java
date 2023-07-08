@@ -164,13 +164,13 @@ public class addCustForm implements Initializable {
                 Validate.genAlert();
             }
 
-            menuSelection("View All Customers", actionEvent);
+            menuSelection("View All Clients", actionEvent);
         }
     }
 
     /**This method loads the allCust scene in the Graphical User Interface.*/
     public void onCustCancel(ActionEvent actionEvent) throws IOException {
-        menuSelection("View All Customers", actionEvent);
+        menuSelection("View All Clients", actionEvent);
     }
 
     /**This method exits the Graphical User Interface.*/

@@ -1,8 +1,7 @@
 package C195.controller;
 
-import C195.model.Contacts;
-import C195.model.Customers;
-import C195.model.Types;
+import C195.model.Clients;
+import C195.model.Therapists;
 import C195.model.Users;
 import C195.utilities.JDBC;
 import C195.utilities.Validate;
@@ -60,13 +59,13 @@ public class addApptForm implements Initializable {
     private int newUserID = 0;
     private int newContID = 0;
 
-    public Customers currCust = new Customers();
+    public Clients currCust = new Clients();
 
-    private ObservableList<Customers> allCust = Customers.getAllCust();
+    private ObservableList<Clients> allCust = Clients.getAllClients();
     private ObservableList<Users> allUsers = Users.getAllUsers();
-    private ObservableList<Contacts> allCont = Contacts.getAllConts();
+    private ObservableList<Therapists> allCont = Therapists.getAllTheras();
     private ObservableList<LocalTime> availETime = apptTime.getAvailEHours();
-    private ObservableList<LocalTime> custAppts = apptTime.getCustApptHours();
+    private ObservableList<LocalTime> custAppts = apptTime.getClientApptHours();
     private static ObservableList<String> Types = FXCollections.observableArrayList();
 
     /**This method initializes the addAppt scene and populates the table and combo boxes.*/
@@ -89,7 +88,7 @@ public class addApptForm implements Initializable {
 
         if (allCust.isEmpty()) {
             try {
-                Customers.tableQueryC();
+                Clients.tableQueryC();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -97,7 +96,7 @@ public class addApptForm implements Initializable {
         else {
             allCust.clear();
             try {
-                Customers.tableQueryC();
+                Clients.tableQueryC();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -134,12 +133,12 @@ public class addApptForm implements Initializable {
     public void onCustSelected(MouseEvent mouseEvent) {
 
         if(currCust.getName().isBlank()) {
-            currCust = (Customers) custTable.getSelectionModel().getSelectedItem();
+            currCust = (Clients) custTable.getSelectionModel().getSelectedItem();
         }
         else {
-            Customers newCust = (Customers) custTable.getSelectionModel().getSelectedItem();
+            Clients newCust = (Clients) custTable.getSelectionModel().getSelectedItem();
 
-            if(currCust.getCustID() != newCust.getCustID()) {
+            if(currCust.getClientID() != newCust.getClientID()) {
 
                 if (apptDatePicker.getValue() != null) {
 
@@ -169,8 +168,8 @@ public class addApptForm implements Initializable {
      */
     public void onContDropBox(ActionEvent actionEvent) {
 
-        Contacts selContact = (Contacts) contDropBox.getValue();
-        newContID = selContact.getContID();
+        Therapists selContact = (Therapists) contDropBox.getValue();
+        newContID = selContact.getTheraID();
 
         if (apptDatePicker.getValue() != null) {
 
@@ -202,9 +201,9 @@ public class addApptForm implements Initializable {
             noSelectionAlert(" customer");
         }
         else {
-            Customers selCust = (Customers) custTable.getSelectionModel().getSelectedItem();
-            int sCustID = selCust.getCustID();
-            fillCustApptHours(sCustID, pickedDate);
+            Clients selCust = (Clients) custTable.getSelectionModel().getSelectedItem();
+            int sCustID = selCust.getClientID();
+            fillClientApptHours(sCustID, pickedDate);
         }
 
         if(!(availSHours.isEmpty())) {
@@ -257,7 +256,7 @@ public class addApptForm implements Initializable {
      */
     public void onAddAppointment(ActionEvent actionEvent) throws SQLException, IOException {
 
-        Customers newCust = (Customers) custTable.getSelectionModel().getSelectedItem();
+        Clients newCust = (Clients) custTable.getSelectionModel().getSelectedItem();
 
         if(newCust == null) { Validate.blankAlert("Customer"); return; }
         if(userDropBox.getValue() == null) { Validate.blankAlert("User"); return; }
@@ -269,7 +268,7 @@ public class addApptForm implements Initializable {
         LocalDateTime newStart = estToLocal(LocalDateTime.of(apptDatePicker.getValue(), (LocalTime) startTime.getValue()));
         LocalDateTime newEnd = estToLocal(LocalDateTime.of(apptDatePicker.getValue(), (LocalTime) endTime.getValue()));
 
-        int newCustID = newCust.getCustID();
+        int newCustID = newCust.getClientID();
 
         String newTitle = addApptTitle.getText();
         String newDesc = addApptDesc.getText();

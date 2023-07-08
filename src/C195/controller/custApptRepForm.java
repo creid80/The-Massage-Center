@@ -2,7 +2,7 @@ package C195.controller;
 
 import C195.helper.Menu;
 import C195.model.Appointments;
-import C195.model.Customers;
+import C195.model.Clients;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -44,9 +44,9 @@ public class custApptRepForm implements Initializable {
     public TableColumn aTEnd;
     public TableColumn aTContName;
 
-    private ObservableList<Customers> searchClientText = null;
+    private ObservableList<Clients> searchClientText = null;
 
-    private ObservableList<Customers> allCust = Customers.getAllCust();
+    private ObservableList<Clients> allCust = Clients.getAllClients();
 
     /**This method initializes the custApptRep scene and populates the customer table.*/
     @Override
@@ -56,7 +56,7 @@ public class custApptRepForm implements Initializable {
 
         if (allCust.isEmpty()) {
             try {
-                Customers.tableQueryC();
+                Clients.tableQueryC();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -64,7 +64,7 @@ public class custApptRepForm implements Initializable {
         else {
             allCust.clear();
             try {
-                Customers.tableQueryC();
+                Clients.tableQueryC();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -92,13 +92,13 @@ public class custApptRepForm implements Initializable {
 
     public void onClientSearch(ActionEvent actionEvent) {
         String q = clientSearch.getText();
-        Customers custID = null;
+        Clients custID = null;
 
         if (searchClientText != null) {
             searchClientText.clear();
         }
 
-        searchClientText = Customers.lookupCustomer(q);
+        searchClientText = Clients.lookupClient(q);
 
         if(q == "") {
             custTable.setItems(allCust);
@@ -107,7 +107,7 @@ public class custApptRepForm implements Initializable {
         else if (searchClientText.size() == 0) {
             try {
                 int ID = Integer.parseInt(q);
-                custID = Customers.lookupCustomer(ID);
+                custID = Clients.lookupClient(ID);
                 if (custID != null) {
                     searchClientText.add(custID);
                 }
@@ -138,11 +138,11 @@ public class custApptRepForm implements Initializable {
 
         if(custTable.getSelectionModel().getSelectedItem() != null) {
 
-            Customers sCustomer = (Customers) custTable.getSelectionModel().getSelectedItem();
-            int sCustID = sCustomer.getCustID();
+            Clients sCustomer = (Clients) custTable.getSelectionModel().getSelectedItem();
+            int sCustID = sCustomer.getClientID();
 
             FilteredList<Appointments> fAppt = new FilteredList<>(Appointments.getAllAppts());
-            fAppt.setPredicate(Appointments -> Appointments.getCustID() == sCustID);
+            fAppt.setPredicate(Appointments -> Appointments.getClientID() == sCustID);
 
             apptTable.setItems(fAppt);
             aTApptID.setCellValueFactory(new PropertyValueFactory<>("apptID"));

@@ -2,7 +2,6 @@ package C195.utilities;
 
 import C195.controller.Operator;
 import C195.model.Appointments;
-import C195.model.Customers;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -10,10 +9,8 @@ import javafx.scene.control.ButtonType;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 import static C195.controller.loginForm.rb;
 
@@ -120,23 +117,23 @@ public class Validate {
         blank.showAndWait();
     }
 
-    /**This method filters allAppts by the selected customer ID. If no appointments are found, and the
-     * deleteConfirm alert is confirmed, it deletes the customer from the database. If successful, an alert
-     * notifies the user. Otherwise if appointments matching the selected customer are found, an alert
-     * notifies the user that the customer can not be deleted.
-     * @param checkCustID The selected customer ID.
+    /**This method filters allAppts by the selected client ID. If no appointments are found, and the
+     * deleteConfirm alert is confirmed, it deletes the client from the database. If successful, an alert
+     * notifies the user. Otherwise if appointments matching the selected client are found, an alert
+     * notifies the user that the client can not be deleted.
+     * @param checkClientID The selected client ID.
      */
-    public static void isValidCDelete(int checkCustID) throws SQLException {
+    public static void isValidCDelete(int checkClientID) throws SQLException {
 
-        FilteredList<Appointments> appCustID = new FilteredList<>(Appointments.getAllAppts());
-        appCustID.setPredicate(Appointments -> Appointments.getCustID() == checkCustID);
+        FilteredList<Appointments> appClientID = new FilteredList<>(Appointments.getAllAppts());
+        appClientID.setPredicate(Appointments -> Appointments.getClientID() == checkClientID);
 
-        if (appCustID.isEmpty()) {
+        if (appClientID.isEmpty()) {
 
-            if (deleteConfirm("customer")) {
+            if (deleteConfirm("client")) {
 
-                if ((deleteCQuery(checkCustID)) == 1) {
-                    successAlert("customer with the ID: " + checkCustID, "deleted");
+                if ((deleteCQuery(checkClientID)) == 1) {
+                    successAlert("client with the ID: " + checkClientID, "deleted");
                 }
             }
         }
@@ -159,12 +156,12 @@ public class Validate {
         blank.showAndWait();
     }
 
-    /**This method notifies the user of an invalid customer delete.*/
+    /**This method notifies the user of an invalid client delete.*/
     public static void cInvalidDelete() {
 
         Alert blank = new Alert(Alert.AlertType.ERROR);
         blank.setTitle("Error alert");
-        blank.setHeaderText("This customer has a scheduled appointment.");
+        blank.setHeaderText("This client has a scheduled appointment.");
         blank.setContentText("Please delete all appointments and then try again.");
         blank.showAndWait();
     }
@@ -181,15 +178,15 @@ public class Validate {
         blank.showAndWait();
     }
 
-    /**This method deletes the selected customer from the database and returns the number of customers effected.
-     * @param dCustID The selected customer ID.
-     * @return The number of customers effected.
+    /**This method deletes the selected client from the database and returns the number of clients effected.
+     * @param dClientID The selected client ID.
+     * @return The number of clients effected.
      */
-    public static int deleteCQuery(int dCustID) throws SQLException {
+    public static int deleteCQuery(int dClientID) throws SQLException {
 
-            String sql = "DELETE FROM customers WHERE Customer_ID = ?;";
+            String sql = "DELETE FROM clients WHERE Client_ID = ?;";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ps.setInt(1, dCustID);
+            ps.setInt(1, dClientID);
             return ps.executeUpdate();
     }
 
@@ -227,15 +224,15 @@ public class Validate {
         }
     }
 
-    /**This method alerts the user when there are no available appointment times for the customer with the
-     * selected contact and date.
+    /**This method alerts the user when there are no available appointment times for the client with the
+     * selected therapist and date.
      */
     public static void noAvailApptAlert() {
 
         Alert blank = new Alert(Alert.AlertType.ERROR);
         blank.setTitle("Error alert");
-        blank.setHeaderText("There are no available appointment times for that customer, with the selected contact on the selected date.");
-        blank.setContentText("Please choose a different contact or date and try again.");
+        blank.setHeaderText("There are no available appointment times for that client, with the selected therapist on the selected date.");
+        blank.setContentText("Please choose a different therapist or date and try again.");
         blank.showAndWait();
     }
 

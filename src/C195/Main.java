@@ -1,5 +1,6 @@
 package C195;
 
+import C195.model.Therapists;
 import C195.utilities.JDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 
 /**@author Carol Reid*/
 
-/** This class launches the application that is used to view, add, modify, and delete customers
+/** This class launches the application that is used to view, add, modify, and delete clients
  * and appointments.*/
 public class Main extends Application {
 
@@ -23,7 +24,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    /**This method populates the officeHours, contacts, and user's. It also opens the database connection,
+    /**This method populates the officeHours, therapists, and user's. It also opens the database connection,
      * launches the Graphical User Interface, and closes the connection upon exiting the program.
      * @param args
      * @throws SQLException
@@ -32,7 +33,7 @@ public class Main extends Application {
 
         C195.utilities.apptTime.fillOfficeHours();
         JDBC.openConnection();
-        C195.model.Contacts.contactsQuery();
+        Therapists.therapistsQuery();
         C195.model.Users.usersQuery();
         launch();
 

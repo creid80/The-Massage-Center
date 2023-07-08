@@ -17,45 +17,42 @@ public class Appointments {
 
     private int apptID;
     private String title;
-    private String desc;
-    private String loc;
-    private String contName;
+    private String note;
+    private String therapistName;
     private String type;
     private LocalDateTime startLDT;
     private LocalDateTime endLDT;
-    private int custID;
+    private int clientID;
     private int userID;
-    private int contID;
+    private int therapistID;
 
     private static ObservableList<Appointments> allAppts = FXCollections.observableArrayList();
 
     /**This method is a constructor. This method creates an appointment object.
      * @param apptID The objects ID.
      * @param title The objects title.
-     * @param desc The objects description.
-     * @param loc The objects location.
-     * @param contName The objects contact name.
+     * @param note The objects note.
+     * @param therapistName The objects therapist name.
      * @param type The objects type.
      * @param startLDT The objects start time.
      * @param endLDT The objects end time.
-     * @param custID The objects customer ID.
+     * @param clientID The objects client ID.
      * @param userID The objects user ID.
-     * @param contID The objects contact ID.
+     * @param therapistID The objects therapist ID.
      */
-    public Appointments(int apptID, String title, String desc, String loc, String contName,String type, LocalDateTime startLDT, LocalDateTime endLDT,
-                        int custID, int userID, int contID) throws SQLException {
+    public Appointments(int apptID, String title, String note, String therapistName, String type, LocalDateTime startLDT, LocalDateTime endLDT,
+                        int clientID, int userID, int therapistID) throws SQLException {
 
         this.apptID = apptID;
         this.title = title;
-        this.desc = desc;
-        this.loc = loc;
-        this.contName = contName;
+        this.note = note;
+        this.therapistName = therapistName;
         this.type = type;
         this.startLDT = startLDT;
         this.endLDT = endLDT;
-        this.custID = custID;
+        this.clientID = clientID;
         this.userID = userID;
-        this.contID = contID;
+        this.therapistID = therapistID;
     }
 
     /**This method returns the appointment ID.
@@ -73,20 +70,15 @@ public class Appointments {
      */
     public String getTitle() { return title; }
 
-    /**This method returns the description.
-     * @return The description.
+    /**This method returns the note.
+     * @return The note.
      */
-    public String getDesc() { return desc; }
+    public String getNote() { return note; }
 
-    /**This method returns the location.
-     * @return The location.
+    /**This method returns the therapist name.
+     * @return The therapist name.
      */
-    public String getLoc() { return loc; }
-
-    /**This method returns the contact name.
-     * @return The contact name.
-     */
-    public String getContName() { return contName; }
+    public String getTherapistName() { return therapistName; }
 
     /**This method sets the type.
      * @param type The type.
@@ -108,55 +100,54 @@ public class Appointments {
      */
     public LocalDateTime getEndLDT() { return endLDT; }
 
-    /**This method sets the customer ID.
-     * @param custID The customer ID.
+    /**This method sets the client ID.
+     * @param clientID The client ID.
      */
-    public void setCustID(int custID) { this.custID = custID; }
+    public void setClientID(int clientID) { this.clientID = clientID; }
 
-    /**This method returns the customer ID.
-     * @return The customer ID.
+    /**This method returns the client ID.
+     * @return The client ID.
      */
-    public int getCustID() { return custID; }
+    public int getClientID() { return clientID; }
 
     /**This method gets the user ID.
      * @return The user ID.
      */
     public int getUserID() { return userID; }
 
-    /**This method gets the contact ID.
-     * @return The contact ID.
+    /**This method gets the therapist ID.
+     * @return The therapist ID.
      */
-    public int getContID() { return contID; }
+    public int getTherapistID() { return therapistID; }
 
     /**This method queries the database for all appointments, and adds each appointment object to the
      * ObservableList allAppts.
      */
     public static void tableQueryA() throws SQLException {
 
-        String sql = "SELECT appointments.Appointment_ID, appointments.Title, appointments.Description, \n" +
-                "appointments.Location, contacts.Contact_Name, appointments.Type, appointments.Start, \n" +
-                "appointments.End, appointments.Customer_ID, appointments.User_ID , contacts.Contact_ID\n" +
-                "FROM appointments, contacts\n" +
-                "WHERE contacts.Contact_ID = appointments.Contact_ID;";
+        String sql = "SELECT appointments.Appointment_ID, appointments.Title, appointments.Note, \n" +
+                "therapists.Therapist_Name, appointments.Type, appointments.Start, \n" +
+                "appointments.End, appointments.Clients_ID, appointments.User_ID , contacts.Therapist_ID\n" +
+                "FROM appointments, therapists\n" +
+                "WHERE therapists.Therapist_ID = appointments.Therapist_ID;";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
 
         while(rs.next()){
             int apptId = rs.getInt("Appointment_ID");
             String title = rs.getString("Title");
-            String desc = rs.getString("Description");
-            String loc = rs.getString("Location");
-            String contName = rs.getString("Contact_Name");
+            String note = rs.getString("Note");
+            String therapistName = rs.getString("Therapist_Name");
             String type = rs.getString("Type");
             Timestamp start = rs.getTimestamp("Start");
             LocalDateTime startLDT = start.toLocalDateTime();
             Timestamp end = rs.getTimestamp("End");
             LocalDateTime endLDT = end.toLocalDateTime();
-            int custID = rs.getInt("Customer_ID");
+            int clientID = rs.getInt("Client_ID");
             int userID = rs.getInt("User_ID");
-            int contID = rs.getInt("Contact_ID");
+            int therapistID = rs.getInt("Therapist_ID");
 
-            Appointments newAppt = new Appointments(apptId, title, desc, loc, contName, type, startLDT, endLDT, custID, userID, contID);
+            Appointments newAppt = new Appointments(apptId, title, note, therapistName, type, startLDT, endLDT, clientID, userID, therapistID);
 
             allAppts.add(newAppt);
         }
