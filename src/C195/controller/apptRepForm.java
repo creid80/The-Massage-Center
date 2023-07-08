@@ -39,9 +39,6 @@ public class apptRepForm implements Initializable {
 
     public ComboBox year;
     public ComboBox month;
-    public TableView apptTypeTable;
-    public TableColumn apptType;
-    public TableColumn apptTotal;
 
     public int selectedY;
     public LocalDate selectedD;
@@ -59,6 +56,7 @@ public class apptRepForm implements Initializable {
     public XYChart.Series<String, Number> series6 = new XYChart.Series<>();
 
 
+//FINISH THIS
 
     /**This method initializes the apptRep scene and populates the type table with appointments from the
      * user's current year and month.
@@ -97,15 +95,6 @@ public class apptRepForm implements Initializable {
         }
 
         typeBarChart.setTitle(String.valueOf(currD.getMonth()));
-        /*
-        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
-        XYChart.Series<String, Number> series2 = new XYChart.Series<>();
-        XYChart.Series<String, Number> series3 = new XYChart.Series<>();
-        XYChart.Series<String, Number> series4 = new XYChart.Series<>();
-        XYChart.Series<String, Number> series5 = new XYChart.Series<>();
-        XYChart.Series<String, Number> series6 = new XYChart.Series<>();
-
-         */
 
         int i = 0;
 
@@ -133,7 +122,7 @@ public class apptRepForm implements Initializable {
             }
             else if(i == 5) {
                 series6.setName(typeName[i]);
-                series6.getData().add(new XYChart.Data("Treatments", totalType[i]));
+                series6.getData().add(new XYChart.Data<>("Treatments", totalType[i]));
             }
             i += 1;
         }
@@ -170,6 +159,10 @@ public class apptRepForm implements Initializable {
         allMonths.addAll("January", "February", "March", "April", "May", "June", "July", "August",
                 "September", "October", "November", "December");
     }
+
+
+
+    //FIX THIS
 
     /**This method clears allTypes if it is not empty. Next, it adds all unique appointment types to a HashSet
      * if the appointment start time matches the selected year and month. Then it adds the unique types to
@@ -223,6 +216,10 @@ public class apptRepForm implements Initializable {
         month.setValue(null);
     }
 
+
+
+    // FIX THIS
+
     /**This method gets the selected month name and determines the number of month. Then it creates a
      * localDateTime from the selected year and month, that it passes to the getApptT method.
      */
@@ -247,18 +244,7 @@ public class apptRepForm implements Initializable {
         System.out.println(selectedM);
         getApptT(selectedD);
 
-        /*
-        CategoryAxis xAxis = new CategoryAxis();
 
-        xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList(
-                "Treatments")));
-        xAxis.setLabel("Treatments");
-
-//Defining the y axis
-        NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel("Total");
-
- */
         int[] totalType = new int[6];
         String[] typeName = new String[6];
 
@@ -278,17 +264,6 @@ public class apptRepForm implements Initializable {
         series6.getData().remove(0);
         typeBarChart.setTitle(String.valueOf(selectedD.getMonth()));
 
-/*
-        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
-        XYChart.Series<String, Number> series2 = new XYChart.Series<>();
-        XYChart.Series<String, Number> series3 = new XYChart.Series<>();
-        XYChart.Series<String, Number> series4 = new XYChart.Series<>();
-        XYChart.Series<String, Number> series5 = new XYChart.Series<>();
-        XYChart.Series<String, Number> series6 = new XYChart.Series<>();
-
-
- */
-
 
 
         int i = 0;
@@ -299,8 +274,6 @@ public class apptRepForm implements Initializable {
                 series1.setName(typeName[i]);
 
                 series1.getData().add(new XYChart.Data<>("Treatments", totalType[i]));
-
-                //.set(0, new XYChart.Data<String, Number> ("Treatments", totalType[i]));
             }
             else if(i == 1) {
                 series2.setName(typeName[i]);
@@ -320,7 +293,7 @@ public class apptRepForm implements Initializable {
             }
             else if(i == 5) {
                 series6.setName(typeName[i]);
-                series6.getData().add(new XYChart.Data("Treatments", totalType[i]));
+                series6.getData().add(new XYChart.Data<>("Treatments", totalType[i]));
             }
             i += 1;
         }

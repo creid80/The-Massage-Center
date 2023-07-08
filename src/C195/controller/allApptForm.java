@@ -38,7 +38,6 @@ public class allApptForm implements Initializable {
     public TableColumn ApptIDCol;
     public TableColumn titleCol;
     public TableColumn descCol;
-    public TableColumn locCol;
     public TableColumn therapistCol;
     public TableColumn typeCol;
     public TableColumn startCol;
@@ -87,12 +86,11 @@ public class allApptForm implements Initializable {
         ApptIDCol.setCellValueFactory(new PropertyValueFactory<>("apptID"));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         descCol.setCellValueFactory(new PropertyValueFactory<>("desc"));
-        locCol.setCellValueFactory(new PropertyValueFactory<>("loc"));
-        therapistCol.setCellValueFactory(new PropertyValueFactory<>("contName"));
+        therapistCol.setCellValueFactory(new PropertyValueFactory<>("therapistName"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         startCol.setCellValueFactory(new PropertyValueFactory<>("startLDT"));
         endCol.setCellValueFactory(new PropertyValueFactory<>("endLDT"));
-        clientIDCol.setCellValueFactory(new PropertyValueFactory<>("custID"));
+        clientIDCol.setCellValueFactory(new PropertyValueFactory<>("clientID"));
         userIDCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
 
         apptTable.getSortOrder().add(ApptIDCol);

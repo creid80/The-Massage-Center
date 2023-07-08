@@ -29,9 +29,9 @@
                 <TableColumn fx:id="divCol" prefWidth="86.0" text="Division ID" />
             </columns>
         </TableView>
-        <Button layoutX="149.0" layoutY="436.0" mnemonicParsing="false" onAction="#onAddCust" text="Add" />
-        <Button layoutX="199.0" layoutY="436.0" mnemonicParsing="false" onAction="#onModCust" text="Modify" />
-        <Button layoutX="263.0" layoutY="436.0" mnemonicParsing="false" onAction="#onDelCust" text="Delete" />
+        <Button layoutX="149.0" layoutY="436.0" mnemonicParsing="false" onAction="#onAddClient" text="Add" />
+        <Button layoutX="199.0" layoutY="436.0" mnemonicParsing="false" onAction="#onModClient" text="Modify" />
+        <Button layoutX="263.0" layoutY="436.0" mnemonicParsing="false" onAction="#onDelClient" text="Delete" />
         <Button layoutX="886.0" layoutY="436.0" mnemonicParsing="false" onAction="#onSignOut" text="Sign out" />
     </AnchorPane>
 </SplitPane>

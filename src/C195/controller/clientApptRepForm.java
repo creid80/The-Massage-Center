@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 
 /**@author Carol Reid*/
 
-/**This class is a controller for the custApptRep Graphical User Interface scene.*/
+/**This class is a controller for the clientApptRep Graphical User Interface scene.*/
 public class clientApptRepForm implements Initializable {
 
 
@@ -46,15 +46,15 @@ public class clientApptRepForm implements Initializable {
 
     private ObservableList<Clients> searchClientText = null;
 
-    private ObservableList<Clients> allCust = Clients.getAllClients();
+    private ObservableList<Clients> allClients = Clients.getAllClients();
 
-    /**This method initializes the custApptRep scene and populates the customer table.*/
+    /**This method initializes the clientApptRep scene and populates the client table.*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         menu.setItems(C195.helper.Menu.menuItems);
 
-        if (allCust.isEmpty()) {
+        if (allClients.isEmpty()) {
             try {
                 Clients.tableQueryC();
             } catch (SQLException throwables) {
@@ -62,7 +62,7 @@ public class clientApptRepForm implements Initializable {
             }
         }
         else {
-            allCust.clear();
+            allClients.clear();
             try {
                 Clients.tableQueryC();
             } catch (SQLException throwables) {
@@ -70,8 +70,8 @@ public class clientApptRepForm implements Initializable {
             }
         }
 
-        clientTable.setItems(allCust);
-        cTClientID.setCellValueFactory(new PropertyValueFactory<>("custID"));
+        clientTable.setItems(allClients);
+        cTClientID.setCellValueFactory(new PropertyValueFactory<>("clientID"));
         cTName.setCellValueFactory(new PropertyValueFactory<>("name"));
         cTAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         cTPostal.setCellValueFactory(new PropertyValueFactory<>("postal"));
@@ -92,7 +92,7 @@ public class clientApptRepForm implements Initializable {
 
     public void onClientSearch(ActionEvent actionEvent) {
         String q = clientSearch.getText();
-        Clients custID = null;
+        Clients clientID = null;
 
         if (searchClientText != null) {
             searchClientText.clear();
@@ -101,15 +101,15 @@ public class clientApptRepForm implements Initializable {
         searchClientText = Clients.lookupClient(q);
 
         if(q == "") {
-            clientTable.setItems(allCust);
+            clientTable.setItems(allClients);
             return;
         }
         else if (searchClientText.size() == 0) {
             try {
                 int ID = Integer.parseInt(q);
-                custID = Clients.lookupClient(ID);
-                if (custID != null) {
-                    searchClientText.add(custID);
+                clientID = Clients.lookupClient(ID);
+                if (clientID != null) {
+                    searchClientText.add(clientID);
                 }
             }
             catch (NumberFormatException e) {
@@ -117,7 +117,7 @@ public class clientApptRepForm implements Initializable {
             }
         }
 
-        if ((searchClientText.size() == 0) && (custID == null)) {
+        if ((searchClientText.size() == 0) && (clientID == null)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error alert");
             alert.setHeaderText("Can not find client.");
@@ -131,27 +131,26 @@ public class clientApptRepForm implements Initializable {
         }
     }
 
-    /**This method gets the selected customer and filters all appointments by the customer. Then it populates
+    /**This method gets the selected client and filters all appointments by the client. Then it populates
      * the appointment table with all of the filtered appointments.
      */
     public void onClientSelected(MouseEvent mouseEvent) {
 
         if(clientTable.getSelectionModel().getSelectedItem() != null) {
 
-            Clients sCustomer = (Clients) clientTable.getSelectionModel().getSelectedItem();
-            int sCustID = sCustomer.getClientID();
+            Clients sClient = (Clients) clientTable.getSelectionModel().getSelectedItem();
+            int sClientID = sClient.getClientID();
 
             FilteredList<Appointments> fAppt = new FilteredList<>(Appointments.getAllAppts());
-            fAppt.setPredicate(Appointments -> Appointments.getClientID() == sCustID);
+            fAppt.setPredicate(Appointments -> Appointments.getClientID() == sClientID);
 
             apptTable.setItems(fAppt);
             aTApptID.setCellValueFactory(new PropertyValueFactory<>("apptID"));
             aTTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
             aTDesc.setCellValueFactory(new PropertyValueFactory<>("desc"));
-            aTType.setCellValueFactory(new PropertyValueFactory<>("type"));
             aTStart.setCellValueFactory(new PropertyValueFactory<>("startLDT"));
             aTEnd.setCellValueFactory(new PropertyValueFactory<>("endLDT"));
-            aTTherapistName.setCellValueFactory(new PropertyValueFactory<>("contName"));
+            aTTherapistName.setCellValueFactory(new PropertyValueFactory<>("therapistName"));
 
             apptTable.getSortOrder().add(aTStart);
             apptTable.sort();

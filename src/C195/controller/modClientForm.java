@@ -44,7 +44,7 @@ public class modClientForm implements Initializable {
 
     private int newDivID = 0;
 
-    private Clients modCust = allClientForm.getmCustomer();
+    private Clients modCust = allClientForm.getmClient();
     private ObservableList<Countries> allCountries = Countries.getAllcountries();
     private ObservableList<FLDivision> allDiv = FLDivision.getAllFLDiv();
 

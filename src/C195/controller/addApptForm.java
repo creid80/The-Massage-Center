@@ -52,41 +52,41 @@ public class addApptForm implements Initializable {
     public ComboBox endTime;
     public TextField addApptTitle;
     public TextField addApptDesc;
-    public TextField addApptLoc;
+
     public ComboBox typeDropBox;
 
     private String newCreatedBy = " ";
     private int newUserID = 0;
-    private int newContID = 0;
+    private int newTherapistID = 0;
 
-    public Clients currCust = new Clients();
+    public Clients currClient = new Clients();
 
-    private ObservableList<Clients> allCust = Clients.getAllClients();
+    private ObservableList<Clients> allClients = Clients.getAllClients();
     private ObservableList<Users> allUsers = Users.getAllUsers();
-    private ObservableList<Therapists> allCont = Therapists.getAllTheras();
+    private ObservableList<Therapists> allTherapists = Therapists.getAllTheras();
     private ObservableList<LocalTime> availETime = apptTime.getAvailEHours();
-    private ObservableList<LocalTime> custAppts = apptTime.getClientApptHours();
+    private ObservableList<LocalTime> clientAppts = apptTime.getClientApptHours();
     private static ObservableList<String> Types = FXCollections.observableArrayList();
 
     /**This method initializes the addAppt scene and populates the table and combo boxes.*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        popcustTable();
+        popclientTable();
         userDropBox.setItems(allUsers);
-        therapistDropBox.setItems(allCont);
+        therapistDropBox.setItems(allTherapists);
         copyOfficeHours();
         popTypeCB();
 
         menu.setItems(C195.helper.Menu.menuItems);
     }
 
-    /**This method checks whether allCust is populated, and if so, clears it and repopulates it.
-     * Then it displays the list sorted by the customer ID.
+    /**This method checks whether allClients is populated, and if so, clears it and repopulates it.
+     * Then it displays the list sorted by the client ID.
      */
-    public void popcustTable() {
+    public void popclientTable() {
 
-        if (allCust.isEmpty()) {
+        if (allClients.isEmpty()) {
             try {
                 Clients.tableQueryC();
             } catch (SQLException throwables) {
@@ -94,7 +94,7 @@ public class addApptForm implements Initializable {
             }
         }
         else {
-            allCust.clear();
+            allClients.clear();
             try {
                 Clients.tableQueryC();
             } catch (SQLException throwables) {
@@ -102,8 +102,8 @@ public class addApptForm implements Initializable {
             }
         }
 
-        clientTable.setItems(allCust);
-        clientIDCol.setCellValueFactory(new PropertyValueFactory<>("custID"));
+        clientTable.setItems(allClients);
+        clientIDCol.setCellValueFactory(new PropertyValueFactory<>("clientID"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
         postalCol.setCellValueFactory(new PropertyValueFactory<>("postal"));
@@ -121,24 +121,25 @@ public class addApptForm implements Initializable {
         menuSelection(selected, actionEvent);
     }
 
+    // NEED TO FINISH
     public void popTypeCB() {
         Types.clear();
         Types.addAll("Acupuncture", "Deep Tissue", "Hot Stone", "Reflexology", "Sports","Swedish");
         typeDropBox.setItems(Types);
     }
 
-    /**This method checks whether this is the first time a customer has been selected. If this is not the
+    /**This method checks whether this is the first time a client has been selected. If this is not the
      * first time, it clears the date and time combo boxes.
      */
     public void onClientSelected(MouseEvent mouseEvent) {
 
-        if(currCust.getName().isBlank()) {
-            currCust = (Clients) clientTable.getSelectionModel().getSelectedItem();
+        if(currClient.getName().isBlank()) {
+            currClient = (Clients) clientTable.getSelectionModel().getSelectedItem();
         }
         else {
-            Clients newCust = (Clients) clientTable.getSelectionModel().getSelectedItem();
+            Clients newClient = (Clients) clientTable.getSelectionModel().getSelectedItem();
 
-            if(currCust.getClientID() != newCust.getClientID()) {
+            if(currClient.getClientID() != newClient.getClientID()) {
 
                 if (apptDatePicker.getValue() != null) {
 
@@ -151,7 +152,7 @@ public class addApptForm implements Initializable {
                     endTime.setValue(null);
                 }
             }
-            currCust = newCust;
+            currClient = newClient;
         }
     }
 
@@ -163,13 +164,13 @@ public class addApptForm implements Initializable {
         newUserID = selectedUser.getUserID();
     }
 
-    /**This method takes the selected contact and stores it. Then it checks whether the date picker has a value,
+    /**This method takes the selected therapist and stores it. Then it checks whether the date picker has a value,
      * and if so, it clears the date picker and both time combo boxes.
      */
     public void onTherapistDropBox(ActionEvent actionEvent) {
 
-        Therapists selContact = (Therapists) therapistDropBox.getValue();
-        newContID = selContact.getTheraID();
+        Therapists selTherapist = (Therapists) therapistDropBox.getValue();
+        newTherapistID = selTherapist.getTheraID();
 
         if (apptDatePicker.getValue() != null) {
 
@@ -183,10 +184,10 @@ public class addApptForm implements Initializable {
         }
     }
 
-    /**This method validates that a date and customer have been selected. Then it checks whether the start time
+    /**This method validates that a date and client have been selected. Then it checks whether the start time
      * is empty, and if not it clears the start and end time combo boxes. Next it checks for appointment times
-     * based on the contact and date selected. Then it checks for conflicting appointment times for the selected
-     * customer, before populating the start combo box.
+     * based on the therapist and date selected. Then it checks for conflicting appointment times for the
+     * selected client, before populating the start combo box.
      */
     public void onDatePicked(ActionEvent actionEvent) throws SQLException {
 
@@ -201,9 +202,9 @@ public class addApptForm implements Initializable {
             noSelectionAlert(" customer");
         }
         else {
-            Clients selCust = (Clients) clientTable.getSelectionModel().getSelectedItem();
-            int sCustID = selCust.getClientID();
-            fillClientApptHours(sCustID, pickedDate);
+            Clients selClient = (Clients) clientTable.getSelectionModel().getSelectedItem();
+            int sClientID = selClient.getClientID();
+            fillClientApptHours(sClientID, pickedDate);
         }
 
         if(!(availSHours.isEmpty())) {
@@ -211,7 +212,7 @@ public class addApptForm implements Initializable {
             availETime.clear();
         }
 
-        apptAvail = (apptTime.getApptSTimes(newContID, pickedDate));
+        apptAvail = (apptTime.getApptSTimes(newTherapistID, pickedDate));
 
         if((availSHours.isEmpty()) && (apptAvail)) {
             copyOfficeHours();
@@ -220,7 +221,7 @@ public class addApptForm implements Initializable {
             noAvailApptAlert();
         }
 
-        if(!(custAppts.isEmpty())) {
+        if(!(clientAppts.isEmpty())) {
             removeCAppt();
         }
 
@@ -256,11 +257,11 @@ public class addApptForm implements Initializable {
      */
     public void onAddAppointment(ActionEvent actionEvent) throws SQLException, IOException {
 
-        Clients newCust = (Clients) clientTable.getSelectionModel().getSelectedItem();
+        Clients newClient = (Clients) clientTable.getSelectionModel().getSelectedItem();
 
-        if(newCust == null) { Validate.blankAlert("Customer"); return; }
+        if(newClient == null) { Validate.blankAlert("Client"); return; }
         if(userDropBox.getValue() == null) { Validate.blankAlert("User"); return; }
-        if(therapistDropBox.getValue() == null) { Validate.blankAlert("Contact"); return; }
+        if(therapistDropBox.getValue() == null) { Validate.blankAlert("Therapist"); return; }
         if(apptDatePicker.getValue() == null) { Validate.blankAlert("Date"); return; }
         if(startTime.getValue() == null) { Validate.blankAlert("Start Time"); return; }
         if(endTime.getValue() == null) { Validate.blankAlert("End Time"); return; }
@@ -268,39 +269,36 @@ public class addApptForm implements Initializable {
         LocalDateTime newStart = estToLocal(LocalDateTime.of(apptDatePicker.getValue(), (LocalTime) startTime.getValue()));
         LocalDateTime newEnd = estToLocal(LocalDateTime.of(apptDatePicker.getValue(), (LocalTime) endTime.getValue()));
 
-        int newCustID = newCust.getClientID();
+        int newCustID = newClient.getClientID();
 
         String newTitle = addApptTitle.getText();
         String newDesc = addApptDesc.getText();
         String newType = typeDropBox.getValue().toString();
-        String newLoc = addApptLoc.getText();
 
         LocalDateTime newCreateDate = LocalDateTime.now();
         LocalDateTime newLastUpdate = LocalDateTime.now();
 
         if((Validate.isValidLength("Title", newTitle, 50)) &&
-                (Validate.isValidLength("Description", newDesc, 50)) &&
-                (Validate.isValidLength("Type", newType, 50)) &&
-                (Validate.isValidLength("Location", newLoc, 50))) {
+                (Validate.isValidLength("Description", newDesc, 150)) &&
+                (Validate.isValidLength("Type", newType, 50))) {
 
-            String sql = "INSERT INTO appointments(Title, Description, Location, Type, Start, End, Create_Date, " +
-                    "Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, " +
+            String sql = "INSERT INTO appointments(Title, Description, Type, Start, End, Create_Date, " +
+                    "Created_By, Last_Update, Last_Updated_By, Client_ID, User_ID, Therapist_ID) VALUES(?, ?, " +
                     "?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setString(1, newTitle);
             ps.setString(2, newDesc);
-            ps.setString(3, newLoc);
-            ps.setString(4, newType);
-            ps.setTimestamp(5, Timestamp.valueOf(newStart));
-            ps.setTimestamp(6, Timestamp.valueOf(newEnd));
-            ps.setTimestamp(7, Timestamp.valueOf(newCreateDate));
-            ps.setString(8, newCreatedBy);
-            ps.setTimestamp(9, Timestamp.valueOf(newLastUpdate));
+            ps.setString(3, newType);
+            ps.setTimestamp(4, Timestamp.valueOf(newStart));
+            ps.setTimestamp(5, Timestamp.valueOf(newEnd));
+            ps.setTimestamp(6, Timestamp.valueOf(newCreateDate));
+            ps.setString(7, newCreatedBy);
+            ps.setTimestamp(8, Timestamp.valueOf(newLastUpdate));
             String newLastUpdatedBy = " ";
-            ps.setString(10, newLastUpdatedBy);
-            ps.setInt(11, newCustID);
-            ps.setInt(12, newUserID);
-            ps.setInt(13, newContID);
+            ps.setString(9, newLastUpdatedBy);
+            ps.setInt(10, newCustID);
+            ps.setInt(11, newUserID);
+            ps.setInt(12, newTherapistID);
             int rowsEffected = ps.executeUpdate();
 
             if(rowsEffected == 1) {

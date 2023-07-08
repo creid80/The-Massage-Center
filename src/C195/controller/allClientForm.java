@@ -27,7 +27,7 @@ import static C195.utilities.Validate.isValidCDelete;
 
 /**@author Carol Reid*/
 
-/**This class is a controller for the allCust Graphical User Interface scene.*/
+/**This class is a controller for the allClient Graphical User Interface scene.*/
 public class allClientForm implements Initializable {
 
     public ComboBox<String> menu;
@@ -41,19 +41,19 @@ public class allClientForm implements Initializable {
     public TableColumn phoneCol;
     public TableColumn divCol;
 
-    private ObservableList<Clients> allCust = Clients.getAllClients();
+    private ObservableList<Clients> allClients = Clients.getAllClients();
 
-    private static Clients mCustomer = null;
+    private static Clients mClient = null;
 
-    public static Clients getmCustomer(){return mCustomer;}
+    public static Clients getmClient(){return mClient;}
 
-    /**This method initializes the allCust scene and populates the customer table.*/
+    /**This method initializes the allClient scene and populates the client table.*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         menu.setItems(C195.helper.Menu.menuItems);
 
-        if (allCust.isEmpty()) {
+        if (allClients.isEmpty()) {
             try {
                 Clients.tableQueryC();
             } catch (SQLException throwables) {
@@ -61,7 +61,7 @@ public class allClientForm implements Initializable {
             }
         }
         else {
-            allCust.clear();
+            allClients.clear();
             try {
                 Clients.tableQueryC();
             } catch (SQLException throwables) {
@@ -69,8 +69,8 @@ public class allClientForm implements Initializable {
             }
         }
 
-        clientTable.setItems(allCust);
-        clientIDcol.setCellValueFactory(new PropertyValueFactory<>("custID"));
+        clientTable.setItems(allClients);
+        clientIDcol.setCellValueFactory(new PropertyValueFactory<>("clientID"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
         postalCol.setCellValueFactory(new PropertyValueFactory<>("postal"));
@@ -88,51 +88,51 @@ public class allClientForm implements Initializable {
         menuSelection(selected, actionEvent);
     }
 
-    /**This method loads the addCust scene when the add button is clicked.*/
-    public void onAddCust(ActionEvent actionEvent) throws IOException {
+    /**This method loads the addClient scene when the add button is clicked.*/
+    public void onAddClient(ActionEvent actionEvent) throws IOException {
 
-        menuSelection("Add A Customer", actionEvent);
+        menuSelection("Add A Client", actionEvent);
     }
 
-    /**This method checks whether a customer has been selected to be modified. Then it loads the
-     * modCust scene.
+    /**This method checks whether a client has been selected to be modified. Then it loads the
+     * modClient scene.
      */
-    public void onModCust(ActionEvent actionEvent) throws IOException {
+    public void onModClient(ActionEvent actionEvent) throws IOException {
 
-        mCustomer = (Clients) clientTable.getSelectionModel().getSelectedItem();
+        mClient = (Clients) clientTable.getSelectionModel().getSelectedItem();
 
-        if (mCustomer == null) {
-            Validate.noSelectionAlert(" customer");
+        if (mClient == null) {
+            Validate.noSelectionAlert(" client");
         }
         else {
 
             Parent root = FXMLLoader.load(Objects.requireNonNull(allApptForm.class.getResource("/C195/view/modClient.fxml")));
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 1100, 600);
-            stage.setTitle("Modify A Customer");
+            stage.setTitle("Modify A Client");
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.show();
         }
     }
 
-    /**This method checks whether a customer has been selected to be deleted. Then it validates
-     * that the customer can be deleted before refreshing the customer table.
+    /**This method checks whether a client has been selected to be deleted. Then it validates
+     * that the client can be deleted before refreshing the client table.
      */
-    public void onDelCust(ActionEvent actionEvent) throws SQLException {
+    public void onDelClient(ActionEvent actionEvent) throws SQLException {
 
-        mCustomer = (Clients) clientTable.getSelectionModel().getSelectedItem();
+        mClient = (Clients) clientTable.getSelectionModel().getSelectedItem();
 
-        if (mCustomer == null) {
-            Validate.noSelectionAlert(" customer");
+        if (mClient == null) {
+            Validate.noSelectionAlert(" client");
         }
         else {
-            isValidCDelete(mCustomer.getClientID());
+            isValidCDelete(mClient.getClientID());
         }
 
-        allCust.clear();
+        allClients.clear();
         Clients.tableQueryC();
-        clientTable.setItems(allCust);
+        clientTable.setItems(allClients);
 
     }
 

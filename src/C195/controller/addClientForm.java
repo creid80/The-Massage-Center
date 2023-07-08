@@ -24,7 +24,7 @@ import static C195.helper.Menu.menuSelection;
 
 /**@author Carol Reid*/
 
-/**This class is a controller for the addCust Graphical User Interface scene.*/
+/**This class is a controller for the addClient Graphical User Interface scene.*/
 public class addClientForm implements Initializable {
 
     public ComboBox<String> menu;
@@ -45,7 +45,7 @@ public class addClientForm implements Initializable {
     private ObservableList<FLDivision> allDiv = FLDivision.getAllFLDiv();
 
 
-    /**This method initializes the addCust scene. It checks whether the country list is empty, and if not,
+    /**This method initializes the addClient scene. It checks whether the country list is empty, and if not,
      * clears it before populating it.
      */
     @Override
@@ -104,7 +104,7 @@ public class addClientForm implements Initializable {
     }
 
     /**This method checks that the address is valid and formats the address according to the country selection.
-     * Next, if all input is valid, it inserts the new customer into the database. Then an alert notifies
+     * Next, if all input is valid, it inserts the new client into the database. Then an alert notifies
      * the user that the insert was or was not successful.
      */
     public void onClientSave(ActionEvent actionEvent) throws SQLException, IOException {
@@ -115,50 +115,50 @@ public class addClientForm implements Initializable {
         String city = addClientCity.getText();
         if(city.isEmpty()) { Validate.blankAlert("City"); return; }
 
-        String newCustAddress;
+        String newClientAddress;
         if(addClientCountry.getValue().getName().equalsIgnoreCase("UK")) {
             String county = addClientCounty.getText();
             if(county.isEmpty()) { Validate.blankAlert("County"); return; }
-            newCustAddress = address + ", " + city + ", " + county;
+            newClientAddress = address + ", " + city + ", " + county;
         }
         else {
-            newCustAddress = address + ", " + city;
+            newClientAddress = address + ", " + city;
         }
 
-        String newCustName = addClientName.getText();
-        String newCustPostal = addClientPostal.getText();
-        String newCustPhone = addClientPhone.getText();
+        String newClientName = addClientName.getText();
+        String newClientPostal = addClientPostal.getText();
+        String newClientPhone = addClientPhone.getText();
 
-        LocalDateTime newCustCreateDate = LocalDateTime.now();
-        String newCustCreatedBy = getUser();
-        LocalDateTime newCustLastUpdate = LocalDateTime.now();
+        LocalDateTime newClientCreateDate = LocalDateTime.now();
+        String newClientCreatedBy = getUser();
+        LocalDateTime newClientLastUpdate = LocalDateTime.now();
 
 
-        if ((Validate.isValidLength("Name", newCustName, 50)) &&
-                (Validate.isValidLength("Address", newCustAddress, 100)) &&
-                (Validate.isValidLength("Postal Code", newCustPostal, 50)) &&
-                (Validate.isValidLength("Phone Number", newCustPhone, 50))) {
+        if ((Validate.isValidLength("Name", newClientName, 50)) &&
+                (Validate.isValidLength("Address", newClientAddress, 100)) &&
+                (Validate.isValidLength("Postal Code", newClientPostal, 50)) &&
+                (Validate.isValidLength("Phone Number", newClientPhone, 50))) {
 
             if (newDivID == 0) { Validate.blankAlert("Country and State/Province"); return;}
 
-            String sql = "INSERT INTO customers(Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By," +
+            String sql = "INSERT INTO client(Client_Name, Address, Postal_Code, Phone, Create_Date, Created_By," +
                     "Last_Update, Last_Updated_By, Division_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ps.setString(1, newCustName);
-            ps.setString(2, newCustAddress);
-            ps.setString(3, newCustPostal);
-            ps.setString(4, newCustPhone);
-            ps.setTimestamp(5, Timestamp.valueOf(newCustCreateDate));
-            ps.setString(6, newCustCreatedBy);
-            ps.setTimestamp(7, Timestamp.valueOf(newCustLastUpdate));
-            String newCustUpdatedBy = " ";
-            ps.setString(8, newCustUpdatedBy);
+            ps.setString(1, newClientName);
+            ps.setString(2, newClientAddress);
+            ps.setString(3, newClientPostal);
+            ps.setString(4, newClientPhone);
+            ps.setTimestamp(5, Timestamp.valueOf(newClientCreateDate));
+            ps.setString(6, newClientCreatedBy);
+            ps.setTimestamp(7, Timestamp.valueOf(newClientLastUpdate));
+            String newClientUpdatedBy = " ";
+            ps.setString(8, newClientUpdatedBy);
             ps.setInt(9, newDivID);
             int rowsEffected = ps.executeUpdate();
             System.out.println(rowsEffected);
 
             if(rowsEffected == 1) {
-                Validate.successAlert("customer", "added");
+                Validate.successAlert("client", "added");
             }
             else {
                 Validate.genAlert();
@@ -168,7 +168,7 @@ public class addClientForm implements Initializable {
         }
     }
 
-    /**This method loads the allCust scene in the Graphical User Interface.*/
+    /**This method loads the allClients scene in the Graphical User Interface.*/
     public void onClientCancel(ActionEvent actionEvent) throws IOException {
         menuSelection("View All Clients", actionEvent);
     }
