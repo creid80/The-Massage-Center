@@ -52,12 +52,11 @@ public class modApptForm implements Initializable {
     public TextField modApptTitle;
     public TextField modApptDesc;
     public ComboBox modApptType;
-    public TextField modApptLoc;
 
 
     private int newApptID = 0;
     private String newLastUpdatedBy = " ";
-    private int newContID = 0;
+    private int newTherapistID = 0;
 
     private LocalDate setDate;
     private LocalTime setStart;
@@ -65,24 +64,24 @@ public class modApptForm implements Initializable {
     private String setType;
 
     private Appointments modAppt = allApptForm.getMAppointment();
-    private ObservableList<Clients> allCust = Clients.getAllClients();
+    private ObservableList<Clients> allClients = Clients.getAllClients();
     private ObservableList<Users> allUsers = Users.getAllUsers();
-    private ObservableList<Therapists> allCont = Therapists.getAllTheras();
+    private ObservableList<Therapists> allTherapists = Therapists.getAllTheras();
     private ObservableList<LocalTime> availETime = apptTime.getAvailEHours();
-    private ObservableList<LocalTime> custAppts = getClientApptHours();
+    private ObservableList<LocalTime> clientAppts = getClientApptHours();
     private static ObservableList<String> Types = FXCollections.observableArrayList();
 
     /**This method initializes the modAppt scene with the data passed through the modAppt object. It calls
-     * methods to populate the customer table, contact drop box and start time combo box. It adds all
+     * methods to populate the client table, therapist drop box and start time combo box. It adds all
      * office hours to availSTime by calling copyOfficeHours. Then it uses the start time assigned to modAppt
-     * to find other appointments that the customer has that day by calling the fillCustApptHours method.
+     * to find other appointments that the client has that day by calling the fillClientApptHours method.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         menu.setItems(C195.helper.Menu.menuItems);
 
-        popcustTable();
+        popclientTable();
 
         String userN = "";
         int userID = modAppt.getUserID();
@@ -94,7 +93,7 @@ public class modApptForm implements Initializable {
         userDropBox.setValue(userN);
         userDropBox.setItems(allUsers);
 
-        popcontDropBox();
+        poptherapistDropBox();
         copyOfficeHours();
 
         setDate = modAppt.getStartLDT().toLocalDate();
@@ -111,17 +110,16 @@ public class modApptForm implements Initializable {
 
         modApptTitle.setText(String.valueOf(modAppt.getTitle()));
         modApptDesc.setText(String.valueOf(modAppt.getNote()));
-        modApptLoc.setText(String.valueOf(modAppt.getLoc()));
 
         newApptID = modAppt.getApptID();
     }
 
-    /**This method populates the customer table and selects the customer who's ID matches the custID
+    /**This method populates the client table and selects the client who's ID matches the clientID
      * assigned to the modAppt object.
      */
-    public void popcustTable() {
+    public void popclientTable() {
 
-        if (allCust.isEmpty()) {
+        if (allClients.isEmpty()) {
             try {
                 Clients.tableQueryC();
             } catch (SQLException throwables) {
@@ -129,7 +127,7 @@ public class modApptForm implements Initializable {
             }
         }
         else {
-            allCust.clear();
+            allClients.clear();
             try {
                 Clients.tableQueryC();
             } catch (SQLException throwables) {
@@ -137,15 +135,15 @@ public class modApptForm implements Initializable {
             }
         }
 
-        int selectedCust = modAppt.getClientID();
-        for (Clients cust : Clients.getAllClients() ) {
-            if(cust.getClientID() == selectedCust) {
-                clientTable.getSelectionModel().select(cust);
+        int selectedClient = modAppt.getClientID();
+        for (Clients c : Clients.getAllClients() ) {
+            if(c.getClientID() == selectedClient) {
+                clientTable.getSelectionModel().select(c);
             }
         }
 
-        clientTable.setItems(allCust);
-        clientIDCol.setCellValueFactory(new PropertyValueFactory<>("custID"));
+        clientTable.setItems(allClients);
+        clientIDCol.setCellValueFactory(new PropertyValueFactory<>("clientID"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
         postalCol.setCellValueFactory(new PropertyValueFactory<>("postal"));
@@ -156,16 +154,16 @@ public class modApptForm implements Initializable {
         clientTable.sort();
     }
 
-    /**This method populates the contact combo box and selects the contact assigned to the modAppt object.*/
-    public void popcontDropBox() {
+    /**This method populates the therapist combo box and selects the therapist assigned to the modAppt object.*/
+    public void poptherapistDropBox() {
 
-        String setCont = modAppt.getTherapistName();
-        therapistDropBox.setItems(allCont);
-        therapistDropBox.setValue(setCont);
+        String setTherapist = modAppt.getTherapistName();
+        therapistDropBox.setItems(allTherapists);
+        therapistDropBox.setValue(setTherapist);
     }
 
     /**This method sets the start time and end time combo boxes to the times assigned to the modAppt object.
-     * Then it checks for available start times based on the contact and date. If the assigned customer has
+     * Then it checks for available start times based on the therapist and date. If the assigned client has
      * other appointments that day, the times are removed from the list. Next, the current appointment time
      * is added to the list, and finally, the available end time combo box is populated.
      */
@@ -179,11 +177,11 @@ public class modApptForm implements Initializable {
         setEnd = officeEnd.toLocalTime();
         endTime.setValue(setEnd);
 
-        newContID = modAppt.getTherapistID();
+        newTherapistID = modAppt.getTherapistID();
 
-        boolean apptAvail = (apptTime.getApptSTimes(newContID, setDate));
+        boolean apptAvail = (apptTime.getApptSTimes(newTherapistID, setDate));
 
-        if (!(custAppts.isEmpty())) {
+        if (!(clientAppts.isEmpty())) {
             removeCAppt();
         }
 
@@ -205,6 +203,9 @@ public class modApptForm implements Initializable {
         menuSelection(selected, actionEvent);
     }
 
+
+    // FIX ME
+
     public void popTypeCB() {
        Types.clear();
            Types.addAll("Acupuncture", "Deep Tissue", "Hot Stone", "Reflexology", "Sports", "Swedish");
@@ -212,18 +213,18 @@ public class modApptForm implements Initializable {
            modApptType.setValue(setType);
     }
 
-    /**This method checks whether the selected customer ID matches the modAppt object's assigned customer ID.
-     * If it does not match, the contact, date, start time, and end time are all cleared.
+    /**This method checks whether the selected client ID matches the modAppt object's assigned client ID.
+     * If it does not match, the therapist, date, start time, and end time are all cleared.
      */
     public void onClientSelected(MouseEvent mouseEvent) {
 
-        Clients newCust = (Clients) clientTable.getSelectionModel().getSelectedItem();
+        Clients newClient = (Clients) clientTable.getSelectionModel().getSelectedItem();
 
-        if(newCust.getClientID() != modAppt.getClientID()) {
+        if(newClient.getClientID() != modAppt.getClientID()) {
 
             if (apptDatePicker.getValue() != null) {
 
-                therapistDropBox.setItems(allCont);
+                therapistDropBox.setItems(allTherapists);
                 apptDatePicker.setValue(null);
                 availSHours.clear();
                 availETime.clear();
@@ -242,19 +243,19 @@ public class modApptForm implements Initializable {
         newLastUpdatedBy = selectedUser.getUserName();
     }
 
-    /**This method checks whether the selected contact ID matches the modAppt objects's assigned contact ID.
+    /**This method checks whether the selected therapist ID matches the modAppt objects's assigned therapist ID.
      * If it does not match, the date, start time, and end time are all cleared.
      */
     public void onTherapistDropBox(ActionEvent actionEvent) {
 
-        Therapists selContact = (Therapists) therapistDropBox.getValue();
-        newContID = selContact.getTheraID();
+        Therapists selTherapist = (Therapists) therapistDropBox.getValue();
+        newTherapistID = selTherapist.getTheraID();
 
         if (apptDatePicker.getValue() != null) {
 
             apptDatePicker.setValue(null);
             availSHours.clear();
-            custAppts.clear();
+            clientAppts.clear();
             availETime.clear();
             startTime.setItems(null);
             startTime.setValue(null);
@@ -263,12 +264,12 @@ public class modApptForm implements Initializable {
         }
     }
 
-    /**This method gets the selected date and after clearing the available start times, customer appointments,
-     * and available end times it checks for available start times based on the contact and date. After getting
-     * the selected customer, it checks for other appointments that day, and the times are removed from the list.
+    /**This method gets the selected date and after clearing the available start times, client appointments,
+     * and available end times it checks for available start times based on the therapist and date. After getting
+     * the selected client, it checks for other appointments that day, and the times are removed from the list.
      * Next, the current appointment time is added to the list. If availStimes is empty but there are available
-     * appointment times, add all office hours to availStimes. If the selected date and either the contact or
-     * customer are the same as the original data assigned to the modAppt object, add the current appointment times.
+     * appointment times, add all office hours to availStimes. If the selected date and either the therapist or
+     * client are the same as the original data assigned to the modAppt object, add the current appointment times.
      */
     public void onDatePicked(ActionEvent actionEvent) throws SQLException {
 
@@ -281,16 +282,16 @@ public class modApptForm implements Initializable {
 
         if(!(availSHours.isEmpty())) {
             availSHours.clear();
-            custAppts.clear();
+            clientAppts.clear();
             availETime.clear();
         }
 
-        apptAvail = (apptTime.getApptSTimes(newContID, pickedDate));
+        apptAvail = (apptTime.getApptSTimes(newTherapistID, pickedDate));
 
-        Clients modCust = (Clients) clientTable.getSelectionModel().getSelectedItem();
+        Clients modClient = (Clients) clientTable.getSelectionModel().getSelectedItem();
 
-        fillClientApptHours(modCust.getClientID(), pickedDate);
-        if(!(custAppts.isEmpty())) {
+        fillClientApptHours(modClient.getClientID(), pickedDate);
+        if(!(clientAppts.isEmpty())) {
             removeCAppt();
         }
 
@@ -298,8 +299,8 @@ public class modApptForm implements Initializable {
             copyOfficeHours();
         }
 
-        if((pickedDate.isEqual(setDate)) && ((modCust.getClientID() == modAppt.getClientID()) ||
-                (newContID == modAppt.getTherapistID()))) {
+        if((pickedDate.isEqual(setDate)) && ((modClient.getClientID() == modAppt.getClientID()) ||
+                (newTherapistID == modAppt.getTherapistID()))) {
 
             addCurrAppt(setStart, setEnd);
         }
@@ -349,11 +350,11 @@ public class modApptForm implements Initializable {
      */
     public void onModAppt(ActionEvent actionEvent) throws SQLException, IOException {
 
-        Clients newCust = (Clients) clientTable.getSelectionModel().getSelectedItem();
+        Clients newClient = (Clients) clientTable.getSelectionModel().getSelectedItem();
 
-        if(newCust == null) { Validate.blankAlert("Customer"); return; }
+        if(newClient == null) { Validate.blankAlert("Client"); return; }
         if(userDropBox.getValue() == null) { Validate.blankAlert("User"); return; }
-        if(therapistDropBox.getValue() == null) { Validate.blankAlert("Contact"); return; }
+        if(therapistDropBox.getValue() == null) { Validate.blankAlert("Therapist"); return; }
         if(apptDatePicker.getValue() == null) { Validate.blankAlert("Date"); return; }
         if(startTime.getValue() == null) { Validate.blankAlert("Start Time"); return; }
         if(endTime.getValue() == null) { Validate.blankAlert("End Time"); return; }
@@ -362,35 +363,32 @@ public class modApptForm implements Initializable {
         LocalDateTime newStart = estToLocal(LocalDateTime.of(apptDatePicker.getValue(), (LocalTime) startTime.getValue()));
         LocalDateTime newEnd = estToLocal(LocalDateTime.of(apptDatePicker.getValue(), (LocalTime) endTime.getValue()));
 
-        int newCustID = newCust.getClientID();
+        int newCustID = newClient.getClientID();
 
         String newTitle = modApptTitle.getText();
         String newDesc = modApptDesc.getText();
         String newType = modApptType.getValue().toString();
-        String newLoc = modApptLoc.getText();
 
         LocalDateTime newLastUpdate = LocalDateTime.now();
 
         if((Validate.isValidLength("Title", newTitle, 50)) &&
-                (Validate.isValidLength("Description", newDesc, 50)) &&
-                (Validate.isValidLength("Location", newLoc, 50))) {
+                (Validate.isValidLength("Description", newDesc, 150))) {
 
-            String sql = "UPDATE APPOINTMENTS SET Title = ?, Description = ?, Location = ?, Type = ?, " +
+            String sql = "UPDATE APPOINTMENTS SET Title = ?, Description = ?, Type = ?, " +
                     "\nStart = ?, End = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, " +
                     "\nContact_ID = ?" +
                     "\nWHERE Appointment_ID = ?";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setString(1, newTitle);
             ps.setString(2, newDesc);
-            ps.setString(3, newLoc);
-            ps.setString(4, newType);
-            ps.setTimestamp(5, Timestamp.valueOf(newStart));
-            ps.setTimestamp(6, Timestamp.valueOf(newEnd));
-            ps.setTimestamp(7, Timestamp.valueOf(newLastUpdate));
-            ps.setString(8, newLastUpdatedBy);
-            ps.setInt(9, newCustID);
-            ps.setInt(10, newContID);
-            ps.setInt(11, newApptID);
+            ps.setString(3, newType);
+            ps.setTimestamp(4, Timestamp.valueOf(newStart));
+            ps.setTimestamp(5, Timestamp.valueOf(newEnd));
+            ps.setTimestamp(6, Timestamp.valueOf(newLastUpdate));
+            ps.setString(7, newLastUpdatedBy);
+            ps.setInt(8, newCustID);
+            ps.setInt(9, newTherapistID);
+            ps.setInt(10, newApptID);
             int rowsEffected = ps.executeUpdate();
 
             if(rowsEffected == 1) {
