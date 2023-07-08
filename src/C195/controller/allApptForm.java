@@ -39,11 +39,11 @@ public class allApptForm implements Initializable {
     public TableColumn titleCol;
     public TableColumn descCol;
     public TableColumn locCol;
-    public TableColumn contactCol;
+    public TableColumn therapistCol;
     public TableColumn typeCol;
     public TableColumn startCol;
     public TableColumn endCol;
-    public TableColumn custIDCol;
+    public TableColumn clientIDCol;
     public TableColumn userIDCol;
     public RadioButton thisMonthRadio;
     public RadioButton thisWeekRadio;
@@ -88,11 +88,11 @@ public class allApptForm implements Initializable {
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         descCol.setCellValueFactory(new PropertyValueFactory<>("desc"));
         locCol.setCellValueFactory(new PropertyValueFactory<>("loc"));
-        contactCol.setCellValueFactory(new PropertyValueFactory<>("contName"));
+        therapistCol.setCellValueFactory(new PropertyValueFactory<>("contName"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         startCol.setCellValueFactory(new PropertyValueFactory<>("startLDT"));
         endCol.setCellValueFactory(new PropertyValueFactory<>("endLDT"));
-        custIDCol.setCellValueFactory(new PropertyValueFactory<>("custID"));
+        clientIDCol.setCellValueFactory(new PropertyValueFactory<>("custID"));
         userIDCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
 
         apptTable.getSortOrder().add(ApptIDCol);

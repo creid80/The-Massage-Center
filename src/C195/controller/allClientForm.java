@@ -28,13 +28,13 @@ import static C195.utilities.Validate.isValidCDelete;
 /**@author Carol Reid*/
 
 /**This class is a controller for the allCust Graphical User Interface scene.*/
-public class allCustForm implements Initializable {
+public class allClientForm implements Initializable {
 
     public ComboBox<String> menu;
 
     public String selected;
-    public TableView custTable;
-    public TableColumn custIDcol;
+    public TableView clientTable;
+    public TableColumn clientIDcol;
     public TableColumn nameCol;
     public TableColumn addressCol;
     public TableColumn postalCol;
@@ -69,16 +69,16 @@ public class allCustForm implements Initializable {
             }
         }
 
-        custTable.setItems(allCust);
-        custIDcol.setCellValueFactory(new PropertyValueFactory<>("custID"));
+        clientTable.setItems(allCust);
+        clientIDcol.setCellValueFactory(new PropertyValueFactory<>("custID"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
         postalCol.setCellValueFactory(new PropertyValueFactory<>("postal"));
         phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         divCol.setCellValueFactory(new PropertyValueFactory<>("divID"));
 
-        custTable.getSortOrder().add(custIDcol);
-        custTable.sort();
+        clientTable.getSortOrder().add(clientIDcol);
+        clientTable.sort();
     }
 
     /**This method takes the selected menu item, and passes it to the Menu.menuSelection method. */
@@ -99,14 +99,14 @@ public class allCustForm implements Initializable {
      */
     public void onModCust(ActionEvent actionEvent) throws IOException {
 
-        mCustomer = (Clients) custTable.getSelectionModel().getSelectedItem();
+        mCustomer = (Clients) clientTable.getSelectionModel().getSelectedItem();
 
         if (mCustomer == null) {
             Validate.noSelectionAlert(" customer");
         }
         else {
 
-            Parent root = FXMLLoader.load(Objects.requireNonNull(allApptForm.class.getResource("/C195/view/modCust.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(allApptForm.class.getResource("/C195/view/modClient.fxml")));
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 1100, 600);
             stage.setTitle("Modify A Customer");
@@ -121,7 +121,7 @@ public class allCustForm implements Initializable {
      */
     public void onDelCust(ActionEvent actionEvent) throws SQLException {
 
-        mCustomer = (Clients) custTable.getSelectionModel().getSelectedItem();
+        mCustomer = (Clients) clientTable.getSelectionModel().getSelectedItem();
 
         if (mCustomer == null) {
             Validate.noSelectionAlert(" customer");
@@ -132,7 +132,7 @@ public class allCustForm implements Initializable {
 
         allCust.clear();
         Clients.tableQueryC();
-        custTable.setItems(allCust);
+        clientTable.setItems(allCust);
 
     }
 

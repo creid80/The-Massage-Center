@@ -20,9 +20,9 @@ import static C195.utilities.Validate.pickToMod;
 /**This class helps centralize the navigation through the application.*/
 public class Menu {
 
-    public static ObservableList<String> menuItems = FXCollections.observableArrayList("View All Appointments", "Add An Appointment", "Modify An Appointment", "\n", "View All Clients", "Add A Customer", "Modify A Customer", "\n", "Monthly Type Report", "Contact Schedules", "Customer Appointments Report");
+    public static ObservableList<String> menuItems = FXCollections.observableArrayList("View All Appointments", "Add An Appointment", "Modify An Appointment", "\n", "View All Clients", "Add A Client", "Modify A Client", "\n", "Monthly Type Report", "Therapist Schedules", "Client Appointments Report");
 
-    /**This method checks what selection what made and loads the correct scene.*/
+    /**This method checks what selection was made and loads the correct scene.*/
     public static void menuSelection(String selected, ActionEvent actionEvent) throws IOException {
 
         if (!(selected.isEmpty())) {
@@ -61,7 +61,7 @@ public class Menu {
                 }
                 case "View All Clients" -> {
 
-                    Parent root = FXMLLoader.load(Objects.requireNonNull(allApptForm.class.getResource("/C195/view/allCust.fxml")));
+                    Parent root = FXMLLoader.load(Objects.requireNonNull(allApptForm.class.getResource("/C195/view/allClient.fxml")));
                     Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                     Scene scene = new Scene(root, 1100, 600);
                     stage.setTitle("All Clients");
@@ -69,27 +69,27 @@ public class Menu {
                     stage.centerOnScreen();
                     stage.show();
                 }
-                case "Add A Customer" -> {
+                case "Add A Client" -> {
 
-                    Parent root = FXMLLoader.load(Objects.requireNonNull(allApptForm.class.getResource("/C195/view/addCust.fxml")));
+                    Parent root = FXMLLoader.load(Objects.requireNonNull(allApptForm.class.getResource("/C195/view/addClient.fxml")));
                     Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                     Scene scene = new Scene(root, 1100, 600);
-                    stage.setTitle("Add A Customer");
+                    stage.setTitle("Add A Client");
                     stage.setScene(scene);
                     stage.centerOnScreen();
                     stage.show();
                 }
-                case "Modify A Customer" -> {
+                case "Modify A Client" -> {
 
-                    Parent root = FXMLLoader.load(Objects.requireNonNull(allApptForm.class.getResource("/C195/view/allCust.fxml")));
+                    Parent root = FXMLLoader.load(Objects.requireNonNull(allApptForm.class.getResource("/C195/view/allClient.fxml")));
                     Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                     Scene scene = new Scene(root, 1100, 600);
-                    stage.setTitle("All Clients");
+                    stage.setTitle("Modify A Client");
                     stage.setScene(scene);
                     stage.centerOnScreen();
                     stage.show();
 
-                    pickToMod(" customer");
+                    pickToMod(" client");
 
                 }
                 case "Monthly Type Report" -> {
@@ -102,22 +102,22 @@ public class Menu {
                     stage.centerOnScreen();
                     stage.show();
                 }
-                case "Contact Schedules" -> {
+                case "Therapist Schedules" -> {
 
                     Parent root = FXMLLoader.load(Objects.requireNonNull(allApptForm.class.getResource("/C195/view/schedules.fxml")));
                     Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                     Scene scene = new Scene(root, 1100, 600);
-                    stage.setTitle("Contact Schedules");
+                    stage.setTitle("Therapist Schedules");
                     stage.setScene(scene);
                     stage.centerOnScreen();
                     stage.show();
                 }
-                case "Customer Appointments Report" -> {
+                case "Client Appointments Report" -> {
 
-                    Parent root = FXMLLoader.load(Objects.requireNonNull(allApptForm.class.getResource("/C195/view/custApptRep.fxml")));
+                    Parent root = FXMLLoader.load(Objects.requireNonNull(allApptForm.class.getResource("/C195/view/clientApptRep.fxml")));
                     Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                     Scene scene = new Scene(root, 1100, 600);
-                    stage.setTitle("Customer Appointments Report");
+                    stage.setTitle("Client Appointments Report");
                     stage.setScene(scene);
                     stage.centerOnScreen();
                     stage.show();

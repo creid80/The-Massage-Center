@@ -37,15 +37,15 @@ public class modApptForm implements Initializable {
     public ComboBox<String> menu;
     public String selected;
 
-    public TableView custTable;
-    public TableColumn custIDCol;
+    public TableView clientTable;
+    public TableColumn clientIDCol;
     public TableColumn nameCol;
     public TableColumn addressCol;
     public TableColumn postalCol;
     public TableColumn phoneCol;
     public TableColumn divCol;
     public ComboBox userDropBox;
-    public ComboBox contDropBox;
+    public ComboBox therapistDropBox;
     public DatePicker apptDatePicker;
     public ComboBox startTime;
     public ComboBox endTime;
@@ -140,28 +140,28 @@ public class modApptForm implements Initializable {
         int selectedCust = modAppt.getClientID();
         for (Clients cust : Clients.getAllClients() ) {
             if(cust.getClientID() == selectedCust) {
-                custTable.getSelectionModel().select(cust);
+                clientTable.getSelectionModel().select(cust);
             }
         }
 
-        custTable.setItems(allCust);
-        custIDCol.setCellValueFactory(new PropertyValueFactory<>("custID"));
+        clientTable.setItems(allCust);
+        clientIDCol.setCellValueFactory(new PropertyValueFactory<>("custID"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
         postalCol.setCellValueFactory(new PropertyValueFactory<>("postal"));
         phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         divCol.setCellValueFactory(new PropertyValueFactory<>("divID"));
 
-        custTable.getSortOrder().add(custIDCol);
-        custTable.sort();
+        clientTable.getSortOrder().add(clientIDCol);
+        clientTable.sort();
     }
 
     /**This method populates the contact combo box and selects the contact assigned to the modAppt object.*/
     public void popcontDropBox() {
 
         String setCont = modAppt.getTherapistName();
-        contDropBox.setItems(allCont);
-        contDropBox.setValue(setCont);
+        therapistDropBox.setItems(allCont);
+        therapistDropBox.setValue(setCont);
     }
 
     /**This method sets the start time and end time combo boxes to the times assigned to the modAppt object.
@@ -215,15 +215,15 @@ public class modApptForm implements Initializable {
     /**This method checks whether the selected customer ID matches the modAppt object's assigned customer ID.
      * If it does not match, the contact, date, start time, and end time are all cleared.
      */
-    public void onCustSelected(MouseEvent mouseEvent) {
+    public void onClientSelected(MouseEvent mouseEvent) {
 
-        Clients newCust = (Clients) custTable.getSelectionModel().getSelectedItem();
+        Clients newCust = (Clients) clientTable.getSelectionModel().getSelectedItem();
 
         if(newCust.getClientID() != modAppt.getClientID()) {
 
             if (apptDatePicker.getValue() != null) {
 
-                contDropBox.setItems(allCont);
+                therapistDropBox.setItems(allCont);
                 apptDatePicker.setValue(null);
                 availSHours.clear();
                 availETime.clear();
@@ -245,9 +245,9 @@ public class modApptForm implements Initializable {
     /**This method checks whether the selected contact ID matches the modAppt objects's assigned contact ID.
      * If it does not match, the date, start time, and end time are all cleared.
      */
-    public void onContDropBox(ActionEvent actionEvent) {
+    public void onTherapistDropBox(ActionEvent actionEvent) {
 
-        Therapists selContact = (Therapists) contDropBox.getValue();
+        Therapists selContact = (Therapists) therapistDropBox.getValue();
         newContID = selContact.getTheraID();
 
         if (apptDatePicker.getValue() != null) {
@@ -287,7 +287,7 @@ public class modApptForm implements Initializable {
 
         apptAvail = (apptTime.getApptSTimes(newContID, pickedDate));
 
-        Clients modCust = (Clients) custTable.getSelectionModel().getSelectedItem();
+        Clients modCust = (Clients) clientTable.getSelectionModel().getSelectedItem();
 
         fillClientApptHours(modCust.getClientID(), pickedDate);
         if(!(custAppts.isEmpty())) {
@@ -349,11 +349,11 @@ public class modApptForm implements Initializable {
      */
     public void onModAppt(ActionEvent actionEvent) throws SQLException, IOException {
 
-        Clients newCust = (Clients) custTable.getSelectionModel().getSelectedItem();
+        Clients newCust = (Clients) clientTable.getSelectionModel().getSelectedItem();
 
         if(newCust == null) { Validate.blankAlert("Customer"); return; }
         if(userDropBox.getValue() == null) { Validate.blankAlert("User"); return; }
-        if(contDropBox.getValue() == null) { Validate.blankAlert("Contact"); return; }
+        if(therapistDropBox.getValue() == null) { Validate.blankAlert("Contact"); return; }
         if(apptDatePicker.getValue() == null) { Validate.blankAlert("Date"); return; }
         if(startTime.getValue() == null) { Validate.blankAlert("Start Time"); return; }
         if(endTime.getValue() == null) { Validate.blankAlert("End Time"); return; }

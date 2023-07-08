@@ -20,15 +20,15 @@ import java.util.ResourceBundle;
 /**@author Carol Reid*/
 
 /**This class is a controller for the custApptRep Graphical User Interface scene.*/
-public class custApptRepForm implements Initializable {
+public class clientApptRepForm implements Initializable {
 
 
     public ComboBox<String> menu;
     public String selected;
     public TextField clientSearch;
 
-    public TableView custTable;
-    public TableColumn cTCustID;
+    public TableView clientTable;
+    public TableColumn cTClientID;
     public TableColumn cTName;
     public TableColumn cTAddress;
     public TableColumn cTPostal;
@@ -42,7 +42,7 @@ public class custApptRepForm implements Initializable {
     public TableColumn aTType;
     public TableColumn aTStart;
     public TableColumn aTEnd;
-    public TableColumn aTContName;
+    public TableColumn aTTherapistName;
 
     private ObservableList<Clients> searchClientText = null;
 
@@ -70,16 +70,16 @@ public class custApptRepForm implements Initializable {
             }
         }
 
-        custTable.setItems(allCust);
-        cTCustID.setCellValueFactory(new PropertyValueFactory<>("custID"));
+        clientTable.setItems(allCust);
+        cTClientID.setCellValueFactory(new PropertyValueFactory<>("custID"));
         cTName.setCellValueFactory(new PropertyValueFactory<>("name"));
         cTAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         cTPostal.setCellValueFactory(new PropertyValueFactory<>("postal"));
         cTPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         cTDiv.setCellValueFactory(new PropertyValueFactory<>("divID"));
 
-        custTable.getSortOrder().add(cTCustID);
-        custTable.sort();
+        clientTable.getSortOrder().add(cTClientID);
+        clientTable.sort();
 
     }
 
@@ -101,7 +101,7 @@ public class custApptRepForm implements Initializable {
         searchClientText = Clients.lookupClient(q);
 
         if(q == "") {
-            custTable.setItems(allCust);
+            clientTable.setItems(allCust);
             return;
         }
         else if (searchClientText.size() == 0) {
@@ -126,7 +126,7 @@ public class custApptRepForm implements Initializable {
             clientSearch.clear();
         }
         else {
-            custTable.setItems(searchClientText);
+            clientTable.setItems(searchClientText);
             clientSearch.setText("");
         }
     }
@@ -134,11 +134,11 @@ public class custApptRepForm implements Initializable {
     /**This method gets the selected customer and filters all appointments by the customer. Then it populates
      * the appointment table with all of the filtered appointments.
      */
-    public void onCustSelected(MouseEvent mouseEvent) {
+    public void onClientSelected(MouseEvent mouseEvent) {
 
-        if(custTable.getSelectionModel().getSelectedItem() != null) {
+        if(clientTable.getSelectionModel().getSelectedItem() != null) {
 
-            Clients sCustomer = (Clients) custTable.getSelectionModel().getSelectedItem();
+            Clients sCustomer = (Clients) clientTable.getSelectionModel().getSelectedItem();
             int sCustID = sCustomer.getClientID();
 
             FilteredList<Appointments> fAppt = new FilteredList<>(Appointments.getAllAppts());
@@ -151,7 +151,7 @@ public class custApptRepForm implements Initializable {
             aTType.setCellValueFactory(new PropertyValueFactory<>("type"));
             aTStart.setCellValueFactory(new PropertyValueFactory<>("startLDT"));
             aTEnd.setCellValueFactory(new PropertyValueFactory<>("endLDT"));
-            aTContName.setCellValueFactory(new PropertyValueFactory<>("contName"));
+            aTTherapistName.setCellValueFactory(new PropertyValueFactory<>("contName"));
 
             apptTable.getSortOrder().add(aTStart);
             apptTable.sort();

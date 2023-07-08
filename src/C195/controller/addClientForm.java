@@ -25,19 +25,19 @@ import static C195.helper.Menu.menuSelection;
 /**@author Carol Reid*/
 
 /**This class is a controller for the addCust Graphical User Interface scene.*/
-public class addCustForm implements Initializable {
+public class addClientForm implements Initializable {
 
     public ComboBox<String> menu;
     public String selected;
 
-    public TextField addCustName;
-    public TextField addCustPhone;
-    public TextField addCustAddress;
-    public TextField addCustCity;
-    public TextField addCustCounty;
-    public ComboBox<Countries> addCustCountry;
-    public ComboBox<FLDivision> addCustState;
-    public TextField addCustPostal;
+    public TextField addClientName;
+    public TextField addClientPhone;
+    public TextField addClientAddress;
+    public TextField addClientCity;
+    public TextField addClientCounty;
+    public ComboBox<Countries> addClientCountry;
+    public ComboBox<FLDivision> addClientState;
+    public TextField addClientPostal;
 
     private int newDivID = 0;
 
@@ -69,7 +69,7 @@ public class addCustForm implements Initializable {
             }
         }
 
-        addCustCountry.setItems(allCountries);
+        addClientCountry.setItems(allCountries);
     }
 
     /**This method takes the selected menu item, and passes it to the Menu.menuSelection method. */
@@ -82,22 +82,22 @@ public class addCustForm implements Initializable {
     /**This method checks whether a country has been selected. Then it clears the division combo box, before
      * populating it with the correct divisions.
      */
-    public void onCustCountry(ActionEvent actionEvent) throws SQLException {
+    public void onClientCountry(ActionEvent actionEvent) throws SQLException {
 
-        Countries selectedC = addCustCountry.getValue();
+        Countries selectedC = addClientCountry.getValue();
         if(selectedC != null) {
 
             int selectedID = selectedC.getCountryID();
             allDiv.clear();
             FLDivision.divisionQuery(selectedID);
-            addCustState.setItems(allDiv);
+            addClientState.setItems(allDiv);
         }
     }
 
     /**This method checks whether a division has been selected and assigns it to the correct variable.*/
-    public void onCustState(ActionEvent actionEvent) {
+    public void onClientState(ActionEvent actionEvent) {
 
-        FLDivision selected = addCustState.getValue();
+        FLDivision selected = addClientState.getValue();
         if(selected != null) {
             newDivID = selected.getDivID();
         }
@@ -107,17 +107,17 @@ public class addCustForm implements Initializable {
      * Next, if all input is valid, it inserts the new customer into the database. Then an alert notifies
      * the user that the insert was or was not successful.
      */
-    public void onCustSave(ActionEvent actionEvent) throws SQLException, IOException {
+    public void onClientSave(ActionEvent actionEvent) throws SQLException, IOException {
 
-        String address = addCustAddress.getText();
+        String address = addClientAddress.getText();
         if(address.isEmpty()) { Validate.blankAlert("Address"); return; }
 
-        String city = addCustCity.getText();
+        String city = addClientCity.getText();
         if(city.isEmpty()) { Validate.blankAlert("City"); return; }
 
         String newCustAddress;
-        if(addCustCountry.getValue().getName().equalsIgnoreCase("UK")) {
-            String county = addCustCounty.getText();
+        if(addClientCountry.getValue().getName().equalsIgnoreCase("UK")) {
+            String county = addClientCounty.getText();
             if(county.isEmpty()) { Validate.blankAlert("County"); return; }
             newCustAddress = address + ", " + city + ", " + county;
         }
@@ -125,9 +125,9 @@ public class addCustForm implements Initializable {
             newCustAddress = address + ", " + city;
         }
 
-        String newCustName = addCustName.getText();
-        String newCustPostal = addCustPostal.getText();
-        String newCustPhone = addCustPhone.getText();
+        String newCustName = addClientName.getText();
+        String newCustPostal = addClientPostal.getText();
+        String newCustPhone = addClientPhone.getText();
 
         LocalDateTime newCustCreateDate = LocalDateTime.now();
         String newCustCreatedBy = getUser();
@@ -169,7 +169,7 @@ public class addCustForm implements Initializable {
     }
 
     /**This method loads the allCust scene in the Graphical User Interface.*/
-    public void onCustCancel(ActionEvent actionEvent) throws IOException {
+    public void onClientCancel(ActionEvent actionEvent) throws IOException {
         menuSelection("View All Clients", actionEvent);
     }
 

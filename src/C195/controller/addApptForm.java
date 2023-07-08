@@ -38,15 +38,15 @@ public class addApptForm implements Initializable {
     public ComboBox<String> menu;
 
     public String selected;
-    public TableView custTable;
-    public TableColumn custIDCol;
+    public TableView clientTable;
+    public TableColumn clientIDCol;
     public TableColumn nameCol;
     public TableColumn addressCol;
     public TableColumn postalCol;
     public TableColumn phoneCol;
     public TableColumn divCol;
     public ComboBox userDropBox;
-    public ComboBox contDropBox;
+    public ComboBox therapistDropBox;
     public DatePicker apptDatePicker;
     public ComboBox startTime;
     public ComboBox endTime;
@@ -74,7 +74,7 @@ public class addApptForm implements Initializable {
 
         popcustTable();
         userDropBox.setItems(allUsers);
-        contDropBox.setItems(allCont);
+        therapistDropBox.setItems(allCont);
         copyOfficeHours();
         popTypeCB();
 
@@ -102,16 +102,16 @@ public class addApptForm implements Initializable {
             }
         }
 
-        custTable.setItems(allCust);
-        custIDCol.setCellValueFactory(new PropertyValueFactory<>("custID"));
+        clientTable.setItems(allCust);
+        clientIDCol.setCellValueFactory(new PropertyValueFactory<>("custID"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
         postalCol.setCellValueFactory(new PropertyValueFactory<>("postal"));
         phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         divCol.setCellValueFactory(new PropertyValueFactory<>("divID"));
 
-        custTable.getSortOrder().add(custIDCol);
-        custTable.sort();
+        clientTable.getSortOrder().add(clientIDCol);
+        clientTable.sort();
     }
 
     /**This method takes the selected menu item, and passes it to the Menu.menuSelection method. */
@@ -130,13 +130,13 @@ public class addApptForm implements Initializable {
     /**This method checks whether this is the first time a customer has been selected. If this is not the
      * first time, it clears the date and time combo boxes.
      */
-    public void onCustSelected(MouseEvent mouseEvent) {
+    public void onClientSelected(MouseEvent mouseEvent) {
 
         if(currCust.getName().isBlank()) {
-            currCust = (Clients) custTable.getSelectionModel().getSelectedItem();
+            currCust = (Clients) clientTable.getSelectionModel().getSelectedItem();
         }
         else {
-            Clients newCust = (Clients) custTable.getSelectionModel().getSelectedItem();
+            Clients newCust = (Clients) clientTable.getSelectionModel().getSelectedItem();
 
             if(currCust.getClientID() != newCust.getClientID()) {
 
@@ -166,9 +166,9 @@ public class addApptForm implements Initializable {
     /**This method takes the selected contact and stores it. Then it checks whether the date picker has a value,
      * and if so, it clears the date picker and both time combo boxes.
      */
-    public void onContDropBox(ActionEvent actionEvent) {
+    public void onTherapistDropBox(ActionEvent actionEvent) {
 
-        Therapists selContact = (Therapists) contDropBox.getValue();
+        Therapists selContact = (Therapists) therapistDropBox.getValue();
         newContID = selContact.getTheraID();
 
         if (apptDatePicker.getValue() != null) {
@@ -197,11 +197,11 @@ public class addApptForm implements Initializable {
             return;
         }
 
-        if(custTable.getSelectionModel().isEmpty()) {
+        if(clientTable.getSelectionModel().isEmpty()) {
             noSelectionAlert(" customer");
         }
         else {
-            Clients selCust = (Clients) custTable.getSelectionModel().getSelectedItem();
+            Clients selCust = (Clients) clientTable.getSelectionModel().getSelectedItem();
             int sCustID = selCust.getClientID();
             fillClientApptHours(sCustID, pickedDate);
         }
@@ -256,11 +256,11 @@ public class addApptForm implements Initializable {
      */
     public void onAddAppointment(ActionEvent actionEvent) throws SQLException, IOException {
 
-        Clients newCust = (Clients) custTable.getSelectionModel().getSelectedItem();
+        Clients newCust = (Clients) clientTable.getSelectionModel().getSelectedItem();
 
         if(newCust == null) { Validate.blankAlert("Customer"); return; }
         if(userDropBox.getValue() == null) { Validate.blankAlert("User"); return; }
-        if(contDropBox.getValue() == null) { Validate.blankAlert("Contact"); return; }
+        if(therapistDropBox.getValue() == null) { Validate.blankAlert("Contact"); return; }
         if(apptDatePicker.getValue() == null) { Validate.blankAlert("Date"); return; }
         if(startTime.getValue() == null) { Validate.blankAlert("Start Time"); return; }
         if(endTime.getValue() == null) { Validate.blankAlert("End Time"); return; }

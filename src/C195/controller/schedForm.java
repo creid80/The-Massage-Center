@@ -35,7 +35,7 @@ public class schedForm implements Initializable {
     public TableColumn schedulesStart;
     public TableColumn schedulesEnd;
     public TableColumn schedulesCustID;
-    public ComboBox contact;
+    public ComboBox therapist;
     public DatePicker date;
 
     private ObservableList<Therapists> allContacts = Therapists.getAllTheras();
@@ -48,7 +48,7 @@ public class schedForm implements Initializable {
 
         menu.setItems(C195.helper.Menu.menuItems);
 
-        contact.setItems(allContacts);
+        therapist.setItems(allContacts);
     }
 
     /**This method takes the selected menu item, and passes it to the Menu.menuSelection method. */
@@ -59,9 +59,9 @@ public class schedForm implements Initializable {
     }
 
     /**This method gets the selected contact, then clears the date and schedule table.*/
-    public void onContact(ActionEvent actionEvent) {
+    public void onTherapist(ActionEvent actionEvent) {
 
-        sContact = (Therapists) contact.getValue();
+        sContact = (Therapists) therapist.getValue();
 
         if(date.getValue() != null) {
             date.setValue(null);

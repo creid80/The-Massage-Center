@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.17224080267558528" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #0588FA;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.controller.allCustForm">
+<SplitPane dividerPositions="0.17224080267558528" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #0588FA;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.controller.allClientForm">
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-        <Label layoutX="430.0" layoutY="15.0" text="Customers">
+        <Label layoutX="430.0" layoutY="15.0" text="Clients">
             <font>
                 <Font name="System Bold" size="48.0" />
             </font>
@@ -19,9 +19,9 @@
         <ComboBox fx:id="menu" layoutX="934.0" layoutY="60.0" onAction="#onMenu" prefWidth="150.0" promptText="Menu" />
     </AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="457.0" prefWidth="527.0" style="-fx-background-color: #0588FA;">
-        <TableView fx:id="custTable" layoutX="130.0" layoutY="66.0" prefHeight="350.0" prefWidth="838.0">
+        <TableView fx:id="clientTable" layoutX="130.0" layoutY="66.0" prefHeight="350.0" prefWidth="838.0">
             <columns>
-                <TableColumn fx:id="custIDcol" text="Customer ID" />
+                <TableColumn fx:id="clientIDcol" text="Client ID" />
                 <TableColumn fx:id="nameCol" prefWidth="168.0" text="Name" />
                 <TableColumn fx:id="addressCol" prefWidth="229.0" text="Address" />
                 <TableColumn fx:id="postalCol" prefWidth="111.0" text="Postal Code" />

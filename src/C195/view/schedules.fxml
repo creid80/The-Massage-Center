@@ -12,7 +12,7 @@
 
 <SplitPane dividerPositions="0.17224080267558528" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #0588FA;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.controller.schedForm">
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-        <Label layoutX="343.0" layoutY="15.0" text="Contact Schedules">
+        <Label layoutX="343.0" layoutY="15.0" text="Therapist Schedules">
             <font>
                 <Font name="System Bold" size="48.0" />
             </font>
@@ -32,8 +32,8 @@
             </columns>
         </TableView>
         <Button layoutX="886.0" layoutY="436.0" mnemonicParsing="false" onAction="#onSignOut" text="Sign out" />
-      <ComboBox fx:id="contact" layoutX="258.0" layoutY="67.0" onAction="#onContact" prefWidth="150.0" />
-      <Label layoutX="254.0" layoutY="37.0" text="Choose A Contact" underline="true">
+      <ComboBox fx:id="therapist" layoutX="258.0" layoutY="67.0" onAction="#onTherapist" prefWidth="150.0" />
+      <Label layoutX="254.0" layoutY="37.0" text="Choose A Therapist" underline="true">
          <font>
             <Font size="20.0" />
          </font>

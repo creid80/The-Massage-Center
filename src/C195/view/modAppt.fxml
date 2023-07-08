@@ -22,9 +22,9 @@
     </AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="457.0" prefWidth="1098.0" style="-fx-background-color: #0588FA;">
         <Button layoutX="906.0" layoutY="438.0" mnemonicParsing="false" onAction="#onSignOut" text="Sign Out" />
-        <TableView fx:id="custTable" layoutX="130.0" layoutY="78.0" onMouseClicked="#onCustSelected" prefHeight="153.0" prefWidth="838.0">
+        <TableView fx:id="clientTable" layoutX="130.0" layoutY="78.0" onMouseClicked="#onClientSelected" prefHeight="153.0" prefWidth="838.0">
             <columns>
-                <TableColumn fx:id="custIDCol" text="Customer ID" />
+                <TableColumn fx:id="clientIDCol" text="Client ID" />
                 <TableColumn fx:id="nameCol" prefWidth="168.0" text="Name" />
                 <TableColumn fx:id="addressCol" prefWidth="229.0" text="Address" />
                 <TableColumn fx:id="postalCol" prefWidth="111.0" text="Postal Code" />
@@ -37,7 +37,7 @@
         </TableView>
         <Label layoutX="758.0" layoutY="115.0" />
         <Button layoutX="186.0" layoutY="438.0" mnemonicParsing="false" onAction="#onModApptCan" text="Cancel" />
-        <Label layoutX="468.0" layoutY="26.0" text="Select A Customer">
+        <Label layoutX="468.0" layoutY="26.0" text="Select A Client">
             <font>
                 <Font size="20.0" />
             </font>
@@ -48,12 +48,12 @@
             <Font size="16.0" />
          </font>
       </Label>
-        <Label layoutX="355.0" layoutY="248.0" text="Contact:">
+        <Label layoutX="355.0" layoutY="248.0" text="Therapist:">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <ComboBox fx:id="contDropBox" layoutX="355.0" layoutY="275.0" onAction="#onContDropBox" prefWidth="150.0" />
+        <ComboBox fx:id="therapistDropBox" layoutX="355.0" layoutY="275.0" onAction="#onTherapistDropBox" prefWidth="150.0" />
         <Label layoutX="570.0" layoutY="248.0" text="Date:">
             <font>
                 <Font size="16.0" />
@@ -90,7 +90,6 @@
                 <Font size="16.0" />
             </font>
         </Label>
-        <TextField fx:id="modApptLoc" layoutX="811.0" layoutY="367.0" prefHeight="25.0" prefWidth="157.0" />
         <Button layoutX="128.0" layoutY="438.0" mnemonicParsing="false" onAction="#onModAppt" text="Save" />
     </AnchorPane>
 </SplitPane>

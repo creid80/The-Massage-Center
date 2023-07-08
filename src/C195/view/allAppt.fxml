@@ -26,12 +26,11 @@
                 <TableColumn fx:id="ApptIDCol" editable="false" prefWidth="63.0" text="Appt. ID" />
                 <TableColumn fx:id="titleCol" editable="false" prefWidth="60.0" text="Title" />
                 <TableColumn fx:id="descCol" editable="false" prefWidth="94.0" text="Description" />
-                <TableColumn fx:id="locCol" editable="false" prefWidth="91.0" text="Location" />
-                <TableColumn fx:id="contactCol" editable="false" prefWidth="97.0" text="Contact" />
+                <TableColumn fx:id="therapistCol" editable="false" prefWidth="97.0" text="Therapist" />
                 <TableColumn fx:id="typeCol" editable="false" prefWidth="102.0" text="Type" />
                 <TableColumn fx:id="startCol" editable="false" prefWidth="108.0" text="Start" />
                 <TableColumn fx:id="endCol" editable="false" prefWidth="108.0" text="End" />
-                <TableColumn fx:id="custIDCol" editable="false" prefWidth="59.0" text="Cust. ID" />
+                <TableColumn fx:id="clientIDCol" editable="false" prefWidth="59.0" text="Client ID" />
                 <TableColumn fx:id="userIDCol" editable="false" prefWidth="59.0" text="User ID" />
             </columns>
         </TableView>

@@ -27,24 +27,24 @@ import static C195.helper.Menu.menuSelection;
 /**@author Carol Reid*/
 
 /**This class is a controller for the modCust Graphical User Interface scene.*/
-public class modCustForm implements Initializable {
+public class modClientForm implements Initializable {
 
     public ComboBox<String> menu;
     public String selected;
 
-    public TextField modCustName;
-    public TextField modCustPhone;
-    public TextField modCustAddress;
-    public TextField modCustCity;
-    public TextField modCustCounty;
-    public TextField modCustPostal;
-    public ComboBox modCustCountry;
-    public ComboBox modCustState;
-    public TextField modCustID;
+    public TextField modClientName;
+    public TextField modClientPhone;
+    public TextField modClientAddress;
+    public TextField modClientCity;
+    public TextField modClientCounty;
+    public TextField modClientPostal;
+    public ComboBox modClientCountry;
+    public ComboBox modClientState;
+    public TextField modClientID;
 
     private int newDivID = 0;
 
-    private Clients modCust = allCustForm.getmCustomer();
+    private Clients modCust = allClientForm.getmCustomer();
     private ObservableList<Countries> allCountries = Countries.getAllcountries();
     private ObservableList<FLDivision> allDiv = FLDivision.getAllFLDiv();
 
@@ -75,26 +75,26 @@ public class modCustForm implements Initializable {
         FilteredList<FLDivision> fDiv = new FilteredList<>(FLDivision.getAllFLDiv());
         fDiv.setPredicate(FLDivision -> FLDivision.getCountryID() == modCust.getCountryID());
 
-        modCustID.setText(String.valueOf(modCust.getClientID()));
-        modCustName.setText(String.valueOf(modCust.getName()));
-        modCustPhone.setText(String.valueOf(modCust.getPhone()));
+        modClientID.setText(String.valueOf(modCust.getClientID()));
+        modClientName.setText(String.valueOf(modCust.getName()));
+        modClientPhone.setText(String.valueOf(modCust.getPhone()));
 
         String[] fullAddress = modCust.getAddress().split(", ");
         if(fullAddress.length == 1) {
-            modCustAddress.setText(fullAddress[0]);
+            modClientAddress.setText(fullAddress[0]);
         }
         else {
-            modCustAddress.setText(fullAddress[0]);
-            modCustCity.setText(fullAddress[1]);
+            modClientAddress.setText(fullAddress[0]);
+            modClientCity.setText(fullAddress[1]);
             if (modCust.getCountryName().equalsIgnoreCase("UK")) {
-                modCustCounty.setText(fullAddress[2]);
+                modClientCounty.setText(fullAddress[2]);
             }
         }
-        modCustPostal.setText(String.valueOf(modCust.getPostal()));
-        modCustCountry.setItems(allCountries);
-        modCustCountry.setValue(modCust.getCountryName());
-        modCustState.setItems(fDiv);
-        modCustState.setValue(modCust.getDivName());
+        modClientPostal.setText(String.valueOf(modCust.getPostal()));
+        modClientCountry.setItems(allCountries);
+        modClientCountry.setValue(modCust.getCountryName());
+        modClientState.setItems(fDiv);
+        modClientState.setValue(modCust.getDivName());
 
     }
 
@@ -108,21 +108,21 @@ public class modCustForm implements Initializable {
     /**This method gets the selected country and clears the allDiv before repopulating it.*/
     public void onCustCountry(ActionEvent actionEvent) throws SQLException {
 
-        Countries selected = (Countries) modCustCountry.getValue();
+        Countries selected = (Countries) modClientCountry.getValue();
         if(selected != null) {
 
             int selectedID = selected.getCountryID();
             allDiv.clear();
             FLDivision.divisionQuery(selectedID);
-            modCustState.setValue(allDiv.get(0));
-            modCustState.setItems(allDiv);
+            modClientState.setValue(allDiv.get(0));
+            modClientState.setItems(allDiv);
         }
     }
 
     /**This method gets the selected division and stores it.*/
     public void onCustState(ActionEvent actionEvent) {
 
-        FLDivision selected = (FLDivision) modCustState.getValue();
+        FLDivision selected = (FLDivision) modClientState.getValue();
         if(selected != null) {
             newDivID = selected.getDivID();
         }
@@ -131,20 +131,20 @@ public class modCustForm implements Initializable {
     /**This method gets all of the data entered, checks if they are valid, and updates the customer in the
      * database. An alert then notifies the user on whether the update was successful or not.
      */
-    public void onModCustSave(ActionEvent actionEvent) throws SQLException, IOException {
+    public void onModClientSave(ActionEvent actionEvent) throws SQLException, IOException {
 
-        String newCustName = modCustName.getText();
+        String newCustName = modClientName.getText();
         if (!(C195.utilities.Validate.isValidLength("Name", newCustName, 50))) { return; }
 
-        String address = modCustAddress.getText();
+        String address = modClientAddress.getText();
         if(address.isEmpty()) { Validate.blankAlert("Address"); return; }
 
-        String city = modCustCity.getText();
+        String city = modClientCity.getText();
         if(city.isEmpty()) { Validate.blankAlert("City"); return; }
 
         String newCustAddress;
-        if(modCustCountry.getValue().toString().equalsIgnoreCase("UK")) {
-            String county = modCustCounty.getText();
+        if(modClientCountry.getValue().toString().equalsIgnoreCase("UK")) {
+            String county = modClientCounty.getText();
             if(county.isEmpty()) { Validate.blankAlert("County"); return; }
             newCustAddress = address + ", " + city + ", " + county;
         }
@@ -154,10 +154,10 @@ public class modCustForm implements Initializable {
 
         if (!(C195.utilities.Validate.isValidLength("Address", newCustAddress, 100))) { return; }
 
-        String newCustPostal = modCustPostal.getText();
+        String newCustPostal = modClientPostal.getText();
         if (!(C195.utilities.Validate.isValidLength("Postal Code", newCustPostal, 50))) { return; }
 
-        String newCustPhone = modCustPhone.getText();
+        String newCustPhone = modClientPhone.getText();
         if (!(C195.utilities.Validate.isValidLength("Phone Number", newCustPhone, 50))) { return; }
 
         if (newDivID == 0) { newDivID = modCust.getDivID();}
@@ -190,7 +190,7 @@ public class modCustForm implements Initializable {
     }
 
     /**This method loads the allCust scene in the Graphical User Interface.*/
-    public void onModCustCancel(ActionEvent actionEvent) throws IOException {
+    public void onModClientCancel(ActionEvent actionEvent) throws IOException {
         menuSelection("View All Clients", actionEvent);
     }
 

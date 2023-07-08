@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.17224080267558528" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #0588FA;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.controller.custApptRepForm">
+<SplitPane dividerPositions="0.17224080267558528" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #0588FA;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.controller.clientApptRepForm">
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-        <Label layoutX="189.0" layoutY="15.0" text="Customer Appointments Report">
+        <Label layoutX="189.0" layoutY="15.0" text="Client Appointments Report">
             <font>
                 <Font name="System Bold" size="48.0" />
             </font>
@@ -20,15 +20,15 @@
         <ComboBox fx:id="menu" layoutX="934.0" layoutY="61.0" onAction="#onMenu" prefWidth="150.0" promptText="Menu" />
     </AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="457.0" prefWidth="527.0" style="-fx-background-color: #0588FA;">
-        <Label layoutX="461.0" layoutY="14.0" text="Choose A Customer">
+        <Label layoutX="461.0" layoutY="14.0" text="Choose A Client">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
         <TextField fx:id="clientSearch" layoutX="781.0" layoutY="17.0" onAction="#onClientSearch" prefHeight="25.0" prefWidth="166.0" promptText="Search by Client Name or ID" />
-        <TableView fx:id="custTable" layoutX="130.0" layoutY="53.0" onMouseClicked="#onCustSelected" prefHeight="170.0" prefWidth="838.0">
+        <TableView fx:id="clientTable" layoutX="130.0" layoutY="53.0" onMouseClicked="#onClientSelected" prefHeight="170.0" prefWidth="838.0">
             <columns>
-                <TableColumn fx:id="cTCustID" text="Customer ID" />
+                <TableColumn fx:id="cTClientID" text="Client ID" />
                 <TableColumn fx:id="cTName" prefWidth="168.0" text="Name" />
                 <TableColumn fx:id="cTAddress" prefWidth="229.0" text="Address" />
                 <TableColumn fx:id="cTPostal" prefWidth="111.0" text="Postal Code" />
@@ -44,7 +44,7 @@
                 <TableColumn fx:id="aTType" prefWidth="139.0" text="Type" />
                 <TableColumn fx:id="aTStart" prefWidth="137.0" text="Start Date/Time" />
                 <TableColumn fx:id="aTEnd" prefWidth="126.0" text="End Date/Time" />
-                <TableColumn fx:id="aTContName" prefWidth="102.0" text="Contact Name" />
+                <TableColumn fx:id="aTTherapistName" prefWidth="102.0" text="Therapist Name" />
             </columns>
         </TableView>
         <Button layoutX="886.0" layoutY="436.0" mnemonicParsing="false" onAction="#onSignOut" text="Sign out" />
