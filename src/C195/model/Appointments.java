@@ -127,7 +127,7 @@ public class Appointments {
 
         String sql = "SELECT appointments.Appointment_ID, appointments.Title, appointments.Note, \n" +
                 "therapists.Therapist_Name, appointments.Type, appointments.Start, \n" +
-                "appointments.End, appointments.Clients_ID, appointments.User_ID , contacts.Therapist_ID\n" +
+                "appointments.End, appointments.Client_ID, appointments.User_ID , therapists.Therapist_ID\n" +
                 "FROM appointments, therapists\n" +
                 "WHERE therapists.Therapist_ID = appointments.Therapist_ID;";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

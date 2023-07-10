@@ -153,6 +153,7 @@ public class clientApptRepForm implements Initializable {
             aTTherapistName.setCellValueFactory(new PropertyValueFactory<>("therapistName"));
 
             apptTable.getSortOrder().add(aTStart);
+
             apptTable.sort();
         }
     }
