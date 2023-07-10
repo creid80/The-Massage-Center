@@ -28,7 +28,7 @@
                 <TableColumn fx:id="schedulesType" prefWidth="139.0" text="Type" />
                 <TableColumn fx:id="schedulesStart" prefWidth="137.0" text="Start Date/Time" />
                 <TableColumn fx:id="schedulesEnd" prefWidth="126.0" text="End Date/Time" />
-                <TableColumn fx:id="schedulesCustID" prefWidth="102.0" text="Customer ID" />
+                <TableColumn fx:id="schedulesClientID" prefWidth="102.0" text="Customer ID" />
             </columns>
         </TableView>
         <Button layoutX="886.0" layoutY="436.0" mnemonicParsing="false" onAction="#onSignOut" text="Sign out" />

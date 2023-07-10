@@ -24,7 +24,7 @@ public class schedForm implements Initializable {
     public ComboBox<String> menu;
     public String selected;
 
-    public Therapists sContact;
+    public Therapists sTherapist;
     public LocalDate sDate;
 
     public TableView schedulesTable;
@@ -34,21 +34,21 @@ public class schedForm implements Initializable {
     public TableColumn schedulesType;
     public TableColumn schedulesStart;
     public TableColumn schedulesEnd;
-    public TableColumn schedulesCustID;
+    public TableColumn schedulesClientID;
     public ComboBox therapist;
     public DatePicker date;
 
-    private ObservableList<Therapists> allContacts = Therapists.getAllTheras();
+    private ObservableList<Therapists> allTherapists = Therapists.getAllTheras();
     private ObservableList<Appointments> allAppt = Appointments.getAllAppts();
 
 
-    /**This method initializes the schedules scene and populates the contact combo box.*/
+    /**This method initializes the schedules scene and populates the therapist combo box.*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         menu.setItems(C195.helper.Menu.menuItems);
 
-        therapist.setItems(allContacts);
+        therapist.setItems(allTherapists);
     }
 
     /**This method takes the selected menu item, and passes it to the Menu.menuSelection method. */
@@ -58,10 +58,10 @@ public class schedForm implements Initializable {
         Menu.menuSelection(selected, actionEvent);
     }
 
-    /**This method gets the selected contact, then clears the date and schedule table.*/
+    /**This method gets the selected therapist, then clears the date and schedule table.*/
     public void onTherapist(ActionEvent actionEvent) {
 
-        sContact = (Therapists) therapist.getValue();
+        sTherapist = (Therapists) therapist.getValue();
 
         if(date.getValue() != null) {
             date.setValue(null);
@@ -69,7 +69,7 @@ public class schedForm implements Initializable {
         }
     }
 
-    /**This method gets the selected date and filters allAppts by the selected contact and date. Then it
+    /**This method gets the selected date and filters allAppts by the selected therapist and date. Then it
      * populates the schedule table.
      */
     public void onDate(ActionEvent actionEvent) {
@@ -80,7 +80,7 @@ public class schedForm implements Initializable {
         sDate = date.getValue();
 
         FilteredList<Appointments> fList = new FilteredList<>(allAppt);
-        fList.setPredicate(Appointments -> Appointments.getTherapistName().equals(sContact.getTheraName()));
+        fList.setPredicate(Appointments -> Appointments.getTherapistName().equals(sTherapist.getTheraName()));
 
         FilteredList<Appointments> fList2 = new FilteredList<>(fList);
         fList2.setPredicate(Appointments -> Appointments.getStartLDT().toLocalDate().isEqual(sDate));
@@ -92,7 +92,7 @@ public class schedForm implements Initializable {
         schedulesType.setCellValueFactory(new PropertyValueFactory<>("type"));
         schedulesStart.setCellValueFactory(new PropertyValueFactory<>("startLDT"));
         schedulesEnd.setCellValueFactory(new PropertyValueFactory<>("endLDT"));
-        schedulesCustID.setCellValueFactory(new PropertyValueFactory<>("custID"));
+        schedulesClientID.setCellValueFactory(new PropertyValueFactory<>("clientID"));
 
         schedulesTable.getSortOrder().add(schedulesStart);
         schedulesTable.sort();

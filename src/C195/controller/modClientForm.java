@@ -26,7 +26,7 @@ import static C195.helper.Menu.menuSelection;
 
 /**@author Carol Reid*/
 
-/**This class is a controller for the modCust Graphical User Interface scene.*/
+/**This class is a controller for the modClient Graphical User Interface scene.*/
 public class modClientForm implements Initializable {
 
     public ComboBox<String> menu;
@@ -44,14 +44,14 @@ public class modClientForm implements Initializable {
 
     private int newDivID = 0;
 
-    private Clients modCust = allClientForm.getmClient();
+    private Clients modClient = allClientForm.getmClient();
     private ObservableList<Countries> allCountries = Countries.getAllcountries();
     private ObservableList<FLDivision> allDiv = FLDivision.getAllFLDiv();
 
 
-    /**This method initializes the modCust scene with the data passed through the modCust object. It populates
+    /**This method initializes the modClient scene with the data passed through the modClient object. It populates
      * the country combo box and selects the assigned country. Then it populates the division combo box based
-     * on the assigned country, and selects the assigned division. Then it seperates the modCust address
+     * on the assigned country, and selects the assigned division. Then it seperates the modClient address
      * into the appropriate textFields based on the assigned country.
      */
     @Override
@@ -67,34 +67,34 @@ public class modClientForm implements Initializable {
         }
 
         try {
-            FLDivision.divisionQuery(modCust.getCountryID());
+            FLDivision.divisionQuery(modClient.getCountryID());
         }
         catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         FilteredList<FLDivision> fDiv = new FilteredList<>(FLDivision.getAllFLDiv());
-        fDiv.setPredicate(FLDivision -> FLDivision.getCountryID() == modCust.getCountryID());
+        fDiv.setPredicate(FLDivision -> FLDivision.getCountryID() == modClient.getCountryID());
 
-        modClientID.setText(String.valueOf(modCust.getClientID()));
-        modClientName.setText(String.valueOf(modCust.getName()));
-        modClientPhone.setText(String.valueOf(modCust.getPhone()));
+        modClientID.setText(String.valueOf(modClient.getClientID()));
+        modClientName.setText(String.valueOf(modClient.getName()));
+        modClientPhone.setText(String.valueOf(modClient.getPhone()));
 
-        String[] fullAddress = modCust.getAddress().split(", ");
+        String[] fullAddress = modClient.getAddress().split(", ");
         if(fullAddress.length == 1) {
             modClientAddress.setText(fullAddress[0]);
         }
         else {
             modClientAddress.setText(fullAddress[0]);
             modClientCity.setText(fullAddress[1]);
-            if (modCust.getCountryName().equalsIgnoreCase("UK")) {
+            if (modClient.getCountryName().equalsIgnoreCase("UK")) {
                 modClientCounty.setText(fullAddress[2]);
             }
         }
-        modClientPostal.setText(String.valueOf(modCust.getPostal()));
+        modClientPostal.setText(String.valueOf(modClient.getPostal()));
         modClientCountry.setItems(allCountries);
-        modClientCountry.setValue(modCust.getCountryName());
+        modClientCountry.setValue(modClient.getCountryName());
         modClientState.setItems(fDiv);
-        modClientState.setValue(modCust.getDivName());
+        modClientState.setValue(modClient.getDivName());
 
     }
 
@@ -106,7 +106,7 @@ public class modClientForm implements Initializable {
     }
 
     /**This method gets the selected country and clears the allDiv before repopulating it.*/
-    public void onCustCountry(ActionEvent actionEvent) throws SQLException {
+    public void onClientCountry(ActionEvent actionEvent) throws SQLException {
 
         Countries selected = (Countries) modClientCountry.getValue();
         if(selected != null) {
@@ -120,7 +120,7 @@ public class modClientForm implements Initializable {
     }
 
     /**This method gets the selected division and stores it.*/
-    public void onCustState(ActionEvent actionEvent) {
+    public void onClientState(ActionEvent actionEvent) {
 
         FLDivision selected = (FLDivision) modClientState.getValue();
         if(selected != null) {
@@ -128,13 +128,13 @@ public class modClientForm implements Initializable {
         }
     }
 
-    /**This method gets all of the data entered, checks if they are valid, and updates the customer in the
+    /**This method gets all of the data entered, checks if they are valid, and updates the client in the
      * database. An alert then notifies the user on whether the update was successful or not.
      */
     public void onModClientSave(ActionEvent actionEvent) throws SQLException, IOException {
 
-        String newCustName = modClientName.getText();
-        if (!(C195.utilities.Validate.isValidLength("Name", newCustName, 50))) { return; }
+        String newClientName = modClientName.getText();
+        if (!(C195.utilities.Validate.isValidLength("Name", newClientName, 50))) { return; }
 
         String address = modClientAddress.getText();
         if(address.isEmpty()) { Validate.blankAlert("Address"); return; }
@@ -142,45 +142,45 @@ public class modClientForm implements Initializable {
         String city = modClientCity.getText();
         if(city.isEmpty()) { Validate.blankAlert("City"); return; }
 
-        String newCustAddress;
+        String newClientAddress;
         if(modClientCountry.getValue().toString().equalsIgnoreCase("UK")) {
             String county = modClientCounty.getText();
             if(county.isEmpty()) { Validate.blankAlert("County"); return; }
-            newCustAddress = address + ", " + city + ", " + county;
+            newClientAddress = address + ", " + city + ", " + county;
         }
         else {
-            newCustAddress = address + ", " + city;
+            newClientAddress = address + ", " + city;
         }
 
-        if (!(C195.utilities.Validate.isValidLength("Address", newCustAddress, 100))) { return; }
+        if (!(C195.utilities.Validate.isValidLength("Address", newClientAddress, 100))) { return; }
 
-        String newCustPostal = modClientPostal.getText();
-        if (!(C195.utilities.Validate.isValidLength("Postal Code", newCustPostal, 50))) { return; }
+        String newClientPostal = modClientPostal.getText();
+        if (!(C195.utilities.Validate.isValidLength("Postal Code", newClientPostal, 50))) { return; }
 
-        String newCustPhone = modClientPhone.getText();
-        if (!(C195.utilities.Validate.isValidLength("Phone Number", newCustPhone, 50))) { return; }
+        String newClientPhone = modClientPhone.getText();
+        if (!(C195.utilities.Validate.isValidLength("Phone Number", newClientPhone, 50))) { return; }
 
-        if (newDivID == 0) { newDivID = modCust.getDivID();}
+        if (newDivID == 0) { newDivID = modClient.getDivID();}
 
-        LocalDateTime newCustLastUpdate = LocalDateTime.now();
-        String newCustUpdatedBy = getUser();
+        LocalDateTime newClientLastUpdate = LocalDateTime.now();
+        String newClientUpdatedBy = getUser();
 
-        String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, " +
+        String sql = "UPDATE clients SET Client_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, " +
                      "\nDivision_ID = ?, Last_Update = ?, Last_Updated_By = ?" +
-                     "WHERE Customer_ID = ?";
+                     "WHERE Client_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, newCustName);
-        ps.setString(2, newCustAddress);
-        ps.setString(3, newCustPostal);
-        ps.setString(4, newCustPhone);
+        ps.setString(1, newClientName);
+        ps.setString(2, newClientAddress);
+        ps.setString(3, newClientPostal);
+        ps.setString(4, newClientPhone);
         ps.setInt(5, newDivID);
-        ps.setTimestamp(6, Timestamp.valueOf(newCustLastUpdate));
-        ps.setString(7, newCustUpdatedBy);
-        ps.setInt(8, modCust.getClientID());
+        ps.setTimestamp(6, Timestamp.valueOf(newClientLastUpdate));
+        ps.setString(7, newClientUpdatedBy);
+        ps.setInt(8, modClient.getClientID());
         int rowsEffected = ps.executeUpdate();
 
         if (rowsEffected == 1) {
-            Validate.successAlert("customer", "updated");
+            Validate.successAlert("client", "updated");
         }
         else {
             Validate.genAlert();
@@ -189,7 +189,7 @@ public class modClientForm implements Initializable {
         menuSelection("View All Clients", actionEvent);
     }
 
-    /**This method loads the allCust scene in the Graphical User Interface.*/
+    /**This method loads the allClient scene in the Graphical User Interface.*/
     public void onModClientCancel(ActionEvent actionEvent) throws IOException {
         menuSelection("View All Clients", actionEvent);
     }

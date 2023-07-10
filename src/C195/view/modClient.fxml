@@ -52,8 +52,8 @@
             </font>
         </Label>
         <TextField fx:id="modClientPostal" layoutX="695.0" layoutY="259.0" prefHeight="25.0" prefWidth="111.0" />
-        <ComboBox fx:id="modClientCountry" layoutX="238.0" layoutY="259.0" onAction="#onCustCountry" prefWidth="150.0" promptText=" " />
-        <ComboBox fx:id="modClientState" layoutX="465.0" layoutY="259.0" onAction="#onCustState" prefWidth="150.0" promptText=" " />
+        <ComboBox fx:id="modClientCountry" layoutX="238.0" layoutY="259.0" onAction="#onClientCountry" prefWidth="150.0" promptText=" " />
+        <ComboBox fx:id="modClientState" layoutX="465.0" layoutY="259.0" onAction="#onClientState" prefWidth="150.0" promptText=" " />
         <Label layoutX="239.0" layoutY="233.0" text="Country:">
             <font>
                 <Font size="16.0" />
