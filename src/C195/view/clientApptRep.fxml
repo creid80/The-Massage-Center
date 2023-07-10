@@ -39,8 +39,8 @@
         <TableView fx:id="apptTable" layoutX="130.0" layoutY="246.0" prefHeight="170.0" prefWidth="838.0">
             <columns>
                 <TableColumn fx:id="aTApptID" prefWidth="58.0" sortType="DESCENDING" text="Appt. ID" />
-                <TableColumn fx:id="aTTitle" prefWidth="67.0" text="Title" />
-                <TableColumn fx:id="aTNote" prefWidth="232.0" text="Note" />
+                <TableColumn fx:id="aTTitle" prefWidth="100.0" text="Title" />
+                <TableColumn fx:id="aTNote" prefWidth="199.0" text="Note" />
                 <TableColumn fx:id="aTType" prefWidth="126.0" text="Type" />
                 <TableColumn fx:id="aTStart" prefWidth="126.0" text="Start Date/Time" />
                 <TableColumn fx:id="aTEnd" prefWidth="126.0" text="End Date/Time" />

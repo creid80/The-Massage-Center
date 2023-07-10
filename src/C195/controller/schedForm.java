@@ -30,7 +30,7 @@ public class schedForm implements Initializable {
     public TableView schedulesTable;
     public TableColumn schedulesApptID;
     public TableColumn schedulesTitle;
-    public TableColumn schedulesDesc;
+    public TableColumn schedulesNote;
     public TableColumn schedulesType;
     public TableColumn schedulesStart;
     public TableColumn schedulesEnd;
@@ -88,7 +88,7 @@ public class schedForm implements Initializable {
         schedulesTable.setItems(fList2);
         schedulesApptID.setCellValueFactory(new PropertyValueFactory<>("apptID"));
         schedulesTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-        schedulesDesc.setCellValueFactory(new PropertyValueFactory<>("desc"));
+        schedulesNote.setCellValueFactory(new PropertyValueFactory<>("note"));
         schedulesType.setCellValueFactory(new PropertyValueFactory<>("type"));
         schedulesStart.setCellValueFactory(new PropertyValueFactory<>("startLDT"));
         schedulesEnd.setCellValueFactory(new PropertyValueFactory<>("endLDT"));
