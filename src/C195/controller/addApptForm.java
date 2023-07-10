@@ -51,7 +51,7 @@ public class addApptForm implements Initializable {
     public ComboBox startTime;
     public ComboBox endTime;
     public TextField addApptTitle;
-    public TextField addApptDesc;
+    public TextArea addApptNote;
 
     public ComboBox typeDropBox;
 
@@ -269,25 +269,25 @@ public class addApptForm implements Initializable {
         LocalDateTime newStart = estToLocal(LocalDateTime.of(apptDatePicker.getValue(), (LocalTime) startTime.getValue()));
         LocalDateTime newEnd = estToLocal(LocalDateTime.of(apptDatePicker.getValue(), (LocalTime) endTime.getValue()));
 
-        int newCustID = newClient.getClientID();
+        int newClientID = newClient.getClientID();
 
         String newTitle = addApptTitle.getText();
-        String newDesc = addApptDesc.getText();
+        String newNote = addApptNote.getText();
         String newType = typeDropBox.getValue().toString();
 
         LocalDateTime newCreateDate = LocalDateTime.now();
         LocalDateTime newLastUpdate = LocalDateTime.now();
 
         if((Validate.isValidLength("Title", newTitle, 50)) &&
-                (Validate.isValidLength("Description", newDesc, 150)) &&
+                (Validate.isValidLength("Note", newNote, 150)) &&
                 (Validate.isValidLength("Type", newType, 50))) {
 
-            String sql = "INSERT INTO appointments(Title, Description, Type, Start, End, Create_Date, " +
+            String sql = "INSERT INTO appointments(Title, Note, Type, Start, End, Create_Date, " +
                     "Created_By, Last_Update, Last_Updated_By, Client_ID, User_ID, Therapist_ID) VALUES(?, ?, " +
                     "?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setString(1, newTitle);
-            ps.setString(2, newDesc);
+            ps.setString(2, newNote);
             ps.setString(3, newType);
             ps.setTimestamp(4, Timestamp.valueOf(newStart));
             ps.setTimestamp(5, Timestamp.valueOf(newEnd));
@@ -296,7 +296,7 @@ public class addApptForm implements Initializable {
             ps.setTimestamp(8, Timestamp.valueOf(newLastUpdate));
             String newLastUpdatedBy = " ";
             ps.setString(9, newLastUpdatedBy);
-            ps.setInt(10, newCustID);
+            ps.setInt(10, newClientID);
             ps.setInt(11, newUserID);
             ps.setInt(12, newTherapistID);
             int rowsEffected = ps.executeUpdate();

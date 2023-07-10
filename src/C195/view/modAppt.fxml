@@ -7,6 +7,7 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -73,23 +74,18 @@
             </font>
         </Label>
         <TextField fx:id="modApptTitle" layoutX="130.0" layoutY="367.0" prefHeight="25.0" prefWidth="149.0" />
-        <Label layoutX="355.0" layoutY="342.0" text="Description:">
+        <Label layoutX="355.0" layoutY="340.0" text="Type:">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <TextField fx:id="modApptDesc" layoutX="355.0" layoutY="367.0" />
-        <Label layoutX="570.0" layoutY="342.0" text="Type:">
+        <ComboBox fx:id="modApptType" layoutX="355.0" layoutY="365.0" onAction="#onModApptType" prefHeight="25.0" prefWidth="150.0" />
+        <Label layoutX="570.0" layoutY="342.0" text="Note:">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <ComboBox fx:id="modApptType" layoutX="570.0" layoutY="367.0" onAction="#onModApptType" prefHeight="25.0" prefWidth="174.0" />
-        <Label layoutX="810.0" layoutY="340.0" text="Location:">
-            <font>
-                <Font size="16.0" />
-            </font>
-        </Label>
+        <TextArea fx:id="modApptNote" layoutX="570.0" layoutY="365.0" prefHeight="50.0" prefWidth="285.0" />
         <Button layoutX="128.0" layoutY="438.0" mnemonicParsing="false" onAction="#onModAppt" text="Save" />
     </AnchorPane>
 </SplitPane>

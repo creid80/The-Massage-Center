@@ -7,6 +7,7 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -20,7 +21,7 @@
             </font>
         </Label>
     </AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="457.0" prefWidth="1098.0" style="-fx-background-color: #0588FA;">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="457.0" prefWidth="2000.0" style="-fx-background-color: #0588FA;">
         <Button layoutX="906.0" layoutY="438.0" mnemonicParsing="false" onAction="#onSignOut" text="Sign Out" />
         <TableView fx:id="clientTable" layoutX="130.0" layoutY="78.0" onMouseClicked="#onClientSelected" prefHeight="153.0" prefWidth="838.0">
             <columns>
@@ -73,18 +74,18 @@
          </font>
       </Label>
       <TextField fx:id="addApptTitle" layoutX="130.0" layoutY="367.0" prefHeight="25.0" prefWidth="149.0" />
-      <Label layoutX="355.0" layoutY="340.0" text="Description:">
+      <Label layoutX="355.0" layoutY="339.0" text="Type:">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="addApptDesc" layoutX="355.0" layoutY="367.0" />
-      <Label layoutX="570.0" layoutY="340.0" text="Type:">
+        <ComboBox fx:id="typeDropBox" layoutX="355.0" layoutY="366.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="570.0" layoutY="338.0" text="Note:">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-        <ComboBox fx:id="typeDropBox" layoutX="570.0" layoutY="367.0" prefHeight="25.0" prefWidth="174.0" />
+        <TextArea fx:id="addApptNote" layoutX="570.0" layoutY="367.0" prefHeight="50.0" prefWidth="285.0" />
       <Button layoutX="128.0" layoutY="438.0" mnemonicParsing="false" onAction="#onAddAppointment" text="Add Appointment" />
     </AnchorPane>
 </SplitPane>

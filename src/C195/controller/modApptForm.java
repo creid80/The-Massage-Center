@@ -50,7 +50,7 @@ public class modApptForm implements Initializable {
     public ComboBox startTime;
     public ComboBox endTime;
     public TextField modApptTitle;
-    public TextField modApptDesc;
+    public TextArea modApptNote;
     public ComboBox modApptType;
 
 
@@ -109,7 +109,7 @@ public class modApptForm implements Initializable {
         popTypeCB();
 
         modApptTitle.setText(String.valueOf(modAppt.getTitle()));
-        modApptDesc.setText(String.valueOf(modAppt.getNote()));
+        modApptNote.setText(String.valueOf(modAppt.getNote()));
 
         newApptID = modAppt.getApptID();
     }
@@ -363,30 +363,30 @@ public class modApptForm implements Initializable {
         LocalDateTime newStart = estToLocal(LocalDateTime.of(apptDatePicker.getValue(), (LocalTime) startTime.getValue()));
         LocalDateTime newEnd = estToLocal(LocalDateTime.of(apptDatePicker.getValue(), (LocalTime) endTime.getValue()));
 
-        int newCustID = newClient.getClientID();
+        int newClientID = newClient.getClientID();
 
         String newTitle = modApptTitle.getText();
-        String newDesc = modApptDesc.getText();
+        String newNote = modApptNote.getText();
         String newType = modApptType.getValue().toString();
 
         LocalDateTime newLastUpdate = LocalDateTime.now();
 
         if((Validate.isValidLength("Title", newTitle, 50)) &&
-                (Validate.isValidLength("Description", newDesc, 150))) {
+                (Validate.isValidLength("Note", newNote, 150))) {
 
-            String sql = "UPDATE APPOINTMENTS SET Title = ?, Description = ?, Type = ?, " +
+            String sql = "UPDATE APPOINTMENTS SET Title = ?, Note = ?, Type = ?, " +
                     "\nStart = ?, End = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, " +
-                    "\nContact_ID = ?" +
+                    "\nTherapist_ID = ?" +
                     "\nWHERE Appointment_ID = ?";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setString(1, newTitle);
-            ps.setString(2, newDesc);
+            ps.setString(2, newNote);
             ps.setString(3, newType);
             ps.setTimestamp(4, Timestamp.valueOf(newStart));
             ps.setTimestamp(5, Timestamp.valueOf(newEnd));
             ps.setTimestamp(6, Timestamp.valueOf(newLastUpdate));
             ps.setString(7, newLastUpdatedBy);
-            ps.setInt(8, newCustID);
+            ps.setInt(8, newClientID);
             ps.setInt(9, newTherapistID);
             ps.setInt(10, newApptID);
             int rowsEffected = ps.executeUpdate();
