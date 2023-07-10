@@ -24,9 +24,9 @@
             <columns>
                 <TableColumn fx:id="schedulesApptID" prefWidth="58.0" text="Appt. ID" />
                 <TableColumn fx:id="schedulesTitle" prefWidth="101.0" text="Title" />
-                <TableColumn fx:id="schedulesDesc" prefWidth="174.0" text="Description" />
-                <TableColumn fx:id="schedulesType" prefWidth="139.0" text="Type" />
-                <TableColumn fx:id="schedulesStart" prefWidth="137.0" text="Start Date/Time" />
+                <TableColumn fx:id="schedulesNote" prefWidth="197.0" text="Note" />
+                <TableColumn fx:id="schedulesType" prefWidth="127.0" text="Type" />
+                <TableColumn fx:id="schedulesStart" prefWidth="126.0" text="Start Date/Time" />
                 <TableColumn fx:id="schedulesEnd" prefWidth="126.0" text="End Date/Time" />
                 <TableColumn fx:id="schedulesClientID" prefWidth="102.0" text="Customer ID" />
             </columns>

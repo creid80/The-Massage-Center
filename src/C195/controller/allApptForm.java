@@ -37,7 +37,7 @@ public class allApptForm implements Initializable {
     public TableView apptTable;
     public TableColumn ApptIDCol;
     public TableColumn titleCol;
-    public TableColumn descCol;
+    public TableColumn noteCol;
     public TableColumn therapistCol;
     public TableColumn typeCol;
     public TableColumn startCol;
@@ -85,7 +85,7 @@ public class allApptForm implements Initializable {
         apptTable.setItems(allAppts);
         ApptIDCol.setCellValueFactory(new PropertyValueFactory<>("apptID"));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-        descCol.setCellValueFactory(new PropertyValueFactory<>("desc"));
+        noteCol.setCellValueFactory(new PropertyValueFactory<>("note"));
         therapistCol.setCellValueFactory(new PropertyValueFactory<>("therapistName"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         startCol.setCellValueFactory(new PropertyValueFactory<>("startLDT"));

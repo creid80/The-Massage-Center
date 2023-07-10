@@ -66,7 +66,7 @@ public class modApptForm implements Initializable {
     private Appointments modAppt = allApptForm.getMAppointment();
     private ObservableList<Clients> allClients = Clients.getAllClients();
     private ObservableList<Users> allUsers = Users.getAllUsers();
-    private ObservableList<Therapists> allTherapists = Therapists.getAllTheras();
+    private ObservableList<Therapists> allTherapists = Therapists.getAllTherapists();
     private ObservableList<LocalTime> availETime = apptTime.getAvailEHours();
     private ObservableList<LocalTime> clientAppts = getClientApptHours();
     private static ObservableList<String> Types = FXCollections.observableArrayList();
@@ -249,7 +249,7 @@ public class modApptForm implements Initializable {
     public void onTherapistDropBox(ActionEvent actionEvent) {
 
         Therapists selTherapist = (Therapists) therapistDropBox.getValue();
-        newTherapistID = selTherapist.getTheraID();
+        newTherapistID = selTherapist.getTherapistID();
 
         if (apptDatePicker.getValue() != null) {
 

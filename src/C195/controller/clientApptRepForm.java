@@ -38,7 +38,7 @@ public class clientApptRepForm implements Initializable {
     public TableView apptTable;
     public TableColumn aTApptID;
     public TableColumn aTTitle;
-    public TableColumn aTDesc;
+    public TableColumn aTNote;
     public TableColumn aTType;
     public TableColumn aTStart;
     public TableColumn aTEnd;
@@ -147,7 +147,7 @@ public class clientApptRepForm implements Initializable {
             apptTable.setItems(fAppt);
             aTApptID.setCellValueFactory(new PropertyValueFactory<>("apptID"));
             aTTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-            aTDesc.setCellValueFactory(new PropertyValueFactory<>("desc"));
+            aTNote.setCellValueFactory(new PropertyValueFactory<>("note"));
             aTStart.setCellValueFactory(new PropertyValueFactory<>("startLDT"));
             aTEnd.setCellValueFactory(new PropertyValueFactory<>("endLDT"));
             aTTherapistName.setCellValueFactory(new PropertyValueFactory<>("therapistName"));

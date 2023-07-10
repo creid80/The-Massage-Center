@@ -13,33 +13,33 @@ import java.sql.SQLException;
 /**This class creates Therapists.*/
 public class Therapists {
 
-    private int theraID;
-    private String theraName;
+    private int therapistID;
+    private String therapistName;
 
-    private static ObservableList<Therapists> allTheras = FXCollections.observableArrayList();
+    private static ObservableList<Therapists> allTherapists = FXCollections.observableArrayList();
 
     /**This method is a constructor. This method creates a therapist object.
-     * @param theraID The therapist ID.
-     * @param theraName The therapist name.
+     * @param therapistID The therapist ID.
+     * @param therapistName The therapist name.
      */
-    public Therapists(int theraID, String theraName) {
+    public Therapists(int therapistID, String therapistName) {
 
-        this.theraID = theraID;
-        this.theraName = theraName;
+        this.therapistID = therapistID;
+        this.therapistName = therapistName;
     }
 
     /**This method returns the therapist ID.
      * @return The therapist ID.
      */
-    public int getTheraID() { return theraID; }
+    public int getTherapistID() { return therapistID; }
 
     /**This method returns the therapist name.
      * @return The therapist name.
      */
-    public String getTheraName() { return theraName; }
+    public String getTherapistName() { return therapistName; }
 
     /**This method queries the database for all therapists, and adds each therapist object to the
-     * ObservableList allTheraps.
+     * ObservableList allTherapists.
      */
     public static void therapistsQuery() throws SQLException {
 
@@ -53,20 +53,20 @@ public class Therapists {
 
             Therapists newTherapist = new Therapists(therapistID, therapist);
 
-            allTheras.add(newTherapist);
+            allTherapists.add(newTherapist);
         }
     }
 
-    /**This method returns the observable list allTheras.
+    /**This method returns the observable list allTherapists.
      * @return The observable list allTheras.
      */
-    public static ObservableList<Therapists> getAllTheras() {
-        return allTheras;
+    public static ObservableList<Therapists> getAllTherapists() {
+        return allTherapists;
     }
 
     /**This method overrides the toString method and returns the therapist name.
      * @return The therapist name.
      */
     @Override
-    public String toString() { return theraName; }
+    public String toString() { return therapistName; }
 }

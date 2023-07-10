@@ -25,13 +25,13 @@
             <columns>
                 <TableColumn fx:id="ApptIDCol" editable="false" prefWidth="63.0" text="Appt. ID" />
                 <TableColumn fx:id="titleCol" editable="false" prefWidth="60.0" text="Title" />
-                <TableColumn fx:id="descCol" editable="false" prefWidth="94.0" text="Description" />
-                <TableColumn fx:id="therapistCol" editable="false" prefWidth="97.0" text="Therapist" />
-                <TableColumn fx:id="typeCol" editable="false" prefWidth="102.0" text="Type" />
-                <TableColumn fx:id="startCol" editable="false" prefWidth="108.0" text="Start" />
-                <TableColumn fx:id="endCol" editable="false" prefWidth="108.0" text="End" />
-                <TableColumn fx:id="clientIDCol" editable="false" prefWidth="59.0" text="Client ID" />
-                <TableColumn fx:id="userIDCol" editable="false" prefWidth="59.0" text="User ID" />
+                <TableColumn fx:id="noteCol" editable="false" prefWidth="140.0" text="Note" />
+                <TableColumn fx:id="therapistCol" editable="false" minWidth="0.0" prefWidth="114.0" text="Therapist" />
+                <TableColumn fx:id="typeCol" editable="false" prefWidth="115.0" text="Type" />
+                <TableColumn fx:id="startCol" editable="false" prefWidth="115.0" text="Start" />
+                <TableColumn fx:id="endCol" editable="false" prefWidth="115.0" text="End" />
+                <TableColumn fx:id="clientIDCol" editable="false" prefWidth="60.0" text="Client ID" />
+                <TableColumn fx:id="userIDCol" editable="false" prefWidth="62.0" text="User ID" />
             </columns>
         </TableView>
         <Button layoutX="149.0" layoutY="436.0" mnemonicParsing="false" onAction="#onAddAppt" text="Add" />

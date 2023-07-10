@@ -38,7 +38,7 @@ public class schedForm implements Initializable {
     public ComboBox therapist;
     public DatePicker date;
 
-    private ObservableList<Therapists> allTherapists = Therapists.getAllTheras();
+    private ObservableList<Therapists> allTherapists = Therapists.getAllTherapists();
     private ObservableList<Appointments> allAppt = Appointments.getAllAppts();
 
 
@@ -80,7 +80,7 @@ public class schedForm implements Initializable {
         sDate = date.getValue();
 
         FilteredList<Appointments> fList = new FilteredList<>(allAppt);
-        fList.setPredicate(Appointments -> Appointments.getTherapistName().equals(sTherapist.getTheraName()));
+        fList.setPredicate(Appointments -> Appointments.getTherapistName().equals(sTherapist.getTherapistName()));
 
         FilteredList<Appointments> fList2 = new FilteredList<>(fList);
         fList2.setPredicate(Appointments -> Appointments.getStartLDT().toLocalDate().isEqual(sDate));
