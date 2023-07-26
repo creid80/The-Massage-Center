@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.17224080267558528" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #0588FA;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.controller.addClientForm">
+<SplitPane dividerPositions="0.17224080267558528" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #0588FA;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="C195.controller.addClientForm">
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-        <Label layoutX="364.0" layoutY="15.0" text="Add A Customer">
+        <Label layoutX="364.0" layoutY="15.0" text="Add A Client">
             <font>
                 <Font name="System Bold" size="48.0" />
             </font>

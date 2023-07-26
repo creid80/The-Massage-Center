@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane style="-fx-background-color: #0588FA;" xmlns="http://javafx.com/javafx/17.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.controller.loginForm">
+<AnchorPane style="-fx-background-color: #0588FA;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="C195.controller.loginForm">
    <AnchorPane style="-fx-border-color: #000000; -fx-padding: 30;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="50.0">
       <padding>
          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

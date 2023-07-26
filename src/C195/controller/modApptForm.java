@@ -375,7 +375,7 @@ public class modApptForm implements Initializable {
                 (Validate.isValidLength("Note", newNote, 150))) {
 
             String sql = "UPDATE APPOINTMENTS SET Title = ?, Note = ?, Type = ?, " +
-                    "\nStart = ?, End = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, " +
+                    "\nStart = ?, End = ?, Last_Update = ?, Last_Updated_By = ?, Client_ID = ?, " +
                     "\nTherapist_ID = ?" +
                     "\nWHERE Appointment_ID = ?";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
