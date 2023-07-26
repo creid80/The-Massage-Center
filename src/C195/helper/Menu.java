@@ -20,7 +20,7 @@ import static C195.utilities.Validate.pickToMod;
 /**This class helps centralize the navigation through the application.*/
 public class Menu {
 
-    public static ObservableList<String> menuItems = FXCollections.observableArrayList("View All Appointments", "Add An Appointment", "Modify An Appointment", "\n", "View All Clients", "Add A Client", "Modify A Client", "\n", "Monthly Type Report", "Therapist Schedules", "Client Appointments Report");
+    public static ObservableList<String> menuItems = FXCollections.observableArrayList("View All Appointments", "Add An Appointment", "Modify An Appointment", "\n", "View All Clients", "Add A Client", "Modify A Client", "\n", "Monthly Appointments Report", "Therapist Schedules", "Client Appointments Report");
 
     /**This method checks what selection was made and loads the correct scene.*/
     public static void menuSelection(String selected, ActionEvent actionEvent) throws IOException {
@@ -92,7 +92,7 @@ public class Menu {
                     pickToMod(" client");
 
                 }
-                case "Monthly Type Report" -> {
+                case "Monthly Appointments Report" -> {
 
                     Parent root = FXMLLoader.load(Objects.requireNonNull(allApptForm.class.getResource("/C195/view/apptRep.fxml")));
                     Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
