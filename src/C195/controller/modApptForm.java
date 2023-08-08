@@ -203,9 +203,7 @@ public class modApptForm implements Initializable {
         menuSelection(selected, actionEvent);
     }
 
-
-    // FIX ME
-
+    /**This method populates the TypeCB combo box. */
     public void popTypeCB() {
        Types.clear();
            Types.addAll("Acupuncture", "Deep Tissue", "Hot Stone", "Reflexology", "Sports", "Swedish");

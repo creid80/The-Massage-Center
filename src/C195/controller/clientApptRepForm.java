@@ -90,6 +90,8 @@ public class clientApptRepForm implements Initializable {
         Menu.menuSelection(selected, actionEvent);
     }
 
+    /**This method takes the user input and passes the information to the lookupClient methods within the
+     * Clients class.*/
     public void onClientSearch(ActionEvent actionEvent) {
         String q = clientSearch.getText();
         Clients clientID = null;
