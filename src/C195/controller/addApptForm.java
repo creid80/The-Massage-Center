@@ -121,7 +121,7 @@ public class addApptForm implements Initializable {
         menuSelection(selected, actionEvent);
     }
 
-    // NEED TO FINISH
+    /**This method populates the TypeCB combo box. */
     public void popTypeCB() {
         Types.clear();
         Types.addAll("Acupuncture", "Deep Tissue", "Hot Stone", "Reflexology", "Sports","Swedish");

@@ -56,9 +56,7 @@ public class apptRepForm implements Initializable {
     public XYChart.Series<String, Number> series6 = new XYChart.Series<>();
 
 
-//FINISH THIS
-
-    /**This method initializes the apptRep scene and populates the type table with appointments from the
+    /**This method initializes the apptRep scene and populates the date combo boxes and bar chart with appointments from the
      * user's current year and month.
      */
     @Override
@@ -160,12 +158,7 @@ public class apptRepForm implements Initializable {
                 "September", "October", "November", "December");
     }
 
-
-
-    //FIX THIS
-
-    /**This method clears allTypes if it is not empty. Next, it adds all unique appointment types to a HashSet
-     * if the appointment start time matches the selected year and month. Then it adds the unique types to
+    /**This method clears allTypes if it is not empty. Next, it adds the unique types to
      * allTypes before checking how many of the filtered appointments have each type.
      */
     public static void getApptT(LocalDate selectedD) {
@@ -189,7 +182,6 @@ public class apptRepForm implements Initializable {
 
         for(Types t : allTypes) {
             tCount = 0;
-            System.out.println(t.getTypeAppt());
             for (Appointments a : Appointments.getAllAppts()) {
 
                 if ((a.getStartLDT().getYear() == sYear) && (a.getStartLDT().getMonthValue() == sMonth) &&
@@ -216,12 +208,10 @@ public class apptRepForm implements Initializable {
         month.setValue(null);
     }
 
-
-
-    // FIX THIS
-
     /**This method gets the selected month name and determines the number of month. Then it creates a
-     * localDateTime from the selected year and month, that it passes to the getApptT method.
+     * localDateTime from the selected year and month, that it passes to the getApptT method. Next, it
+     * creates two array's, one for type names and one for type count. Each type name and count are added from
+     * the filtered allTypes list. Finally, it inserts the types' name and count into the bar chart.
      */
     public void onMonth(ActionEvent actionEvent) {
 
@@ -241,7 +231,6 @@ public class apptRepForm implements Initializable {
             }
         }
         selectedD = LocalDate.of(selectedY, selM, 1);
-        System.out.println(selectedM);
         getApptT(selectedD);
 
 
@@ -300,7 +289,7 @@ public class apptRepForm implements Initializable {
 
 
         typeBarChart.getData().addAll(series1, series2, series3, series4, series5, series6);
-        System.out.println(selectedY);
+
 
     }
 
